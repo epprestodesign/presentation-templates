@@ -1,0 +1,17 @@
+node_modules
+dist
+storybook-static
+*.log
+.DS_Store
+.vite
+
+# Build output from the export scripts (regenerate with pnpm export:*)
+export-out/
+
+# Secrets
+.env
+.env.local
+.env.*.local
+
+# Local Netlify folder
+.netlify

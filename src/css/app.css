@@ -1,0 +1,132 @@
+/* =============================================================
+ * Global slide styles. Imported once by .storybook/preview.js and by the
+ * standalone deck entry.
+ *
+ * Fonts and icons are self-hosted npm packages, never CDN links: the
+ * export scripts render slides in headless Chromium and CI has no
+ * network guarantee, so a webfont that fails to load would silently
+ * change every measurement.
+ * ============================================================= */
+
+/* Poppins — the deck typeface. Only the weights the type scale actually
+   uses, plus italics for the emphasis runs in the comparison slides. */
+@import '@fontsource/poppins/400.css';
+@import '@fontsource/poppins/400-italic.css';
+@import '@fontsource/poppins/500.css';
+@import '@fontsource/poppins/600.css';
+@import '@fontsource/poppins/600-italic.css';
+@import '@fontsource/poppins/700.css';
+@import '@fontsource/poppins/700-italic.css';
+
+/* Material Symbols — the full ~3,700-glyph library as one variable font.
+   All three styles ship so a deck can pick a voice; Rounded is the
+   default because it sits best with Poppins' geometry and the rounded
+   card language of the deck. */
+@import 'material-symbols/rounded.css';
+@import 'material-symbols/outlined.css';
+@import 'material-symbols/sharp.css';
+
+@import './tokens.generated.css';
+
+/* ---------------------------------------------------------------
+ * Reset — scoped tight. Slides are absolutely positioned inside a
+ * fixed canvas, so the usual flow-layout resets do not apply.
+ * --------------------------------------------------------------- */
+.ds-slide *,
+.ds-slide *::before,
+.ds-slide *::after {
+  box-sizing: border-box;
+}
+
+.ds-slide h1,
+.ds-slide h2,
+.ds-slide h3,
+.ds-slide h4,
+.ds-slide p,
+.ds-slide ul,
+.ds-slide ol,
+.ds-slide figure {
+  margin: 0;
+  padding: 0;
+}
+
+.ds-slide ul,
+.ds-slide ol {
+  list-style: none;
+}
+
+.ds-slide img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ---------------------------------------------------------------
+ * Type utilities. One class per step in the scale, so an element can
+ * opt into a role without restating four properties. Templates should
+ * prefer these over ad-hoc font declarations.
+ * --------------------------------------------------------------- */
+.ds-text-display,
+.ds-text-h1,
+.ds-text-h2,
+.ds-text-h3,
+.ds-text-h4,
+.ds-text-lead,
+.ds-text-body,
+.ds-text-body-sm,
+.ds-text-caption,
+.ds-text-eyebrow,
+.ds-text-page-number,
+.ds-text-stat,
+.ds-text-stat-sm {
+  font-family: var(--slide-font-family);
+  color: var(--slide-color-text);
+  /* Slides are rendered at a fixed size and exported at 2x; let the
+     browser optimise for shape fidelity rather than screen legibility. */
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ds-text-display     { font-size: var(--slide-text-display-size);     line-height: var(--slide-text-display-line-height);     font-weight: var(--slide-text-display-weight);     letter-spacing: var(--slide-text-display-tracking); }
+.ds-text-h1          { font-size: var(--slide-text-h1-size);          line-height: var(--slide-text-h1-line-height);          font-weight: var(--slide-text-h1-weight);          letter-spacing: var(--slide-text-h1-tracking); }
+.ds-text-h2          { font-size: var(--slide-text-h2-size);          line-height: var(--slide-text-h2-line-height);          font-weight: var(--slide-text-h2-weight);          letter-spacing: var(--slide-text-h2-tracking); }
+.ds-text-h3          { font-size: var(--slide-text-h3-size);          line-height: var(--slide-text-h3-line-height);          font-weight: var(--slide-text-h3-weight);          letter-spacing: var(--slide-text-h3-tracking); }
+.ds-text-h4          { font-size: var(--slide-text-h4-size);          line-height: var(--slide-text-h4-line-height);          font-weight: var(--slide-text-h4-weight);          letter-spacing: var(--slide-text-h4-tracking); }
+.ds-text-lead        { font-size: var(--slide-text-lead-size);        line-height: var(--slide-text-lead-line-height);        font-weight: var(--slide-text-lead-weight);        letter-spacing: var(--slide-text-lead-tracking); }
+.ds-text-body        { font-size: var(--slide-text-body-size);        line-height: var(--slide-text-body-line-height);        font-weight: var(--slide-text-body-weight);        letter-spacing: var(--slide-text-body-tracking); }
+.ds-text-body-sm     { font-size: var(--slide-text-body-sm-size);     line-height: var(--slide-text-body-sm-line-height);     font-weight: var(--slide-text-body-sm-weight);     letter-spacing: var(--slide-text-body-sm-tracking); }
+.ds-text-caption     { font-size: var(--slide-text-caption-size);     line-height: var(--slide-text-caption-line-height);     font-weight: var(--slide-text-caption-weight);     letter-spacing: var(--slide-text-caption-tracking); }
+.ds-text-stat        { font-size: var(--slide-text-stat-size);        line-height: var(--slide-text-stat-line-height);        font-weight: var(--slide-text-stat-weight);        letter-spacing: var(--slide-text-stat-tracking); }
+.ds-text-stat-sm     { font-size: var(--slide-text-stat-sm-size);     line-height: var(--slide-text-stat-sm-line-height);     font-weight: var(--slide-text-stat-sm-weight);     letter-spacing: var(--slide-text-stat-sm-tracking); }
+
+.ds-text-eyebrow {
+  font-size: var(--slide-text-eyebrow-size);
+  line-height: var(--slide-text-eyebrow-line-height);
+  font-weight: var(--slide-text-eyebrow-weight);
+  letter-spacing: var(--slide-text-eyebrow-tracking);
+  text-transform: uppercase;
+}
+
+.ds-text-page-number {
+  font-size: var(--slide-text-page-number-size);
+  line-height: var(--slide-text-page-number-line-height);
+  font-weight: var(--slide-text-page-number-weight);
+  letter-spacing: var(--slide-text-page-number-tracking);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Colour roles, as modifiers on any of the above. */
+.ds-text-subtle    { color: var(--slide-color-text-subtle); }
+.ds-text-muted     { color: var(--slide-color-text-muted); }
+.ds-text-cool      { color: var(--slide-color-text-cool); }
+.ds-text-accent    { color: var(--slide-color-accent); }
+.ds-text-accent-deep { color: var(--slide-color-accent-deep); }
+.ds-text-on-brand  { color: var(--slide-color-text-on-brand); }
+.ds-text-on-brand-subtle { color: var(--slide-color-text-on-brand-subtle); }
+
+/* ---------------------------------------------------------------
+ * Storybook canvas. Slides are their own fixed-size artboard, so the
+ * usual docs padding just crops them.
+ * --------------------------------------------------------------- */
+.sb-show-main.sb-main-padded {
+  padding: 0;
+}

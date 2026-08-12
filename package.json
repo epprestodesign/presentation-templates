@@ -1,0 +1,31 @@
+{
+  "name": "eventpipe-slide-presentations",
+  "version": "0.1.0",
+  "private": true,
+  "description": "EventPipe slide design system — 1280x720 HTML slide templates, documented in Storybook, exportable to Google Slides / PowerPoint with editable layers.",
+  "type": "module",
+  "scripts": {
+    "storybook": "storybook dev -p 6008",
+    "build-storybook": "storybook build -o storybook-static",
+    "dev:deck": "vite --config vite.deck.config.js --port 6009",
+    "build:deck": "vite build --config vite.deck.config.js",
+    "export:pptx": "node scripts/export-pptx.mjs",
+    "export:png": "node scripts/export-png.mjs",
+    "export:pdf": "node scripts/export-pdf.mjs",
+    "build:tokens": "node scripts/build-tokens.mjs"
+  },
+  "dependencies": {
+    "@fontsource/poppins": "^5.1.0",
+    "material-symbols": "^0.45.10",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@storybook/addon-docs": "^10.4.6",
+    "@storybook/vue3-vite": "^10.4.6",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "playwright": "^1.49.0",
+    "pptxgenjs": "^4.0.1",
+    "storybook": "^10.4.6",
+    "vite": "^6.0.0"
+  }
+}
