@@ -35,7 +35,10 @@
   /* Cells hang from a common top edge; a cell that runs to four lines grows
      downward rather than shifting its neighbours. */
   align-items: flex-start;
-  gap: 12px;
+  /* 16px. Chosen by solving for the measured column starts (272.5, 456.5,
+     664.5, 848.5, 1032.5 on slide 02) with equal step columns — at 12px the
+     whole run of steps drifted ~40px left of the reference. */
+  gap: 16px;
   padding-left: 24px;
   padding-right: 24px;
   /* currentColor for the dashes. They read a step lighter than the copy in the
@@ -44,12 +47,22 @@
   color: var(--slide-color-text-subtle);
 }
 
+/* Reversed, the dashes are solid white in the reference, not a tinted rule —
+   they have to hold their own against the gradient. */
 .brand .row {
-  color: var(--slide-color-rule-on-brand);
+  color: var(--slide-color-text-on-brand);
 }
 
+/* Balanced on purpose, and it is doing real work. The reference breaks both
+   side labels after "Organizers" — "Organizers / Old Way" and "Organizers /
+   with EventPipe" — and no single cell width reproduces that in Poppins,
+   because the old-way band is italic and italic runs narrower: any width that
+   keeps "with EventPipe" together also fits "Organizers Old". Balancing picks
+   the split with the shortest longest line, which is the reference's break in
+   both bands regardless of the face. */
 .labelCell {
   flex: none;
+  text-wrap: balance;
 }
 
 /* Equal share of what is left, so adding a sixth step re-flows the row

@@ -1,0 +1,60 @@
+/* No font sizes here — the labels arrive with ds-text-h4. Module CSS is
+   injected after the globals, so a `font` declaration would silently win. */
+.plot {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+/* Full-height so a label can be positioned against the plot's floor via
+   `bottom`, which is what lets it ride on top of its bar. */
+.column {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.bar {
+  position: relative;
+  width: 100%;
+}
+
+.prior {
+  background: var(--slide-color-rule);
+}
+
+/* 45deg: dark at the bottom-left corner, bright at the top-right — sampled
+   #01658b → #02adb3 across the reference's bars, which is the deck's standard
+   card gradient, not a chart-specific one. */
+.current {
+  background: var(--slide-gradient-brand);
+}
+
+.label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  /* The figure and its year read as one label, not two lines of copy, so they
+     are set on the measured 18px baseline pitch — tighter than body's 1.55
+     carries. Only the leading is overridden; the size stays body. */
+  line-height: 1.2;
+  /* Body's weight is regular; the reference's bar labels are semibold. */
+  font-weight: var(--slide-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Above the bar, in the slide's own ink — its `bottom` is set by the component
+   because it tracks the bar's height. */
+.priorLabel {
+  color: var(--slide-color-text);
+}
+
+.currentLabel {
+  /* Inside the bar, reversed, 12px from its top edge (net of the ~3.8px of
+     above-cap space in the line box). */
+  top: 8px;
+  color: var(--slide-color-text-on-brand);
+}

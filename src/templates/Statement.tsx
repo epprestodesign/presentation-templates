@@ -2,8 +2,9 @@ import type { CSSProperties } from 'react'
 import { grid } from '../tokens/tokens.js'
 import type { RichText, SlideChromeSpec, TypeStep } from '../types'
 import { SlideFrame } from '../elements/layout/SlideFrame'
-import { SlideHeading } from '../elements/layout/SlideHeading'
+import { AccentText } from '../elements/text/AccentText'
 import { EpLogo } from '../elements/brand/EpLogo'
+import { typeClass } from '../lib/typeClass'
 import styles from './Statement.module.css'
 
 /**
@@ -22,6 +23,12 @@ import styles from './Statement.module.css'
  *
  * Contact columns are a grid rather than a repeated absolute box, so a slide
  * with three contacts spaces itself.
+ *
+ * The copy stack is built here rather than with `SlideHeading`, which cannot
+ * render a headline on a dark surface: its `onDark` flag reaches the lead and
+ * the body but not the title, and `ds-text-display` sets `color` to the
+ * on-light ink, so a display headline inside it comes out black on the brand
+ * plate. `Agenda` sets its own title for the same reason.
  */
 
 /** One labelled contact column, e.g. 'Website' / 'www.eventpipe.com'. */
@@ -44,16 +51,18 @@ export interface StatementProps extends SlideChromeSpec {
   /** Cap-height anchor for the statement. Measured at 136 in the reference,
    *  which is where a two-line statement balances against the contact row. */
   top?: number
-  /** Gap between the statement and its supporting paragraph. Wider than
-   *  `SlideHeading`'s default because the statement's lines are so much
-   *  taller — the reference leaves about a full line of air there. */
+  /** Left edge of the copy column. */
+  left?: number
+  /** Gap between the statement and its supporting paragraph. Wider than a
+   *  content slide's because the statement's lines are so much taller — the
+   *  reference leaves about a full line of air there. */
   gap?: number
 
   contacts?: StatementContact[]
   /** Top of the contact row. */
   contactsTop?: number
-  /** Column pitch for the contact row. 400 is a third of the content width and
-   *  matches the reference's two columns at x = 40 and x = 435. */
+  /** Column pitch for the contact row. Measured: the reference's two columns
+   *  start at x = 40 and x = 435. */
   contactColumnWidth?: number
 
   /** Horizontal lockup, bottom-right. Long edge in slide px. */
@@ -70,10 +79,11 @@ export function Statement({
   titleSize = 'display',
   width = 1120,
   top = 136,
+  left = grid.marginX,
   gap = 30,
   contacts = [],
   contactsTop = 486,
-  contactColumnWidth = 400,
+  contactColumnWidth = 395,
   logoSize = 228,
   logo = true,
   ...chrome
@@ -86,15 +96,14 @@ export function Statement({
 
   return (
     <SlideFrame fit={fit} surface="brand" plate={plate} {...chrome}>
-      <SlideHeading
-        title={title}
-        lead={lead}
-        size={titleSize}
-        width={width}
-        top={top}
-        gap={gap}
-        onDark
-      />
+      <div className={styles.copy} style={{ left, top, width, gap }}>
+        {title && (
+          <AccentText content={title} className={`${typeClass(titleSize)} ds-text-on-brand`} />
+        )}
+        {lead && (
+          <AccentText as="p" content={lead} className="ds-text-lead ds-text-on-brand-subtle" />
+        )}
+      </div>
 
       {contacts.length > 0 && (
         <dl className={styles.contacts} style={contactStyle}>

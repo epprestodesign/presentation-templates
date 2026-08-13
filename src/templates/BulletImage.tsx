@@ -67,12 +67,14 @@ export function BulletImage({
 }: BulletImageProps) {
   return (
     <SlideFrame fit={fit} {...chrome}>
-      {title && <SlideHeading title={title} size={titleSize} width={titleWidth} />}
-
-      {/* Imagery first in the DOM so the copy column wins any overlap. The
-          headline runs past the cluster's left edge on slide 2-01, and only
-          gets away with it because that corner of the asset is transparent. */}
+      {/* Imagery first in the DOM, deliberately. ImageMosaic and SlideHeading
+          both sit on z-index 2, so document order decides overlaps — and on
+          slide 2-01 the headline runs past the cluster's left edge, where the
+          asset's transparent corner still carries a faint shadow. Drawn second,
+          the cluster smudged the last word of the title. */}
       {images.length > 0 && <ImageMosaic images={images} />}
+
+      {title && <SlideHeading title={title} size={titleSize} width={titleWidth} />}
 
       {bullets.length > 0 && (
         <BulletList

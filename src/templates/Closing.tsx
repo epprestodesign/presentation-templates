@@ -1,8 +1,9 @@
 import { grid } from '../tokens/tokens.js'
 import type { PersonSpec, RichText, SlideChromeSpec, TypeStep } from '../types'
 import { SlideFrame } from '../elements/layout/SlideFrame'
-import { SlideHeading } from '../elements/layout/SlideHeading'
+import { AccentText } from '../elements/text/AccentText'
 import { OutlineCard } from '../elements/layout/OutlineCard'
+import { typeClass } from '../lib/typeClass'
 import { img } from '../assets/imagery'
 import styles from './Closing.module.css'
 
@@ -101,7 +102,9 @@ export function Closing({
   insetRight,
   photoSize = 180,
   cardRadius = 24,
-  padding = 40,
+  /** 38, not 40. The reference measures 40px from the card's *outer* edge to the
+   *  portrait; the 2px border sits inside that, so the padding is 40 - 2. */
+  padding = 38,
   ...chrome
 }: ClosingProps) {
   const right = insetRight ?? (chrome.watermark === false ? grid.marginX : grid.watermarkGutter)
@@ -116,7 +119,14 @@ export function Closing({
         />
       )}
 
-      <SlideHeading title={title} size={titleSize} width={titleWidth} top={titleTop} onDark />
+      {/* Not SlideHeading: its `onDark` only recolours the lead, so the
+          headline itself would keep `ds-text-*`'s black ink over the gradient.
+          Same reason Agenda sets its own title. See the note in the story. */}
+      <AccentText
+        content={title}
+        className={[styles.title, typeClass(titleSize), 'ds-text-on-brand'].join(' ')}
+        style={{ top: titleTop, width: titleWidth }}
+      />
 
       <div className={styles.row} style={{ left: grid.marginX, top, right, height, gap }}>
         {people.map((person, i) => (

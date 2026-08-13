@@ -17,6 +17,8 @@
   display: flex;
 }
 
+/* No gap between number and label: the 68px number's line box already leaves
+   the 19px the reference has between its baseline and the label's cap. */
 .figure {
   position: relative;
   flex: 1 1 0;

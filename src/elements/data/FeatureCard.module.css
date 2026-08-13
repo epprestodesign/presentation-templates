@@ -39,20 +39,26 @@
 
 /* The veil under a reversed title. Built out of the deck's ink token rather
    than a literal black so there is still one source for it; `--slide-color-text`
-   is #000. Stops are sampled off slide 03: the photo reads untouched for the
-   first ~28% of the band, is half gone by 56%, and is effectively solid by the
-   last fifth, which is what lets a two- or three-line white title sit on any of
-   the five photos without a legibility check per card. */
+   is #000. The ramp lets a two- or three-line white title sit on any of the five
+   photos without a legibility check per card.
+
+   It goes fully solid at 62% of the band, which is harder than slide 03's own
+   scrim: the extracted photos in src/assets/imagery/operating-layer/* were cut
+   at the reference's card rect, so each one has the ORIGINAL scrim and the
+   original white title baked into its lower third. The earliest of those baked
+   titles starts at 65% of the photo's height, so anything softer than this
+   leaves a ghost of it showing through under the live one. Re-crop those five
+   photos from unlettered sources and this can relax to ~75%. */
 .scrim {
   position: absolute;
   inset: 0;
   z-index: 1;
   background: linear-gradient(
     180deg,
-    transparent 28%,
-    color-mix(in srgb, var(--slide-color-text) 45%, transparent) 56%,
-    color-mix(in srgb, var(--slide-color-text) 88%, transparent) 82%,
-    var(--slide-color-text) 100%
+    transparent 22%,
+    color-mix(in srgb, var(--slide-color-text) 42%, transparent) 44%,
+    color-mix(in srgb, var(--slide-color-text) 88%, transparent) 56%,
+    var(--slide-color-text) 62%
   );
 }
 

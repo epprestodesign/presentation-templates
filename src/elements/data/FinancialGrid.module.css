@@ -39,10 +39,17 @@
 }
 
 /* The label column's caption is 3px smaller than the teal period headings, so
-   it is set to the bottom of the header band to share their baseline. */
+   it is set to the bottom of the header band to share their baseline.
+
+   It must not wrap. Poppins runs the reference's unit note ("Figures in
+   thousands (USD $000s)") a few px wider than the label column, and letting it
+   break doubles the header band's height and drags the whole table down. It
+   overhangs into the first period column instead, which is empty there — the
+   figures are right-aligned 90px further over. */
 .headerLabel {
   align-items: flex-end;
   padding-bottom: 2px;
+  white-space: nowrap;
 }
 
 /* --- summary block -------------------------------------------------- */

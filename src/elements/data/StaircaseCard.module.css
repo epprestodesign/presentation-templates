@@ -41,8 +41,8 @@
 }
 
 /* The title is pinned to the card's floor — see the component note on why the
-   label comes last. */
-.title {
+   label comes last, and on why the auto margin lives on a wrapper. */
+.titleSlot {
   position: relative;
   z-index: 1;
   margin-top: auto;

@@ -9,6 +9,14 @@
   /* Headlines in the deck wrap on their own terms: templates set the width
      and the copy breaks naturally. */
   text-wrap: balance;
+
+  /* pre-line so a "\n" inside run text is an explicit break. The reference
+     breaks several card titles and headlines at a chosen word — "Static
+     Booking / Hyperlinks", "Turn / contracted rooms / into bookings" — which
+     natural wrapping at the column width does not reproduce, and which the
+     RichText shape had no way to express. Explicit breaks still win over
+     `text-wrap: balance`, which only governs automatic wrapping. */
+  white-space: pre-line;
 }
 
 .accent { color: var(--slide-color-accent); }

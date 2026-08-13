@@ -91,12 +91,19 @@ export function StaircaseCard({
         </div>
       )}
 
+      {/* The title is pinned to the card's floor by a wrapper rather than by
+          `margin-top: auto` on the heading itself: globals.css resets
+          `.ds-slide h3 { margin: 0 }`, and a class-plus-type selector outranks
+          any single class a module can offer, so the auto margin would be
+          silently dropped. */}
       {title && (
-        <AccentText
-          as="h3"
-          content={title}
-          className={[styles.title, typeClass(titleSize), 'ds-text-on-brand'].join(' ')}
-        />
+        <div className={styles.titleSlot}>
+          <AccentText
+            as="h3"
+            content={title}
+            className={[typeClass(titleSize), 'ds-text-on-brand'].join(' ')}
+          />
+        </div>
       )}
     </div>
   )

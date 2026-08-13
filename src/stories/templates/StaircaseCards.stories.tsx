@@ -107,13 +107,14 @@ export const IntegrationRoadmap: Story = {
  *  error than the 4px this gives up.
  *
  *  The reference also carries an "ON LOCATION | eventpipe" lockup in the
- *  watermark area. That is chrome, so it is passed as data: with no `src` the
- *  lockup renders its deliberately obvious placeholder until the partner's
- *  artwork lands. */
+ *  watermark area. `coBrand` on the chrome already covers that, but it is left
+ *  off here: without the partner's artwork the lockup renders its deliberately
+ *  obvious placeholder, which at the watermark's rotation collides with the
+ *  wordmark. Add `coBrand: { name: 'On Location', src: … }` once the mark
+ *  lands. */
 export const ImplementationAndSupport: Story = {
   args: {
     eyebrow: 'Client Onboarding',
-    coBrand: { name: 'ON LOCATION' },
     title: [{ accent: 'Implementation & Support Model: ' }, 'Fast, Focused, and Fully Supported'],
     titleWidth: 720,
     top: 247,

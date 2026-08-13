@@ -5,6 +5,10 @@
   position: relative;
 }
 
+/* The `max-width: none` that lets the asset be wider than this box is set
+   inline in the component, not here: globals.css has `.ds-slide img
+   { max-width: 100% }`, which outranks a single module class on specificity, so
+   a rule in this file loses however late it is injected. */
 .mockup {
   position: absolute;
   display: block;

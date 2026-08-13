@@ -76,10 +76,21 @@ export interface CoverProps extends SlideChromeSpec {
    *  is the radius the *content* slides' photos use. */
   radius?: number
   /** Opacity of the teal wash that lifts the title well off the plate.
-   *  Sampled: the well runs about 8% of `--slide-color-accent` brighter than
-   *  the bare plate underneath it, which is what makes it read as a well at
-   *  all without becoming a second panel. */
+   *  Fitted to the sampled difference between the well and the plate beside
+   *  it — a wash of `--slide-color-accent`, not white: the reference's well
+   *  holds R at 0 across its whole area, so whatever is over the plate there
+   *  carries no red. It is what makes the well read as a well at all without
+   *  becoming a second panel. */
   wash?: number
+  /** Black scrim over the plate, under everything else.
+   *
+   *  The reference cover sits about 4% darker than the bare
+   *  `backgrounds/brand-hex` artwork at every point outside the panels —
+   *  sampled corner by corner against 20.png, which is that artwork. The
+   *  photos and panels are NOT darkened, and the recovered cover crops already
+   *  carry whatever the original did, so the scrim has to sit under the grid
+   *  rather than over the slide. `SlideFrame` puts it exactly there. */
+  scrim?: number
 }
 
 export function Cover({
@@ -98,7 +109,8 @@ export function Cover({
   gutter = 16,
   stripHeight = 287,
   radius = 4,
-  wash = 0.08,
+  wash = 0.22,
+  scrim = 0.04,
   ...chrome
 }: CoverProps) {
   const gridStyle: CSSProperties = {
@@ -109,7 +121,7 @@ export function Cover({
   }
 
   return (
-    <SlideFrame fit={fit} surface="brand" plate={plate} {...chrome}>
+    <SlideFrame fit={fit} surface="brand" plate={plate} scrim={scrim} {...chrome}>
       <div className={styles.grid} style={gridStyle}>
         <div
           className={styles.well}

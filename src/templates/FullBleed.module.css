@@ -27,6 +27,17 @@
   border-radius: 0 var(--fullbleed-radius) var(--fullbleed-radius) 0;
 }
 
+/* Same stack SlideHeading builds — title over lead, at the page margin — but
+   with the ink flipped for a photographic surface. */
+.heading {
+  position: absolute;
+  left: var(--slide-grid-margin-x);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
 /* Scrim under a headline. FullBleed carries its own rather than using
    SlideFrame's, because the photo here is an <img> above the artboard
    background and SlideFrame's scrim sits below it. */

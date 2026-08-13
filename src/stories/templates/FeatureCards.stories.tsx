@@ -62,17 +62,24 @@ type Story = StoryObj<typeof meta>
  *  measured 151px well by 20px, so the list takes `caption` (11/15.4), whose
  *  pitch lands within 0.6px of the reference.
  *
- *  Headline width is 900, which reproduces the reference's break after "bid".
- *  The cost is that the lead runs to two lines where the reference keeps it on
- *  one — Poppins sets that sentence 1005px wide against the original's 949, and
- *  no single column width gives both the break and the single line. */
+ *  Headline width is 1010, set by the lead rather than by the headline: Poppins
+ *  sets that sentence 1005px wide, so anything narrower breaks it onto a second
+ *  line where the reference keeps it on one. The headline's own break is not a
+ *  width decision at all — AccentText sets `text-wrap: balance`, so a two-line
+ *  headline splits evenly whatever column it is given. That costs the
+ *  reference's break after "bid"; it is a system-wide choice, not this slide's.
+ *
+ *  The photos here are the reference's own card crops, which means each one has
+ *  the original scrim and white title baked into its lower third. The card's
+ *  scrim therefore goes solid earlier than the reference's does, to bury them —
+ *  see the note in FeatureCard.module.css. */
 export const OperatingLayer: Story = {
   args: {
     eyebrow: 'EventPipe',
     pageNumber: 3,
     title: 'One operating layer, from the first hotel bid to the final payout.',
     lead: 'EventPipe connects event operators, housing companies, hotels, teams, and attendees around one live source of truth.',
-    titleWidth: 900,
+    titleWidth: 1010,
     layout: 'photo-top',
     titleSize: 'h4',
     bodySize: 'caption',

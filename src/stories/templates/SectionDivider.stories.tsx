@@ -44,13 +44,18 @@ type Story = StoryObj<typeof meta>
  *
  *  20.png is the clean background artwork with nothing on it, so the geometry
  *  being rebuilt here is the plate: full bleed, hexagons reading out of the
- *  dark left-hand end of the gradient. The copy is the divider's own. */
+ *  dark left-hand end of the gradient. The copy is the divider's own.
+ *
+ *  No `accent` run in the title, deliberately. The deck's habit of setting the
+ *  emphasis clause in teal needs a light surface behind it — on the plate the
+ *  teal falls to a few points of contrast against the gradient it is sitting
+ *  on, which the `WhitePanel` variant below shows working properly. */
 export const OnBrand: Story = {
   args: {
     eyebrow: 'Investor Presentation',
     pageNumber: 12,
     label: 'Section 03',
-    title: ['Platform acceleration — ', { accent: 'where the next dollar goes.' }],
+    title: 'Platform acceleration — where the next dollar goes.',
     lead: 'Payments, distribution and AI, layered on the operating system live events already run on.',
     width: 860,
   },
@@ -68,7 +73,7 @@ export const WhitePanel: Story = {
     watermark: false,
     panel: true,
     label: 'Section 04',
-    title: ['Capital plan'],
+    title: ['Capital plan — ', { accent: 'where the round goes.' }],
     lead: 'Investment strategy, growth roadmap, and where the round is allocated.',
     width: 820,
   },

@@ -57,7 +57,7 @@ export const ClosingStatement: Story = {
     pageNumber: 'AUG 2026',
     tag: 'Confidential',
     watermark: false,
-    title: 'The booking layer is built. Now we monetize the rails.',
+    title: 'The booking layer is built.\nNow we monetize the rails.',
     lead: 'EventPipe already powers the workflow and the volume. This Series A scales payments, distribution, and AI on top of the operating system live events already use.',
     contacts: [
       { label: 'Contacts', value: 'dante@eventpipe.com' },
@@ -79,7 +79,7 @@ export const ThreeContacts: Story = {
     pageNumber: 'AUG 2026',
     tag: 'Confidential',
     watermark: false,
-    title: 'The booking layer is built. Now we monetize the rails.',
+    title: 'The booking layer is built.\nNow we monetize the rails.',
     lead: 'EventPipe already powers the workflow and the volume. This Series A scales payments, distribution, and AI on top of the operating system live events already use.',
     contacts: [
       { label: 'Contacts', value: 'dante@eventpipe.com' },

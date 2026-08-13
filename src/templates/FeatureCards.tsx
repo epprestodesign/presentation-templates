@@ -86,7 +86,9 @@ export function FeatureCards({
     left: inset,
     top,
     height,
-    gridTemplateColumns: `repeat(${columns ?? cards.length ?? 1}, 1fr)`,
+    // `|| 1` rather than `??`: an empty row would otherwise emit repeat(0, 1fr),
+    // which is invalid and silently drops the grid.
+    gridTemplateColumns: `repeat(${columns || cards.length || 1}, 1fr)`,
     gap,
     ...(wellWidth
       ? { width: wellWidth }

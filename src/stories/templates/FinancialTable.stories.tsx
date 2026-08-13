@@ -69,7 +69,10 @@ export const BookingsAndRevenue: Story = {
       { text: 'EBITDA improves by $1.2M, reaching -$1.5M in 2025', bold: true, underline: true },
       '.',
     ],
-    titleWidth: 1000,
+    // Narrower than the template's default so the lead breaks onto four lines
+    // as the reference does; at 1000 it collapses to three and opens a hole
+    // above the table.
+    titleWidth: 940,
     headers: [
       'Figures in thousands (USD $000s)',
       '2024A',

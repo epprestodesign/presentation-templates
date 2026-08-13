@@ -18,27 +18,45 @@ import styles from './LogoGrid.module.css'
  * wide wordmark and a square badge read as two different sizes.
  */
 
-/* Every file in src/assets/partners, keyed by basename.
+/* Every third-party mark the deck ships, keyed by basename.
  *
- * Not routed through `img()` because that helper globs src/assets/imagery
- * only — partner marks live in their own directory and are not photography.
- * Same glob pattern as Foundations/Logos uses. */
-const modules = import.meta.glob<string>('../../assets/partners/*.{png,jpg,jpeg,svg}', {
-  eager: true,
-  import: 'default',
-  query: '?url',
-})
+ * Two directories, one lookup: src/assets/partners holds the customer and event
+ * marks for the logo wall, src/assets/employers the prior-employer marks for
+ * the leadership row. They are the same KIND of thing to this component — a
+ * foreign logo to be shown at even optical size — so keeping one registry means
+ * a caller never has to know which folder a name came from.
+ *
+ * Not routed through `img()`: that helper globs src/assets/imagery only, and
+ * neither of these sits inside it. (`img('employers/motus')` therefore does
+ * NOT resolve, despite the folder being named that way — moving both
+ * directories under src/assets/imagery would fix it, and neither they nor
+ * imagery/index.ts are this component's to change.) */
+const modules = {
+  ...import.meta.glob<string>('../../assets/partners/*.{png,jpg,jpeg,svg}', {
+    eager: true,
+    import: 'default',
+    query: '?url',
+  }),
+  ...import.meta.glob<string>('../../assets/employers/*.{png,jpg,jpeg,svg}', {
+    eager: true,
+    import: 'default',
+    query: '?url',
+  }),
+}
 
 const byFile: Record<string, string> = Object.fromEntries(
   Object.entries(modules).map(([path, url]) => [path.split('/').pop()!, url])
 )
 
-/* Readable names for the marks, because 15 of the 19 files shipped as bare
- * UUIDs and `logo('1dcde4ac-24aa-42a2-9ac5-791d2b543ea8')` in a slide spec is
- * not content anybody can review. The real fix is renaming the files in
+/* Readable names for the PARTNER marks, because 15 of those 19 files shipped as
+ * bare UUIDs and `logo('1dcde4ac-24aa-42a2-9ac5-791d2b543ea8')` in a slide spec
+ * is not content anybody can review. The real fix is renaming the files in
  * src/assets/partners — that directory is not this component's to change, so
  * the mapping lives here until it happens, and `logo()` still accepts a raw
- * basename so nothing is unreachable. */
+ * basename so nothing is unreachable.
+ *
+ * The employer marks need no aliases: they already ship named after the company
+ * ('motus', 'connectedu'), and `logo()` falls through to the filename. */
 const ALIASES: Record<string, string> = {
   '365': '365Logo_Horizontal.png',
   '288-travel': 'd9cf643b-683c-45eb-8bc4-21285efb2d87.png',
@@ -73,8 +91,11 @@ export function logo(name: string): string {
   return url
 }
 
-/** Every alias, for documentation stories. */
-export const logoNames = Object.keys(ALIASES).sort()
+/** Every name `logo()` accepts — aliases plus raw basenames. For documentation
+ *  stories, and for the error message above. */
+export const logoNames = [
+  ...new Set([...Object.keys(ALIASES), ...Object.keys(byFile).map((f) => f.replace(/\.\w+$/, ''))]),
+].sort()
 
 export interface LogoGridProps {
   /** Alias or filename per mark — see `logo()`. */

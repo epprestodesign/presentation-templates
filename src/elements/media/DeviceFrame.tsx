@@ -112,6 +112,11 @@ export function DeviceFrame({ device, width, alt = '', className, style }: Devic
           height: height / trim.h,
           left: -(trim.x / trim.w) * width,
           top: -(trim.y / trim.h) * height,
+          // Has to be inline. globals.css sets `.ds-slide img { max-width: 100% }`
+          // and that selector outranks a module class, so the asset was being
+          // clamped to the box width while its height was honoured — a device
+          // stretched vertically by exactly 1/trim.w.
+          maxWidth: 'none',
         }}
       />
     </div>

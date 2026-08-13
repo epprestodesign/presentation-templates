@@ -114,8 +114,17 @@ export const gradient = {
   brandBleed: { angle: 80, from: orient[900], to: fountainBlue[600] },
   /** Chart bars and columns — dark at the base, bright at the top. */
   brandVertical: { angle: 0, from: orient[800], to: fountainBlue[600] },
-  /** The staircase/stepped cards run the other diagonal: dark top-left to
-   *  bright bottom-right. Sampled #027595 → #019baa. */
+  /** The opposite diagonal — dark top-left to bright bottom-right. Available
+   *  as StatCard's `brandAlt` surface.
+   *
+   *  NOT sampled from the staircase cards, despite an earlier comment here
+   *  saying so. That claim came from comparing only top-left against
+   *  bottom-right, and on a 45° gradient BOTH of those corners are mid-tones,
+   *  so the pair cannot distinguish the two diagonals. Scanning all four
+   *  corners of the staircase cards gives #02678d at bottom-left rising to
+   *  #01a9b1 at top-right — which is `brand` above, not this. The staircase
+   *  cards therefore use `brand`; this token stands on its own as the other
+   *  diagonal, for when a deck wants it. */
   brandCardAlt: { angle: 135, from: '#02718f', to: '#01a2b1' },
 }
 

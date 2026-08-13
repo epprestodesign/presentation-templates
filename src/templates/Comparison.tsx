@@ -1,12 +1,12 @@
 import type { CSSProperties } from 'react'
 import { grid } from '../tokens/tokens.js'
-import type { RichText, SlideChromeSpec, StatSpec } from '../types'
+import type { RichText, SlideChromeSpec, TypeStep } from '../types'
 import { SlideFrame } from '../elements/layout/SlideFrame'
 import { SlideHeading } from '../elements/layout/SlideHeading'
-import { StatCard } from '../elements/data/StatCard'
 import { ComparisonBand, type ComparisonBandProps } from '../elements/data/ComparisonBand'
 import { AccentText } from '../elements/text/AccentText'
 import { Icon } from '../elements/brand/Icon'
+import { typeClass } from '../lib/typeClass'
 import styles from './Comparison.module.css'
 
 /**
@@ -30,10 +30,20 @@ import styles from './Comparison.module.css'
  * to express a difference in furniture.
  *
  * The figures row and the note beside it are slide 13's only extra structure,
- * so they are optional props rather than a third template. The figures reuse
- * StatCard on a `plain` surface, which is what keeps a 68px number on this
- * slide identical to one on the traction slide.
+ * so they are optional props rather than a third template.
+ *
+ * The figures are NOT StatCard, which was the first attempt. StatCard locks its
+ * label to `ds-text-h4` — 18px semibold, right for a KPI tile — and this slide
+ * sets the same label at body weight so it stays one line under a 68px number.
+ * Rather than fight it, the pair is two lines of type here; a `labelSize` prop
+ * on StatCard would let this fold back into it.
  */
+export interface ComparisonFigure {
+  /** Pre-formatted, e.g. '$20B+'. A string so the deck owns the rounding. */
+  value: string
+  label?: RichText
+  valueSize?: TypeStep
+}
 export interface ComparisonProps extends SlideChromeSpec {
   fit?: 'contain' | 'none'
 
@@ -52,7 +62,7 @@ export interface ComparisonProps extends SlideChromeSpec {
   leadWidth?: number
 
   /** KPI pair above the panel (slide 13), separated by a vertical rule. */
-  figures?: StatSpec[]
+  figures?: ComparisonFigure[]
   figuresTop?: number
   figuresWidth?: number
 
@@ -125,14 +135,12 @@ export function Comparison({
         <div className={styles.figures} style={{ top: figuresTop, width: figuresWidth }}>
           {figures.map((figure, i) => (
             <div key={i} className={styles.figure}>
-              <StatCard
-                {...figure}
-                surface={figure.surface ?? 'plain'}
-                order={figure.order ?? 'value-first'}
-                align={figure.align ?? 'top'}
-                valueSize={figure.valueSize ?? 'stat'}
-                padding={0}
-              />
+              <div className={`${typeClass(figure.valueSize ?? 'stat')} ds-text-accent-deep`}>
+                {figure.value}
+              </div>
+              {figure.label && (
+                <AccentText as="p" content={figure.label} className="ds-text-body" />
+              )}
             </div>
           ))}
         </div>

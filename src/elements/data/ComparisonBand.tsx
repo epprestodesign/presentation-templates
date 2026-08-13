@@ -53,7 +53,13 @@ export interface ComparisonBandProps {
   paddingTop?: number
   /** Fixed width of the side-label cell. Fixed rather than content-sized so
    *  the dashes and step columns land in the same place in both bands, which
-   *  is what makes the two sides read as a comparison. */
+   *  is what makes the two sides read as a comparison.
+   *
+   *  152, measured off slide 02, which with a 16px gap lands the five step
+   *  columns at x = 275, 466, 657, 848, 1039 against the reference's 272.5,
+   *  456.5, 664.5, 848.5, 1032.5. Where the label itself breaks is left to
+   *  `text-wrap: balance` on the cell rather than a tighter width — see the
+   *  CSS, the two bands disagree about how wide their label is. */
   labelWidth?: number
   /** Type step for the label and the steps. */
   size?: TypeStep
@@ -121,10 +127,10 @@ export function ComparisonBand({
               className={[styles.card, onBrand ? styles.cardOnBrand : ''].filter(Boolean).join(' ')}
               style={{ height: cardHeight }}
             >
-              {/* `as="span"` on purpose. AccentText's root sets
-                  `text-wrap: balance`, which is right for a headline and wrong
-                  for a two-line card label; as an inline it never becomes the
-                  block container, so the card wraps normally. */}
+              {/* As a grid item this span is blockified, so AccentText's
+                  `text-wrap: balance` does apply here — which is what we want
+                  for centred card copy, where two even lines read better than a
+                  long line over a short one. */}
               <AccentText as="span" content={step} className="ds-text-body" />
             </div>
           ))}

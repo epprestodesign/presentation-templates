@@ -167,9 +167,9 @@ export function FinancialGrid({
      what does the work — the block's fill only reinforces it. */
   const renderRow = (row: FinancialRowSpec, key: number, height: number, kind: 'summary' | 'detail') => {
     const text = kind === 'summary' ? 'ds-text-h4' : 'ds-text-body ds-text-subtle'
-    const rowClass = kind === 'summary' ? styles.summaryRow : styles.detailRow
+    const rowClass = kind === 'summary' ? ` ${styles.summaryRow}` : ''
     return (
-      <div key={key} className={[styles.row, rowClass].filter(Boolean).join(' ')} style={{ height }} role="row">
+      <div key={key} className={`${styles.row}${rowClass}`} style={{ height }} role="row">
         <div className={`${styles.cell} ${styles.labelCell} ${text}`} role="rowheader">
           <AccentText as="span" content={row.label} />
         </div>

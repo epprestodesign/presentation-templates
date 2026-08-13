@@ -57,6 +57,9 @@ export interface DeviceShowcaseProps extends SlideChromeSpec {
   deviceInset?: number
   /** Caption under the device, e.g. what the screen is showing. */
   caption?: string
+  /** Gap between the device and the copy column when the device is on the
+   *  left and the copy has to move out of its way. */
+  columnGap?: number
 }
 
 export function DeviceShowcase({
@@ -73,6 +76,7 @@ export function DeviceShowcase({
   deviceTop = 210,
   deviceInset,
   caption,
+  columnGap = 40,
   ...chrome
 }: DeviceShowcaseProps) {
   const inset =
@@ -88,12 +92,20 @@ export function DeviceShowcase({
     ...(align === 'right' ? { right: inset } : { left: inset }),
   }
 
+  // The copy column keeps the page margin when the device is on the right, and
+  // steps past the device when it is on the left. Derived rather than a prop:
+  // there is exactly one correct answer, and it depends on numbers the template
+  // already has.
+  const copyLeft = align === 'left' ? inset + deviceWidth + columnGap : grid.marginX
+
   return (
     <SlideFrame fit={fit} {...chrome}>
-      {(title || lead) && <SlideHeading title={title} lead={lead} width={copyWidth} />}
+      {(title || lead) && (
+        <SlideHeading title={title} lead={lead} width={copyWidth} left={copyLeft} />
+      )}
 
       {points.length > 0 && (
-        <ul className={styles.points} style={{ left: grid.marginX, top: pointsTop, width: copyWidth }}>
+        <ul className={styles.points} style={{ left: copyLeft, top: pointsTop, width: copyWidth }}>
           {points.map((point, i) => (
             <li key={i} className={styles.point}>
               <Icon

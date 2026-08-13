@@ -1,0 +1,20 @@
+/* No font sizes here — they arrive as ds-text-* classes from the component.
+   Module CSS is injected after the globals and would silently win. */
+.row {
+  display: grid;
+  align-items: center;
+}
+
+/* Material Symbols carry side bearings the reference's drawn arrow does not,
+   so the glyph is pulled back to sit flush with the page margin (its ink
+   starts at x=39 on the reference, 1px inside the 40px margin). */
+.arrow {
+  margin-left: -7.5px;
+}
+
+/* The label is set at h3's size but the reference's weight is regular, not the
+   step's bold. Only the weight is restated — a `font` declaration here would
+   collapse the size back to inherited. */
+.label {
+  font-weight: var(--slide-font-weight-regular);
+}

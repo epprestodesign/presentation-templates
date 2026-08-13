@@ -14,6 +14,12 @@
   transform: scaleX(-1);
 }
 
+.title {
+  position: absolute;
+  left: var(--slide-grid-margin-x);
+  z-index: 2;
+}
+
 .row {
   position: absolute;
   z-index: 2;

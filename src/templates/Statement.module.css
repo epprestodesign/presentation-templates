@@ -1,3 +1,13 @@
+/* One flex stack for the statement and its paragraph: the statement's height
+   depends on where its copy wraps, so anything anchored to a fixed y below it
+   eventually collides. */
+.copy {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
 /* A description list, so the label/value pairing survives into the accessible
    tree as well as the layout. */
 .contacts {
@@ -10,10 +20,13 @@
   margin: 0;
 }
 
+/* 12px, not the 26px the reference measures between label and value: that gap
+   is set for the original's much larger contact type, and reproducing it under
+   15/22px copy pulls the pair apart into two unrelated lines. */
 .contact {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
 }
 
 .contact dd {

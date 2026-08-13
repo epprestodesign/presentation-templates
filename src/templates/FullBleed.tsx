@@ -1,6 +1,7 @@
 import type { RichText, SlideChromeSpec, TypeStep } from '../types'
 import { SlideFrame } from '../elements/layout/SlideFrame'
-import { SlideHeading } from '../elements/layout/SlideHeading'
+import { AccentText } from '../elements/text/AccentText'
+import { typeClass } from '../lib/typeClass'
 import { img } from '../assets/imagery'
 import styles from './FullBleed.module.css'
 
@@ -87,15 +88,22 @@ export function FullBleed({
 
       {scrim > 0 && <div className={styles.scrim} style={{ opacity: scrim }} />}
 
+      {/* The headline is built here rather than handed to SlideHeading because
+          SlideHeading's `onDark` recolours only the lead — the title keeps
+          `ds-text-*`'s black ink, which is invisible over a photograph. The
+          stack is otherwise the same: title, then lead beneath it. */}
       {(title || lead) && (
-        <SlideHeading
-          title={title}
-          size={titleSize}
-          lead={lead}
-          width={titleWidth}
-          top={titleTop}
-          onDark
-        />
+        <div className={styles.heading} style={{ top: titleTop, width: titleWidth }}>
+          {title && (
+            <AccentText
+              content={title}
+              className={`${typeClass(titleSize)} ds-text-on-brand`}
+            />
+          )}
+          {lead && (
+            <AccentText as="p" content={lead} className="ds-text-lead ds-text-on-brand-subtle" />
+          )}
+        </div>
       )}
     </SlideFrame>
   )
