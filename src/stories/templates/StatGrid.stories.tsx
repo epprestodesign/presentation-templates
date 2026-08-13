@@ -8,7 +8,7 @@ import { StatGrid } from '../../templates/StatGrid'
  * on: a new slide is data, not markup.
  */
 const meta = {
-  title: 'Templates/Stat Grid',
+  title: 'Templates/Data/Stat Grid',
   component: StatGrid,
   tags: ['autodocs'],
   parameters: {

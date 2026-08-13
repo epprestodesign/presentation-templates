@@ -8,7 +8,7 @@ import { FeatureCards } from '../../templates/FeatureCards'
  * slide is data, not markup.
  */
 const meta = {
-  title: 'Templates/Feature Cards',
+  title: 'Templates/Narrative/Feature Cards',
   component: FeatureCards,
   tags: ['autodocs'],
   parameters: {

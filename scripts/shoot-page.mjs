@@ -25,7 +25,14 @@ const page = await browser.newPage({
   deviceScaleFactor: 1,
 })
 
-await page.goto(`http://localhost:6008/iframe.html?id=${id}&viewMode=story`, {
+/* Storybook's port. package.json pins `-p 6008`, but Storybook silently falls
+ * through to the next free port if something already holds it — which is exactly
+ * what happened when a server left running from the old folder name kept 6008
+ * and the real one came up on 6009, leaving every script here pointed at a dead
+ * tree. SB_PORT overrides without editing four files. */
+const SB_PORT = process.env.SB_PORT || '6008'
+
+await page.goto(`http://localhost:${SB_PORT}/iframe.html?id=${id}&viewMode=story`, {
   waitUntil: 'networkidle',
 })
 await page.evaluate(() => document.fonts.ready)

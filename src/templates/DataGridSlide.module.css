@@ -1,0 +1,11 @@
+/* The grid well. Absolutely positioned in the 1280x720 space like every other
+   template body, with height left to the content — the grid runs at autoHeight,
+   so its height is a function of row count and density, not of this box. */
+.well {
+  position: absolute;
+}
+
+.caption {
+  margin-top: 12px;
+  color: var(--slide-color-text-subtle);
+}

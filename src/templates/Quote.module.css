@@ -1,0 +1,94 @@
+/* No `font:` declaration in this file. The quote, the name and the role all
+   carry ds-text-* classes, and module CSS is injected after the globals — a
+   shorthand here would win and drop a 40px pull-quote to body size. */
+
+.copy {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.quote {
+  margin: 0;
+  /* Poppins at 40px wraps late, and a pull quote reads badly with one orphan
+     word on the last line. `balance` is safe here because the block is short —
+     the browser gives up past a few lines rather than reflowing a paragraph. */
+  text-wrap: balance;
+}
+
+.attribution {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* Inherits the column's alignment, so a centred quote centres its credit
+     without the story setting anything twice. */
+  align-items: inherit;
+}
+
+.rule {
+  height: 3px;
+  border-radius: var(--slide-radius-pill);
+  background: var(--slide-color-accent);
+}
+
+.ruleOnBrand {
+  background: var(--slide-color-rule-on-brand-strong);
+}
+
+.credit {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* The monogram disc doubles as the photo frame, so a slide that swaps initials
+   for a headshot keeps the same silhouette and the same baseline. */
+.avatar {
+  flex: none;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--slide-radius-pill);
+  background: var(--slide-color-accent-soft);
+}
+
+.avatarOnBrand {
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--slide-color-rule-on-brand-strong);
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.initials {
+  color: var(--slide-color-accent-deep);
+  letter-spacing: 0.02em;
+}
+
+.avatarOnBrand .initials {
+  color: var(--slide-color-text-on-brand);
+}
+
+.names {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.role {
+  white-space: pre;
+}
+
+/* A partner mark sits after the name, separated by its own air rather than a
+   divider — the rule above the credit is already doing that job. */
+.logo {
+  margin-left: 16px;
+  width: auto;
+  object-fit: contain;
+}

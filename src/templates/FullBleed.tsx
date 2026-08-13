@@ -51,6 +51,8 @@ export interface FullBleedProps extends SlideChromeSpec {
   arrow?: boolean
   /** Material Symbols glyph for that mark. */
   arrowIcon?: string
+  /** Glyph size inside the 72px plate. */
+  arrowSize?: number
 }
 
 export function FullBleed({
@@ -68,6 +70,7 @@ export function FullBleed({
   titleTop = 420,
   arrow = false,
   arrowIcon = 'arrow_downward',
+  arrowSize = 34,
   ...chrome
 }: FullBleedProps) {
   return (
@@ -101,7 +104,15 @@ export function FullBleed({
         // SlideHeading, because the heading's width is the copy measure — an
         // arrow inside it would track the text, not the slide.
         <div className={styles.arrow} style={{ top: titleTop }}>
-          <Icon name={arrowIcon} size={44} weight={300} color="var(--slide-color-text-on-brand)" />
+          <Icon
+            name={arrowIcon}
+            size={arrowSize}
+            /* 500, not 300. A hairline glyph inside the plate reads as a
+               rendering artefact at slide scale; the ring can carry the light
+               weight, the arrow inside it cannot. */
+            weight={500}
+            color="var(--slide-color-text-on-brand)"
+          />
         </div>
       )}
 

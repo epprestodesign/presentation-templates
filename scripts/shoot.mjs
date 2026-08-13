@@ -17,7 +17,14 @@ if (!id) {
   process.exit(1)
 }
 
-const url = `http://localhost:6008/iframe.html?id=${id}&viewMode=story&args=fit:none`
+/* Storybook's port. package.json pins `-p 6008`, but Storybook silently falls
+ * through to the next free port if something already holds it — which is exactly
+ * what happened when a server left running from the old folder name kept 6008
+ * and the real one came up on 6009, leaving every script here pointed at a dead
+ * tree. SB_PORT overrides without editing four files. */
+const SB_PORT = process.env.SB_PORT || '6008'
+
+const url = `http://localhost:${SB_PORT}/iframe.html?id=${id}&viewMode=story&args=fit:none`
 
 mkdirSync(dirname(out), { recursive: true })
 

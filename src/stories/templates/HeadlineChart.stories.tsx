@@ -3,7 +3,7 @@ import { HeadlineChart } from '../../templates/HeadlineChart'
 
 /** TEMPLATES / Headline + Chart — copy column left, chart(s) right. */
 const meta = {
-  title: 'Templates/Headline + Chart',
+  title: 'Templates/Charts/Headline + Chart',
   component: HeadlineChart,
   tags: ['autodocs'],
   parameters: {

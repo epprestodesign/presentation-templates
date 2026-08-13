@@ -10,18 +10,6 @@
   /* ------------------------------------------------------------------
    * Tier 1 — primitive ramps (documentation + Colors story only)
    * ------------------------------------------------------------------ */
-  /* orient */
-  --color-orient-50: #effaff;
-  --color-orient-100: #dff5ff;
-  --color-orient-200: #b7ecff;
-  --color-orient-300: #77ddff;
-  --color-orient-400: #2fceff;
-  --color-orient-500: #04baf3;
-  --color-orient-600: #0099d0;
-  --color-orient-700: #007aa9;
-  --color-orient-800: #01658b;
-  --color-orient-900: #075373;
-  --color-orient-950: #05354c;
   /* fountain-blue */
   --color-fountain-blue-50: #ebfffd;
   --color-fountain-blue-100: #cdfffb;
@@ -34,6 +22,54 @@
   --color-fountain-blue-800: #127078;
   --color-fountain-blue-900: #135d66;
   --color-fountain-blue-950: #063e46;
+  /* orient */
+  --color-orient-50: #f0faff;
+  --color-orient-100: #dff4ff;
+  --color-orient-200: #b9ebfe;
+  --color-orient-300: #7bdcfe;
+  --color-orient-400: #35cbfb;
+  --color-orient-500: #0ab5ed;
+  --color-orient-600: #0093ca;
+  --color-orient-700: #0075a4;
+  --color-orient-800: #05658b;
+  --color-orient-900: #0a5170;
+  --color-orient-950: #07344a;
+  /* coral */
+  --color-coral-50: #fff5f2;
+  --color-coral-100: #ffe7e0;
+  --color-coral-200: #ffd2c5;
+  --color-coral-300: #ffb29c;
+  --color-coral-400: #ff8863;
+  --color-coral-500: #fa6338;
+  --color-coral-600: #e5451a;
+  --color-coral-700: #bf3312;
+  --color-coral-800: #992c14;
+  --color-coral-900: #7d2917;
+  --color-coral-950: #441107;
+  /* amber */
+  --color-amber-50: #fffaeb;
+  --color-amber-100: #fef0c7;
+  --color-amber-200: #fedf89;
+  --color-amber-300: #fec84b;
+  --color-amber-400: #fdb022;
+  --color-amber-500: #f79009;
+  --color-amber-600: #dc6803;
+  --color-amber-700: #b54708;
+  --color-amber-800: #93370d;
+  --color-amber-900: #7a2e0e;
+  --color-amber-950: #4e1d09;
+  /* emerald */
+  --color-emerald-50: #ecfdf3;
+  --color-emerald-100: #d1fadf;
+  --color-emerald-200: #a6f4c5;
+  --color-emerald-300: #6ce9a6;
+  --color-emerald-400: #32d583;
+  --color-emerald-500: #12b76a;
+  --color-emerald-600: #039855;
+  --color-emerald-700: #027a48;
+  --color-emerald-800: #05603a;
+  --color-emerald-900: #054f31;
+  --color-emerald-950: #02291a;
   /* neutral */
   --color-neutral-0: #ffffff;
   --color-neutral-50: #fafafa;
@@ -185,11 +221,27 @@
   --slide-color-rule: #d4d4d4;
   --slide-color-rule-on-brand: rgba(255, 255, 255, 0.28);
   --slide-color-rule-on-brand-strong: rgba(255, 255, 255, 0.40);
+  --slide-color-accent-warm: #fa6338;
+  --slide-color-accent-warm-deep: #e5451a;
+  --slide-color-positive: #039855;
+  --slide-color-positive-soft: #ecfdf3;
+  --slide-color-negative: #e5451a;
+  --slide-color-negative-soft: #fff5f2;
+  --slide-color-warning: #f79009;
+  --slide-color-warning-soft: #fffaeb;
   --slide-color-series-1: #02adb3;
-  --slide-color-series-2: #007aa9;
+  --slide-color-series-2: #0075a4;
   --slide-color-series-3: #1bf5ef;
-  --slide-color-series-4: #04baf3;
+  --slide-color-series-4: #0ab5ed;
   --slide-color-series-5: #127078;
+  --slide-color-series-categorical-1: #02adb3;
+  --slide-color-series-categorical-2: #0075a4;
+  --slide-color-series-categorical-3: #fa6338;
+  --slide-color-series-categorical-4: #fdb022;
+  --slide-color-series-categorical-5: #039855;
+  --slide-color-series-categorical-6: #35cbfb;
+  --slide-color-series-categorical-7: #ffb29c;
+  --slide-color-series-categorical-8: #607d8b;
   --slide-color-axis: #d4d4d4;
   --slide-color-axis-label: #808080;
   --slide-color-gridline: #e5e5e5;
@@ -197,10 +249,10 @@
   /* ------------------------------------------------------------------
    * Brand gradients
    * ------------------------------------------------------------------ */
-  --slide-gradient-brand: linear-gradient(45deg, #01658b 0%, #02adb3 100%);
-  --slide-gradient-brand-bleed: linear-gradient(80deg, #075373 0%, #02adb3 100%);
-  --slide-gradient-brand-vertical: linear-gradient(0deg, #01658b 0%, #02adb3 100%);
-  --slide-gradient-brand-band: linear-gradient(4deg, #02adb3 0%, #01658b 100%);
+  --slide-gradient-brand: linear-gradient(45deg, #05658b 0%, #02adb3 100%);
+  --slide-gradient-brand-bleed: linear-gradient(80deg, #0a5170 0%, #02adb3 100%);
+  --slide-gradient-brand-vertical: linear-gradient(0deg, #05658b 0%, #02adb3 100%);
+  --slide-gradient-brand-band: linear-gradient(4deg, #02adb3 0%, #05658b 100%);
   --slide-gradient-brand-card-alt: linear-gradient(135deg, #02718f 0%, #01a2b1 100%);
 
   /* ------------------------------------------------------------------

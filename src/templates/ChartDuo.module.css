@@ -1,0 +1,29 @@
+.well {
+  position: absolute;
+  display: flex;
+  align-items: stretch;
+  z-index: 2;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  /* min-width:0 so a long axis label cannot push a panel past its share and
+     shove the other one off the artboard. */
+  min-width: 0;
+}
+
+.framed {
+  background: var(--slide-color-surface-muted);
+}
+
+/* A rule rather than a gap: the caption belongs to the plot above it, and on
+   two panels side by side the rules are what stop the captions reading as one
+   continuous paragraph. */
+.caption {
+  /* Wide enough to clear the x-axis tick labels, which are drawn on the very
+     last row of the plot's own box — at 14px the rule sat on top of them. */
+  margin-top: 22px;
+  padding-top: 12px;
+  border-top: 1px solid var(--slide-color-border);
+}

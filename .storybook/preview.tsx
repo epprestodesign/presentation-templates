@@ -66,34 +66,58 @@ const preview: Preview = {
           'Charts',
           ['Overview', 'Bar', 'Line', 'Pie', 'Scatter', 'Radar', 'Gauge & Sparkline'],
           'Data Grid',
-          ['Overview', 'Basics'],
+          ['Overview', 'Basics', 'Static'],
           // 3) Elements — the pieces a slide is assembled from
           'Elements',
           ['Text', 'Data', 'Media', 'Layout', 'Brand'],
-          // 4) Templates — the slide archetypes, with real rebuilt slides as
-          //    their stories
+          // 4) Templates — the slide archetypes, grouped by the JOB the slide
+          //    does rather than by what it is made of. A deck is written in
+          //    roughly this order, so the sidebar reads as the shape of a
+          //    presentation: open, argue, evidence, prove, show, close.
+          //
+          //    Deliberately NOT grouped by audience (investor / customer /
+          //    internal). Almost every template here is used by all three, so
+          //    that cut would have duplicated most of the list and forced a
+          //    guess about intent at authoring time.
           'Templates',
           [
-            'Cover',
-            'Section Divider',
-            'Statement',
-            'Headline + Image',
-            'Headline + Chart',
-            'Stat Grid',
-            'Feature Cards',
-            'Staircase Cards',
-            'Comparison',
-            'Tint Table',
-            'Financial Table',
-            'Use of Funds',
-            'Split Panel',
-            'Bullet + Image',
-            'Team',
-            'Logo Wall',
-            'Diagram',
-            'Full Bleed',
-            'Device Showcase',
+            'Openers',
+            ['Cover', 'Section Divider', 'Agenda'],
+            'Narrative',
+            [
+              'Headline + Image',
+              'Bullets + Image',
+              'Feature Cards',
+              'Staircase Cards',
+              'Pillars',
+              'Diagram',
+              'Timeline',
+              'Process',
+              'Quote',
+            ],
+            'Data',
+            [
+              'Stat Grid',
+              'Column Grid',
+              'Numbers',
+              'Comparison',
+              'Tint Table',
+              'Financial Table',
+              'Use of Funds',
+              'Data Grid',
+              'KPI Board',
+            ],
+            'Charts',
+            ['Headline + Chart', 'Chart Hero', 'Chart Duo', 'Chart Stack', 'Chart + Stats'],
+            'People & Partners',
+            ['Team Grid', 'Team Row', 'Logo Wall'],
+            'Showcase',
+            ['Full Bleed', 'Device Showcase'],
+            // Statement lives here rather than with the openers. It is the
+            // full-slide declarative sentence — used far more often to land a
+            // deck than to open one.
             'Closing',
+            ['Statement', 'Closing'],
           ],
           '*',
         ],

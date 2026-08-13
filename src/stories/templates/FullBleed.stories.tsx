@@ -3,7 +3,7 @@ import { FullBleed } from '../../templates/FullBleed'
 
 /** TEMPLATES / Full Bleed — a photograph filling the slide. */
 const meta = {
-  title: 'Templates/Full Bleed',
+  title: 'Templates/Showcase/Full Bleed',
   component: FullBleed,
   tags: ['autodocs'],
   parameters: {

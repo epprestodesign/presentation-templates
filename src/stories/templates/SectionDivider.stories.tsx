@@ -8,7 +8,7 @@ import { SectionDivider } from '../../templates/SectionDivider'
  * on: a new slide is data, not markup.
  */
 const meta = {
-  title: 'Templates/Section Divider',
+  title: 'Templates/Openers/Section Divider',
   component: SectionDivider,
   tags: ['autodocs'],
   parameters: {

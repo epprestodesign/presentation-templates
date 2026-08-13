@@ -1,0 +1,152 @@
+/* StaticGrid — presentation styling for MUI X Data Grid.
+ *
+ * Everything here targets `.MuiDataGrid-*` from inside a CSS Module, so the
+ * selectors are written as `.wrap :global(.MuiDataGrid-cell)`. Without
+ * :global(), CSS Modules would hash the MUI class names and nothing would match.
+ *
+ * The rules fall into two groups, and it is worth keeping them apart:
+ *
+ *   1. Removing interaction feedback — hover fills, focus rings, the pointer
+ *      cursor, column separators. These are what make a live grid feel live, and
+ *      every one of them is a lie on a static slide.
+ *   2. Putting the grid on the deck's type scale, since MUI ships 14px Roboto
+ *      metrics that read small beside slide copy.
+ */
+
+.wrap {
+  position: relative;
+  width: 100%;
+}
+
+/* --- 1. de-interaction ------------------------------------------------ */
+
+/* MUI paints a hover fill on every row and a focus outline on the last-clicked
+   cell. `!important` is regrettable but correct here: these come from MUI's own
+   emotion styles, which are injected AFTER module CSS and would otherwise win
+   on load order alone regardless of specificity. */
+.wrap :global(.MuiDataGrid-row:hover),
+.wrap :global(.MuiDataGrid-row.Mui-hovered) {
+  background-color: transparent !important;
+}
+
+.wrap :global(.MuiDataGrid-cell:focus),
+.wrap :global(.MuiDataGrid-cell:focus-within),
+.wrap :global(.MuiDataGrid-columnHeader:focus),
+.wrap :global(.MuiDataGrid-columnHeader:focus-within) {
+  outline: none !important;
+}
+
+/* The drag handle between headers. Nothing is resizable, so it is a control
+   that does nothing. */
+.wrap :global(.MuiDataGrid-columnSeparator) {
+  display: none !important;
+}
+
+.wrap :global(.MuiDataGrid-cell),
+.wrap :global(.MuiDataGrid-columnHeader) {
+  cursor: default;
+}
+
+/* Kills the scroller entirely. `autoHeight` already sizes the grid to its rows,
+   but the scroll container remains and can still show a 1px shadow edge. */
+.wrap :global(.MuiDataGrid-virtualScroller) {
+  overflow: visible !important;
+}
+
+/* --- 2. type and line ------------------------------------------------- */
+
+.wrap :global(.MuiDataGrid-root) {
+  font-family: var(--slide-font-family);
+  border-color: var(--slide-color-border);
+}
+
+.wrap :global(.MuiDataGrid-columnHeaderTitle) {
+  font-family: var(--slide-font-family);
+  font-weight: var(--slide-font-weight-semibold);
+  font-size: 13px;
+  letter-spacing: 0.01em;
+}
+
+.wrap :global(.MuiDataGrid-cell) {
+  font-family: var(--slide-font-family);
+  font-size: 13.5px;
+  color: var(--slide-color-text);
+  border-bottom-color: var(--slide-color-border);
+}
+
+.wrap :global(.MuiDataGrid-columnHeaders) {
+  border-bottom-color: var(--slide-color-rule);
+}
+
+/* --- variants --------------------------------------------------------- */
+
+/* Header fills need BOTH selectors and `!important`.
+ *
+ * MUI paints the header background on the `.MuiDataGrid-columnHeaders`
+ * container via a generated emotion class, and that stylesheet is injected into
+ * <head> at runtime — after this module's CSS. At equal specificity the later
+ * sheet wins, so a plain `.slide .MuiDataGrid-columnHeader { background }`
+ * loses and the header stays white. On the 'slide' variant that put white
+ * header text on a white fill: invisible, and invisible in a way that looks like
+ * missing data rather than a style bug.
+ *
+ * The container is what actually paints, but the cells sit on top of it, so
+ * both have to be set or the cell's own white fill covers the container. */
+.product :global(.MuiDataGrid-root) {
+  border-radius: var(--slide-radius-card);
+}
+
+/* 'product' — a real screen. Keeps the outer border and the light header. */
+.product :global(.MuiDataGrid-columnHeaders),
+.product :global(.MuiDataGrid-columnHeader) {
+  background: var(--slide-color-surface-muted) !important;
+}
+
+/* 'slide' — the table IS the slide. Header on brand navy, no outer border, so
+   it reads as deck furniture rather than as a screenshot pasted in. */
+.slide :global(.MuiDataGrid-root) {
+  border: none;
+}
+
+.slide :global(.MuiDataGrid-columnHeaders),
+.slide :global(.MuiDataGrid-columnHeader) {
+  background: var(--slide-color-brand-navy) !important;
+}
+
+/* The vertical hairlines between header cells. MUI draws these as a right
+   border on the cell, not as the `columnSeparator` element hidden above, so
+   they survive on the navy header as pale ticks. */
+.slide :global(.MuiDataGrid-columnHeader) {
+  border-right: none;
+}
+
+.slide :global(.MuiDataGrid-columnHeaderTitle) {
+  color: var(--slide-color-text-on-brand);
+  font-size: 14px;
+}
+
+.slide :global(.MuiDataGrid-cell) {
+  font-size: 15px;
+}
+
+.slide :global(.MuiDataGrid-columnHeaders) {
+  border-bottom: none;
+}
+
+/* --- zebra ------------------------------------------------------------- */
+
+/* :nth-child on `.MuiDataGrid-row` is safe only because virtualisation is off —
+   with it on, MUI recycles row elements and the stripes would crawl as the list
+   scrolled. StaticGrid always sets disableVirtualization, so the DOM order is
+   the data order. */
+.zebra :global(.MuiDataGrid-row:nth-child(even)) {
+  background: var(--slide-color-surface-sunken);
+}
+
+/* --- truncation note ---------------------------------------------------- */
+
+.more {
+  margin-top: 10px;
+  color: var(--slide-color-text-subtle);
+  font-style: italic;
+}

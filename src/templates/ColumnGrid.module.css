@@ -1,0 +1,103 @@
+/* Sublabel and row share one absolutely-positioned stack.
+ *
+ * The sublabel used to position itself at `top - 34`, which only worked while
+ * the row had a fixed top. The row is now bottom-anchored and content-sized, so
+ * there is no `top` to subtract from — and computing one would mean knowing the
+ * rendered height. Stacking them instead makes the sublabel sit 12px above the
+ * row whatever the row turns out to be. */
+.stack {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 2;
+}
+
+.sublabel {
+  flex: none;
+}
+
+.well {
+  display: grid;
+  /* Stretch is the default, but it is the thing that keeps every cell the same
+     height, so it is stated rather than assumed — an `align-items` added later
+     for the icon row would otherwise silently shrink-wrap the cells. */
+  align-items: stretch;
+  z-index: 2;
+}
+
+.cell {
+  /* Grid items default to min-width:auto, which lets a long unbroken figure
+     push its own track wider than its siblings. Together with the
+     minmax(0, 1fr) tracks in the template this is what guarantees equal
+     columns. */
+  min-width: 0;
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.muted {
+  background: var(--slide-color-surface-muted);
+  border-radius: var(--slide-radius-card);
+}
+
+.brand {
+  background: var(--slide-gradient-brand);
+  border-radius: var(--slide-radius-card);
+}
+
+.brandAlt {
+  background: var(--slide-gradient-brand-card-alt);
+  border-radius: var(--slide-radius-card);
+}
+
+.outline {
+  background: transparent;
+  border: 1px solid var(--slide-color-border);
+  border-radius: var(--slide-radius-card);
+}
+
+/* The ruled variant. No card, so the columns are separated by a rule across
+   each cell's top edge instead of by a fill — the quietest of the three looks,
+   for a slide where the figures should carry and the containers should not.
+   box-sizing above keeps the border inside the cell's height, so a ruled row
+   still lines up with a filled one. */
+.plain {
+  background: transparent;
+  border-top: 2px solid var(--slide-color-rule);
+}
+
+/* Pinned to the corner rather than sitting in the stack. In the stack, with the
+   default bottom alignment, the glyph and the figure end up at opposite ends of
+   a 324px card and the space between them reads as a layout gap; in the corner
+   the same space reads as a card with a mark on it, which is what the deck's
+   existing stat cards do.
+
+   Insets track the cell's padding through custom properties set by the
+   template, so the glyph stays in the corner when the density steps down — and
+   `--cg-pad-x` goes to 0 on a ruled cell, which has no horizontal padding. */
+.icon {
+  position: absolute;
+  top: var(--cg-pad-top);
+  right: var(--cg-pad-x);
+}
+
+.body {
+  /* pre-line so '\n' in a label is an explicit break. A two-word metric name
+     wrapping wherever the cell happens to end is the difference between a row
+     that looks set and one that looks reflowed. */
+  white-space: pre-line;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Sits hard under the figure — it qualifies the number rather than being the
+   next item in the stack. */
+.note {
+  margin-top: 2px;
+}

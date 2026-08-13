@@ -16,7 +16,7 @@
  * 1px === 1/96in and the emitter needs no scaling math at all — it just
  * divides by 96.
  * ============================================================= */
-import { orient, fountainBlue, neutral, blueGrey } from './palette.js'
+import { orient, fountainBlue, neutral, blueGrey, coral, amber, emerald } from './palette.js'
 
 /** The slide canvas. Do not change these without re-deriving the grid. */
 export const canvas = {
@@ -232,8 +232,50 @@ export const color = {
    *  0.28 reads as almost no border at all. */
   ruleOnBrandStrong: 'rgba(255, 255, 255, 0.40)',
 
+  /* --- Supporting colour ------------------------------------------------
+   *
+   * Built on the three complementary ramps in palette.js. These carry MEANING
+   * that the brand teal cannot: teal already means "EventPipe", so the moment a
+   * slide uses it to also mean "good" or "on plan", the two readings collide.
+   *
+   * Warm accent. The one value that stays legible ON the brand gradient — accent
+   * teal against brandBleed is nearly invisible, which previously left bold as
+   * the only way to stress a word on a divider or cover. */
+  accentWarm: coral[500],
+  accentWarmDeep: coral[600],
+
+  /* Direction, for B/(W) variance columns, deltas and trend arrows.
+   *
+   * `negative` is coral rather than a true red on purpose: a red that reads as
+   * "error" is too loud for a plan variance, and it clashes with the teal in a
+   * way coral does not — coral is fountain-blue's complement, so it sits
+   * opposite the brand rather than fighting it. */
+  positive: emerald[600],
+  positiveSoft: emerald[50],
+  negative: coral[600],
+  negativeSoft: coral[50],
+  warning: amber[500],
+  warningSoft: amber[50],
+
   /* Chart series, in application order. */
   series: [fountainBlue[600], orient[700], fountainBlue[400], orient[500], fountainBlue[800]],
+  /** Categorical series, for a chart whose slices are unrelated CATEGORIES
+   *  rather than steps of one quantity — a product-mix pie, a stacked bar of
+   *  event types. `series` above is five teals and blues, which is right for an
+   *  ordered series but collapses into one blur across six pie slices at slide
+   *  scale. This alternates brand and supporting hues so adjacent slices always
+   *  differ in hue, not just lightness. Still brand-led: the first two entries
+   *  are the logo's own colours. */
+  seriesCategorical: [
+    fountainBlue[600],
+    orient[700],
+    coral[500],
+    amber[400],
+    emerald[600],
+    orient[400],
+    coral[300],
+    blueGrey[500],
+  ],
   axis: neutral[300],
   axisLabel: neutral[500],
   gridline: neutral[200],

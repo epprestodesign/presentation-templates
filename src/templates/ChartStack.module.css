@@ -1,0 +1,12 @@
+.well {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.footnote {
+  position: absolute;
+  bottom: var(--slide-grid-margin-bottom);
+  z-index: 2;
+}

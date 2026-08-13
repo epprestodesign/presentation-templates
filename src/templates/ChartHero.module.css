@@ -1,0 +1,14 @@
+/* The plot well. Absolute, like every content well in the system — the
+   artboard is a fixed coordinate space, not a flow. */
+.well {
+  position: absolute;
+  z-index: 2;
+}
+
+/* Sits on the floor of the slide rather than under the plot, so the chart's
+   height does not change when a source line is added. */
+.footnote {
+  position: absolute;
+  bottom: var(--slide-grid-margin-bottom);
+  z-index: 2;
+}

@@ -40,10 +40,32 @@
 /* The section-opener arrow. Positioned against the slide's right margin, not
    against the headline — the headline's width is a copy measure, so an arrow
    inside it would move with the text rather than sit at the slide edge. */
+/* The section-opener mark, in a ringed plate.
+ *
+ * A bare 300-weight glyph was effectively invisible here. Every one of these
+ * slides is a photograph — busy, mid-tone, and different in every story — so a
+ * hairline stroke in white had nothing reliable to sit against and disappeared
+ * into whatever was behind it. The ring gives it a constant edge, and the wash
+ * inside gives the stroke a constant ground, so the mark reads the same on the
+ * dark laptop shot and the pale airport one without tuning per slide.
+ *
+ * backdrop-filter rather than a flat fill: a solid disc would punch a grey hole
+ * in the photograph, while a blur keeps the picture reading through it. It does
+ * rasterise correctly in headless Chromium, which is what the exports use. */
 .arrow {
   position: absolute;
   right: var(--slide-grid-margin-x);
   z-index: 3;
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  /* Pull up by half the plate so the ring centres on the title's cap line
+     rather than hanging below it — `top` positions the box, not the glyph. */
+  margin-top: -14px;
+  border-radius: var(--slide-radius-pill);
+  border: 2px solid var(--slide-color-rule-on-brand-strong);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
 }

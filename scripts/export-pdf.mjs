@@ -3,7 +3,7 @@
  *   pnpm export:pdf                → export-out/eventpipe-deck.pdf
  *   pnpm export:pdf tint-table     → only ids containing "tint-table"
  *
- * Needs Storybook running on :6008.
+ * Needs Storybook running on :6008 (or set SB_PORT).
  *
  * Page size is 13.333in x 7.5in — the artboard's own dimensions, so a slide
  * fills the page exactly with no margin and no scaling. That is the same
@@ -19,7 +19,14 @@ import { chromium } from 'playwright'
 import { mkdirSync, writeFileSync } from 'node:fs'
 
 const OUT = 'export-out/eventpipe-deck.pdf'
-const SB = 'http://localhost:6008'
+/* Storybook's port. package.json pins `-p 6008`, but Storybook silently falls
+ * through to the next free port if something already holds it — which is exactly
+ * what happened when a server left running from the old folder name kept 6008
+ * and the real one came up on 6009, leaving every script here pointed at a dead
+ * tree. SB_PORT overrides without editing four files. */
+const SB_PORT = process.env.SB_PORT || '6008'
+
+const SB = `http://localhost:${SB_PORT}`
 
 const filter = process.argv.slice(2).filter((a) => !a.startsWith('--'))
 

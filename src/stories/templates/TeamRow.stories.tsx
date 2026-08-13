@@ -8,7 +8,7 @@ import { TeamRow } from '../../templates/TeamRow'
  * slide is data, not markup.
  */
 const meta = {
-  title: 'Templates/Team Row',
+  title: 'Templates/People & Partners/Team Row',
   component: TeamRow,
   tags: ['autodocs'],
   parameters: {

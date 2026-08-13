@@ -103,6 +103,68 @@ export function Swatch({
   )
 }
 
+/** A whole ramp as one continuous strip.
+ *
+ *  Distinct from `Grid` + `Swatch`, which the Palette page uses to give each
+ *  step its own tile: at 11 steps that fills a screen, which is right when the
+ *  ramps ARE the subject and wrong on the Colors page, where they are context
+ *  for the semantic tokens below them. A strip also shows the thing a grid of
+ *  separated tiles hides — whether the ramp steps evenly.
+ *
+ *  Step labels flip to dark text on the pale end. The threshold is luminance,
+ *  not step number, because the ramps do not all cross mid-grey at the same
+ *  step — fountain-blue is still bright at 500 where orient has gone deep. */
+export function Ramp({
+  name,
+  steps,
+  note,
+}: {
+  name: string
+  steps: Record<string | number, string>
+  note?: ReactNode
+}) {
+  const entries = Object.entries(steps)
+  return (
+    <div style={{ marginBottom: 22 }}>
+      <div style={{ font: `600 12.5px/1.4 ${sans}`, marginBottom: 6 }}>{name}</div>
+      <div style={{ display: 'flex', borderRadius: 8, overflow: 'hidden', border: '1px solid #d4d4d4' }}>
+        {entries.map(([step, hex]) => (
+          <div
+            key={step}
+            title={`${name}-${step} · ${hex}`}
+            style={{
+              flex: 1,
+              height: 58,
+              background: hex,
+              display: 'flex',
+              alignItems: 'flex-end',
+              justifyContent: 'center',
+              paddingBottom: 5,
+              font: `600 10px/1 ${sans}`,
+              color: luminance(hex) > 0.62 ? 'rgba(0,0,0,0.62)' : 'rgba(255,255,255,0.92)',
+            }}
+          >
+            {step}
+          </div>
+        ))}
+      </div>
+      {note && (
+        <div style={{ font: `400 11.5px/1.5 ${sans}`, color: '#546e7a', marginTop: 6, maxWidth: '72ch' }}>
+          {note}
+        </div>
+      )}
+    </div>
+  )
+}
+
+/** Relative luminance of a #rrggbb string, 0..1. Used only to pick a readable
+ *  label colour on top of a swatch. */
+function luminance(hex: string) {
+  const h = hex.replace('#', '')
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16) / 255)
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b
+}
+
 /** Monospaced token value. */
 export function Code({ children }: { children: ReactNode }) {
   return (

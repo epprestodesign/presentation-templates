@@ -8,7 +8,7 @@ import { BulletImage } from '../../templates/BulletImage'
  * on: a new slide is data, not markup.
  */
 const meta = {
-  title: 'Templates/Bullets + Image',
+  title: 'Templates/Narrative/Bullets + Image',
   component: BulletImage,
   tags: ['autodocs'],
   parameters: {

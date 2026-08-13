@@ -3,7 +3,7 @@ import { Closing } from '../../templates/Closing'
 
 /** TEMPLATES / Closing — the thank-you and contact slide. */
 const meta = {
-  title: 'Templates/Closing',
+  title: 'Templates/Closing/Closing',
   component: Closing,
   tags: ['autodocs'],
   parameters: {

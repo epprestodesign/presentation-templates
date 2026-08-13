@@ -3,7 +3,7 @@ import { DeviceShowcase } from '../../templates/DeviceShowcase'
 
 /** TEMPLATES / Device Showcase — a product shot in a device mockup. */
 const meta = {
-  title: 'Templates/Device Showcase',
+  title: 'Templates/Showcase/Device Showcase',
   component: DeviceShowcase,
   tags: ['autodocs'],
   parameters: {

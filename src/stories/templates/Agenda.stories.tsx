@@ -3,7 +3,7 @@ import { Agenda } from '../../templates/Agenda'
 
 /** TEMPLATES / Agenda — numbered running order on the brand background. */
 const meta = {
-  title: 'Templates/Agenda',
+  title: 'Templates/Openers/Agenda',
   component: Agenda,
   tags: ['autodocs'],
   parameters: {

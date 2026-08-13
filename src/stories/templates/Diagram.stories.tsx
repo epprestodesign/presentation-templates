@@ -6,7 +6,7 @@ import { Diagram } from '../../templates/Diagram'
  * Stories are the real rebuilt slides: a content object handed to the template.
  */
 const meta = {
-  title: 'Templates/Diagram',
+  title: 'Templates/Narrative/Diagram',
   component: Diagram,
   tags: ['autodocs'],
   parameters: {
@@ -112,12 +112,21 @@ export const EcosystemFlow: Story = {
   },
 }
 
-/** Four steps rather than three, to show the row re-flowing.
+/** The chain carried all the way to the person who books a room.
  *
- *  Cards share the width left after the fixed arrow columns are taken out, so a
- *  fourth step narrows every card rather than pushing the last one past the
- *  watermark gutter. */
-export const FlowFourSteps: Story = {
+ *  Three steps, like `EcosystemFlow`, but ending at the traveller rather than at
+ *  the operator — the two stories are a pair, showing the same flow to its two
+ *  useful endpoints.
+ *
+ *  This was a four-step version until the fourth card was dropped. Four fit
+ *  geometrically — cards share the width left after the fixed arrow columns, so
+ *  a fourth narrows every card rather than pushing the last past the watermark
+ *  gutter — but narrowing them wraps 'Event / Tournament Operators' and
+ *  'Teams & Attendees' onto three lines each, and a row of three-line labels
+ *  under 150px icons reads as dense rather than as a sequence. Three is the
+ *  practical ceiling for this variant at slide scale. */
+export const FlowToAttendees: Story = {
+  name: 'Flow – to attendees',
   args: {
     ...EcosystemFlow.args,
     nodes: [
@@ -127,7 +136,6 @@ export const FlowFourSteps: Story = {
         icon: 'corporate_fare',
         caption: 'Powered by EventPipe software',
       },
-      { label: 'Event Operators', icon: 'stadium', caption: 'Serviced by Housing Companies' },
       { label: 'Teams & Attendees', icon: 'family_restroom', caption: 'Book on branded sites' },
     ],
   },

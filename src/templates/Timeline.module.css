@@ -1,0 +1,198 @@
+/* No `font:` declaration anywhere in this file. Dates, titles and descriptions
+   all receive ds-text-* classes, and module CSS is injected after the globals —
+   a shorthand here would win at equal specificity and silently collapse every
+   milestone title to body size. */
+
+.well {
+  position: absolute;
+  z-index: 2;
+}
+
+/* ---------------------------------------------------------------------------
+ * The rule
+ *
+ * One element spanning the whole well, under the markers, with the teal fill as
+ * its only child. Both orientations share the fill; only the axis differs.
+ * ------------------------------------------------------------------------- */
+
+.rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  border-radius: var(--slide-radius-pill);
+  background: var(--slide-color-border);
+}
+
+.railV {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 0;
+  border-radius: var(--slide-radius-pill);
+  background: var(--slide-color-border);
+}
+
+/* The travelled part of the line. Gradient rather than flat accent so a long
+   roadmap's completed stretch reads as the same brand surface the cards use. */
+.railFill {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--slide-radius-pill);
+  background: var(--slide-gradient-brand);
+}
+
+/* ---------------------------------------------------------------------------
+ * Markers
+ * ------------------------------------------------------------------------- */
+
+.marker {
+  flex: none;
+  box-sizing: border-box;
+  border-radius: var(--slide-radius-pill);
+  /* A white ring so the dot reads as sitting ON the rule rather than being
+     crossed by it. */
+  outline: 3px solid var(--slide-color-surface);
+}
+
+.markerDone {
+  background: var(--slide-color-accent);
+}
+
+/* The one dot that is allowed to be louder than the others: it is the answer to
+   "where are we". The halo is drawn with box-shadow so it costs no layout and
+   cannot push the marker off the line. */
+.markerCurrent {
+  background: var(--slide-color-accent-deep);
+  box-shadow: 0 0 0 6px var(--slide-color-accent-soft);
+}
+
+.markerUpcoming {
+  background: var(--slide-color-surface);
+  border: 2px solid var(--slide-color-rule);
+}
+
+/* ---------------------------------------------------------------------------
+ * Horizontal
+ * ------------------------------------------------------------------------- */
+
+.columns {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+}
+
+/* flex: 1 with min-width: 0 is what makes six milestones and three milestones
+   both come out as equal columns; nothing here sizes itself to its content. */
+.column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Fixed-height slots. Their heights are set inline from the same numbers that
+   compute where the rule is drawn, so the markers land on the line whatever the
+   date or the icon does. */
+.iconSlot,
+.dateSlot,
+.markerSlot {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Dates hang from the bottom of their band so a wrapped date grows upward,
+   away from the rule, instead of pushing the marker down. */
+.dateSlot {
+  align-items: flex-end;
+}
+
+.date {
+  white-space: nowrap;
+}
+
+/* "Today". A pill rather than more colour, because the current marker is
+   already carrying the colour and two teals at different values read as an
+   accident. */
+.badge {
+  flex: none;
+  padding: 2px 8px;
+  border-radius: var(--slide-radius-pill);
+  background: var(--slide-color-accent-deep);
+  color: var(--slide-color-text-on-brand);
+  white-space: nowrap;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  /* The copy takes the slack under the marker, so columns stay equal height
+     however many lines a description runs to. */
+  flex: 1;
+  min-height: 0;
+  /* Keeps a description clear of the next column's marker without narrowing one
+     column more than another. */
+  padding-right: 20px;
+}
+
+.title,
+.description {
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * Vertical
+ * ------------------------------------------------------------------------- */
+
+.rows {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.row {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+/* The date is right-aligned against the rule, which is what makes a column of
+   ragged-length dates read as one edge. */
+.rowDate {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.rowMarker {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rowIcon {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Glyph and title on one line, so a vertical row spends its height on copy. */
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}

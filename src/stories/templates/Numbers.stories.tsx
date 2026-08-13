@@ -3,7 +3,7 @@ import { Numbers } from '../../templates/Numbers'
 
 /** TEMPLATES / Numbers — growth rates left, absolute figures right. */
 const meta = {
-  title: 'Templates/Numbers',
+  title: 'Templates/Data/Numbers',
   component: Numbers,
   tags: ['autodocs'],
   parameters: {

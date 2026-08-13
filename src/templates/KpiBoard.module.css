@@ -1,0 +1,132 @@
+.board {
+  position: absolute;
+  display: flex;
+  z-index: 2;
+}
+
+/* Fixed width, and the secondary grid takes whatever is left — the large cell
+   is the one thing on this slide whose size is a decision rather than a
+   consequence. */
+.primary {
+  flex: none;
+  min-width: 0;
+  display: flex;
+}
+
+.secondary {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  align-items: stretch;
+}
+
+.tile {
+  /* min-width:0 alongside the minmax(0, 1fr) tracks in the template: grid items
+     default to min-width:auto, which lets one long figure widen its own track
+     and leaves the row visibly unequal. */
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.muted {
+  background: var(--slide-color-surface-muted);
+  border-radius: var(--slide-radius-card);
+}
+
+.brand {
+  background: var(--slide-gradient-brand);
+  border-radius: var(--slide-radius-card);
+}
+
+.brandAlt {
+  background: var(--slide-gradient-brand-card-alt);
+  border-radius: var(--slide-radius-card);
+}
+
+.plain {
+  background: transparent;
+  border-top: 2px solid var(--slide-color-rule);
+}
+
+.outline {
+  background: transparent;
+  border: 1px solid var(--slide-color-border);
+  border-radius: var(--slide-radius-card);
+}
+
+/* Label left, glyph right. The glyph slot is part of this row rather than
+   absolutely positioned, so a tile without one keeps the same label width and
+   the same first-line height as its neighbours. */
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  white-space: pre-line;
+  min-width: 0;
+}
+
+.icon {
+  flex: none;
+}
+
+/* margin-top:auto rather than a spacer element — every tile keeps the same
+   child count, so nothing can make one tile taller than the rest. */
+.figure {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.deltaRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px 3px 7px;
+  border-radius: var(--slide-radius-pill);
+  white-space: nowrap;
+}
+
+.positive {
+  color: var(--slide-color-positive);
+  background: var(--slide-color-positive-soft);
+}
+
+.negative {
+  color: var(--slide-color-negative);
+  background: var(--slide-color-negative-soft);
+}
+
+.neutral {
+  color: var(--slide-color-text-muted);
+  background: var(--slide-color-surface-sunken);
+}
+
+/* Last, so it overrides the three fills above at equal specificity.
+   The soft tints are near-white washes that disappear on the gradient, and
+   putting emerald or coral straight onto teal loses the one distinction the
+   chip exists to make. So on brand the chip takes a solid white plate and keeps
+   its semantic ink. */
+.onBrandChip {
+  background: var(--slide-color-surface);
+}
+
+.footnote {
+  position: absolute;
+  z-index: 2;
+}

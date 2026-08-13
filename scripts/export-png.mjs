@@ -3,7 +3,7 @@
  *   pnpm export:png                    → export-out/png/<story-id>.png
  *   pnpm export:png stat-grid          → only ids containing "stat-grid"
  *
- * Needs Storybook running on :6008.
+ * Needs Storybook running on :6008 (or set SB_PORT).
  *
  * This is the third renderer of the same slide specs — alongside the React view
  * and the PPTX emitter. It exists for the cases the other two cannot serve: a
@@ -17,7 +17,14 @@ import { chromium } from 'playwright'
 import { mkdirSync } from 'node:fs'
 
 const OUT = 'export-out/png'
-const SB = 'http://localhost:6008'
+/* Storybook's port. package.json pins `-p 6008`, but Storybook silently falls
+ * through to the next free port if something already holds it — which is exactly
+ * what happened when a server left running from the old folder name kept 6008
+ * and the real one came up on 6009, leaving every script here pointed at a dead
+ * tree. SB_PORT overrides without editing four files. */
+const SB_PORT = process.env.SB_PORT || '6008'
+
+const SB = `http://localhost:${SB_PORT}`
 const SCALE = 2
 
 const filter = process.argv.slice(2).filter((a) => !a.startsWith('--'))

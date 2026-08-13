@@ -1,0 +1,143 @@
+/* No `font:` declaration in this file. Numbers, titles and descriptions all
+   carry ds-text-* classes, and module CSS lands after the globals — a shorthand
+   here would win at equal specificity and flatten the whole scale. */
+
+.well {
+  position: absolute;
+  z-index: 2;
+}
+
+/* ---------------------------------------------------------------------------
+ * row
+ * ------------------------------------------------------------------------- */
+
+.row {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+/* Each item is [connector][card], so the cards share whatever is left after the
+   fixed connector columns and stay equal however many steps there are. */
+.item {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  /* Explicit rather than inherited: every card fills the well's full height, so
+     a one-line title and a two-line title still produce cards of equal height. */
+  align-items: stretch;
+}
+
+.connector {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Number at one end, glyph at the other. Both slots are always present, so the
+   title below them always starts at the same height. */
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* ---------------------------------------------------------------------------
+ * list
+ * ------------------------------------------------------------------------- */
+
+.list {
+  display: grid;
+  width: 100%;
+  height: 100%;
+}
+
+.cell {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  min-width: 0;
+}
+
+.cellCopy {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Shared parts
+ * ------------------------------------------------------------------------- */
+
+.surfaceMuted {
+  background: var(--slide-color-surface-muted);
+  border-radius: var(--slide-radius-panel);
+}
+
+.surfacePlain {
+  background: transparent;
+}
+
+.surfaceOutline {
+  background: transparent;
+  border: 1px solid var(--slide-color-border);
+  border-radius: var(--slide-radius-panel);
+}
+
+/* The chip's figure is centred optically rather than by line box: the numerals
+   are tabular and the disc is small, so `line-height: 1` plus centring is what
+   stops '01' sitting low in it. */
+.chip {
+  flex: none;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: var(--slide-radius-pill);
+  background: var(--slide-color-accent-deep);
+  color: var(--slide-color-text-on-brand);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The quiet alternative: the figure IS the graphic, so it takes the deep teal
+   rather than the flat accent — a 44px number in `accent` vibrates against
+   white, which is the reason `accentDeep` exists. */
+.ghost {
+  display: block;
+  color: var(--slide-color-accent-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.iconSlot {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  margin: 0;
+}
+
+/* The description takes the slack, which keeps every card the same height and
+   the copy top-aligned rather than floating in the middle of the card. */
+.body {
+  margin: 0;
+  flex: 1;
+  min-height: 0;
+}

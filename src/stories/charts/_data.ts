@@ -54,8 +54,21 @@ export const operationalScores = {
 /** A short run for sparklines. */
 export const trend = [12, 15, 14, 18, 22, 21, 27, 31, 30, 36]
 
-/** Formats thousands the way the deck's axes do. */
-export const thousands = (v: number | null) =>
-  v === null ? '' : v >= 1000 ? `${Math.round(v / 1000)}K` : String(v)
+/** Formats thousands the way the deck's axes do.
+ *
+ *  Keeps the half-step. This used to round — `Math.round(v / 1000)` — which is
+ *  fine until an axis lands a gridline on 1500: that printed "2K", and so did
+ *  2000, so a chart showed the SAME label on two different gridlines. It looked
+ *  like a duplicated tick rather than a formatting bug, which is why it survived
+ *  as long as it did.
+ *
+ *  Zero is '0', not '0K'. */
+export const thousands = (v: number | null) => {
+  if (v === null) return ''
+  if (v === 0) return '0'
+  if (Math.abs(v) < 1000) return String(v)
+  const k = v / 1000
+  return `${Number.isInteger(k) ? k : k.toFixed(1)}K`
+}
 
 export const usd = (v: number | null) => (v === null ? '' : `$${v.toLocaleString()}`)
