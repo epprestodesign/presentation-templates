@@ -15,3 +15,31 @@ export-out/
 
 # Local Netlify folder
 .netlify
+
+# ---------------------------------------------------------------------------
+# ORIGINAL CONTENT — deliberately not published.
+#
+# This repo is the slide SYSTEM: tokens, elements, templates, scripts and docs.
+# The source material is not, because it is EventPipe's own:
+#
+#   references/        the real decks, including the Series A deck with its
+#                      actual revenue, EBITA, retention and capital-plan figures
+#   src/assets/        photography of identifiable employees, the company photo,
+#                      customer and partner marks, and the recovered slide art
+#
+# Both were purged from git history, not merely untracked — they had been
+# committed since the first commit, so removing them going forward would have
+# left them retrievable from any earlier commit.
+#
+# CONSEQUENCE: a fresh clone has no images, so `img()` will throw on every name
+# and Storybook's Templates will not render. That is intended. To restore a
+# working checkout, drop `references/` back in and run `pnpm crop:images`
+# followed by `pnpm imagery:fetch` — both are reproducible from the manifests
+# in scripts/, which is exactly why they are scripts rather than manual copies.
+#
+# The .ts files under src/assets are code, not content, and stay tracked.
+# ---------------------------------------------------------------------------
+references/
+src/assets/**
+!src/assets/**/
+!src/assets/**/*.ts
