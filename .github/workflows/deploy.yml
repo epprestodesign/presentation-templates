@@ -1,0 +1,73 @@
+# Publishes Storybook to GitHub Pages on every push to main.
+#
+# Pages serves a project site from a SUBPATH — /presentation-templates/ — not
+# from the domain root. Storybook's built assets are referenced absolutely, so
+# without a matching base the deployed page requests /assets/... , gets the
+# 404 page, and renders a blank white screen with no error anyone can see. That
+# is what STORYBOOK_BASE_PATH below exists to prevent; it is read in
+# .storybook/main.ts.
+#
+# Replaces the Netlify config that used to live here. One deploy path, so there
+# is no question about which one is authoritative.
+name: Deploy Storybook
+
+on:
+  push:
+    branches: [main]
+  # So a broken deploy can be re-run without an empty commit.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a queued run supersede an older one, but never cancel a deploy midway.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Tokens are generated ahead of the build. src/styles/theme.css IS
+      # committed, so this is belt-and-braces — but it means a token edit
+      # someone forgot to regenerate still ships correctly rather than
+      # deploying stale CSS.
+      - run: pnpm build:tokens
+
+      - name: Build Storybook
+        env:
+          STORYBOOK_DISABLE_TELEMETRY: '1'
+          # The repo name IS the Pages subpath for a project site.
+          STORYBOOK_BASE_PATH: /${{ github.event.repository.name }}/
+        run: pnpm build-storybook
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: storybook-static
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

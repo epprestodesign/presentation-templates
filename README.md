@@ -6,6 +6,11 @@ documented in Storybook, and exportable to **editable Google Slides**.
 Built with **React 19 · TypeScript · MUI X Charts · Storybook 10 · Vite ·
 Poppins · Material Symbols**.
 
+**📖 [Browse the design system →](https://epprestodesign.github.io/presentation-templates/)**
+
+Published to GitHub Pages from `main` on every push — see
+[.github/workflows/deploy.yml](.github/workflows/deploy.yml).
+
 ```bash
 pnpm install
 pnpm storybook      # → http://localhost:6008

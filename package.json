@@ -15,6 +15,7 @@
     "export:pdf": "node scripts/export-pdf.mjs",
     "build:tokens": "node scripts/build-tokens.mjs",
     "crop:images": "node scripts/crop-images.mjs",
+    "imagery:manifest": "node scripts/build-imagery-manifest.mjs",
     "imagery:fetch": "node scripts/fetch-unsplash.mjs",
     "imagery:fetch:all": "bash scripts/fetch-unsplash-all.sh",
     "imagery:check": "node scripts/check-imagery.mjs"

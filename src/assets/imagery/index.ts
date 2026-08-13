@@ -18,6 +18,8 @@
  * one carried a hand-written name→filename alias table on top. One registry
  * deletes all of that, and means a slide spec never has to know which folder an
  * asset happens to live in. */
+import { IMAGERY_HOST, REMOTE_IMAGERY } from './manifest'
+
 const modules = {
   ...import.meta.glob<string>('./**/*.{png,jpg,jpeg,svg}', {
     eager: true,
@@ -42,16 +44,41 @@ export const imagery: Record<string, string> = Object.fromEntries(
   ])
 )
 
-/** Resolve an imagery name to a URL, failing loudly if it is not there. */
+/** Resolve an imagery name to a URL.
+ *
+ *  Local files WIN. On a developer's machine and in the export scripts the
+ *  photos are on disk, so they resolve to a bundled asset — which keeps the
+ *  PNG/PPTX/PDF exports working offline and byte-identical, the property the
+ *  whole download-rather-than-hotlink decision was made to protect.
+ *
+ *  The remote host is the fallback for the DEPLOYED build only. Imagery is
+ *  gitignored — original decks, staff headshots and third-party marks must not
+ *  be republished — so a Pages build globs nothing and would otherwise throw on
+ *  every photographic slide. Anything in the manifest is served from the public
+ *  image host instead.
+ *
+ *  A name that is in neither still throws with the full list, which is what
+ *  catches a typo at authoring time. */
 export function img(name: string): string {
-  const url = imagery[name]
-  if (!url) {
-    throw new Error(
-      `Unknown image "${name}". Available:\n  ${Object.keys(imagery).sort().join('\n  ')}`
-    )
-  }
-  return url
+  const local = imagery[name]
+  if (local) return local
+
+  const remote = REMOTE_IMAGERY[name]
+  if (remote) return `${IMAGERY_HOST}/${remote}`
+
+  throw new Error(
+    `Unknown image "${name}". Available locally:\n  ${Object.keys(imagery).sort().join('\n  ')}`
+  )
 }
 
-/** All names, for the Imagery foundation story. */
-export const imageryNames = Object.keys(imagery).sort()
+/** True when this asset can only come from the remote host — used by the
+ *  Imagery foundation page to say so rather than showing a silent gap. */
+export function isRemote(name: string): boolean {
+  return !imagery[name] && Boolean(REMOTE_IMAGERY[name])
+}
+
+/** All names, for the Imagery foundation story. Union of what is on disk and
+ *  what the host carries, so the page lists the same set in dev and deployed. */
+export const imageryNames = [
+  ...new Set([...Object.keys(imagery), ...Object.keys(REMOTE_IMAGERY)]),
+].sort()
