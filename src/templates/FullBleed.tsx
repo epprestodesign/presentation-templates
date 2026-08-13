@@ -66,6 +66,14 @@ export interface FullBleedProps extends SlideChromeSpec {
   /** Drawn height of that mark, in slide px. Defaults to the cap height of the
    *  headline beside it, so the two read as one line of the same voice. */
   arrowSize?: number
+  /** Distance from the RIGHT edge of the slide to the right edge of the mark.
+   *
+   *  64, not the 40 the copy margin uses. The arrow is artwork sitting on a
+   *  photograph, not text in a column, so lining it up with the headline's own
+   *  margin pushed it visually harder into the corner than the type ever
+   *  looks — and on the framed slides it left only 20px between the mark and
+   *  the gradient edge. */
+  arrowRight?: number
 }
 
 export function FullBleed({
@@ -83,6 +91,7 @@ export function FullBleed({
   titleBottom = 78,
   arrow = false,
   arrowSize,
+  arrowRight = 64,
   ...chrome
 }: FullBleedProps) {
   /* Cap height of the headline, which is what the arrow is sized and aligned to.
@@ -141,7 +150,7 @@ export function FullBleed({
         // arrow inside it would track the text, not the slide.
         <div
           className={styles.arrow}
-          style={{ bottom: titleBottom, height: titleCap }}
+          style={{ bottom: titleBottom, right: arrowRight, height: titleCap }}
         >
           <ArrowGlyph size={arrowSize ?? titleCap} />
         </div>
