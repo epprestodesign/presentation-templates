@@ -9,7 +9,7 @@
     "build-storybook": "storybook build -o storybook-static",
     "dev:deck": "vite --config vite.deck.config.js --port 6009",
     "build:deck": "vite build --config vite.deck.config.js",
-    "export:pptx": "node scripts/export-pptx.mjs",
+    "export:pptx": "tsx scripts/export-pptx.mjs",
     "export:png": "node scripts/export-png.mjs",
     "export:pdf": "node scripts/export-pdf.mjs",
     "build:tokens": "node scripts/build-tokens.mjs",
@@ -38,6 +38,7 @@
     "playwright": "^1.49.0",
     "pptxgenjs": "^4.0.1",
     "storybook": "^10.4.6",
+    "tsx": "^4.23.12",
     "typescript": "^5.9.3",
     "vite": "^8.2.1"
   }
