@@ -51,8 +51,14 @@ export interface FullBleedProps extends SlideChromeSpec {
    *  1188), so 1080 leaves a comfortable gap before the mark. */
   titleWidth?: number
   lead?: RichText
-  /** Where the headline sits vertically. */
-  titleTop?: number
+  /** Where the headline sits vertically, measured from the BOTTOM of the slide
+   *  to the bottom of the headline's line box.
+   *
+   *  Anchored from below rather than above for two reasons. A headline this low
+   *  that wraps to a second line would otherwise grow downward off the artboard;
+   *  and 'how far up from the bottom' is the thing being judged by eye here, so
+   *  it is the number worth exposing. */
+  titleBottom?: number
   /** A down arrow at the right of the title row — the deck's own mark for a
    *  section opener, meaning "the section starts here". Off by default, since
    *  a full-bleed slide is not always a divider. */
@@ -74,7 +80,7 @@ export function FullBleed({
   titleSize = 'displayLg',
   titleWidth = 1080,
   lead,
-  titleTop = 512,
+  titleBottom = 78,
   arrow = false,
   arrowSize,
   ...chrome
@@ -86,7 +92,22 @@ export function FullBleed({
    * font size matters: an em-tall arrow beside a 85px headline overshoots the
    * letters by a fifth and reads as a separate, larger object rather than as
    * punctuation on the same line. */
-  const titleCap = Math.round((typeScale.scale[titleSize]?.size ?? 64) * 0.781)
+  const titleSizePx = typeScale.scale[titleSize]?.size ?? 64
+  const titleCap = Math.round(titleSizePx * 0.781)
+
+  /* The arrow takes the SAME bottom offset as the heading, which lands it
+     exactly on the text baseline.
+     
+     That is not a coincidence worth relying on blindly, so: the heading is a
+     flex column whose box ends at the last line's baseline, with the descent
+     and half-leading overflowing below it. Anchoring both to the same `bottom`
+     therefore puts the arrow's foot on the baseline and, since the arrow is
+     drawn to the cap height, its head on the cap line.
+     
+     Verified with a zero-width baseline probe: baseline 656, arrow 590 to 656,
+     cap top 656 - 66. The previous version aligned the arrow to the box TOP,
+     which sat it 22px above the cap — close enough to look deliberate, wrong
+     enough that the arrow and the letters never shared a line. */
 
   return (
     <SlideFrame
@@ -118,7 +139,10 @@ export function FullBleed({
         // Sits on the title's own line at the right margin rather than inside
         // SlideHeading, because the heading's width is the copy measure — an
         // arrow inside it would track the text, not the slide.
-        <div className={styles.arrow} style={{ top: titleTop, height: titleCap }}>
+        <div
+          className={styles.arrow}
+          style={{ bottom: titleBottom, height: titleCap }}
+        >
           <ArrowGlyph size={arrowSize ?? titleCap} />
         </div>
       )}
@@ -129,7 +153,7 @@ export function FullBleed({
           size={titleSize}
           lead={lead}
           width={titleWidth}
-          top={titleTop}
+          bottom={titleBottom}
           onDark
         />
       )}

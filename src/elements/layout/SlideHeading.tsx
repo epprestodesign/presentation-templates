@@ -34,6 +34,13 @@ export interface SlideHeadingProps {
   width?: number
   /** Vertical start. Defaults to the deck's standard headline anchor. */
   top?: number
+  /** Anchor by the BOTTOM edge instead, growing upward.
+   *
+   *  Wins over `top` when both are given. Use it wherever the headline sits low
+   *  on the slide: anchored from above, a title that wraps to a second line
+   *  grows DOWNWARD and runs off the artboard, and it does so only for the one
+   *  string that happens to be long — so it survives review and breaks later. */
+  bottom?: number
   left?: number
   /** Gap between headline and lead. */
   gap?: number
@@ -50,12 +57,16 @@ export function SlideHeading({
   size = 'h1',
   width = 720,
   top = grid.titleY,
+  bottom,
   left = grid.marginX,
   gap = 18,
   onDark = false,
 }: SlideHeadingProps) {
   return (
-    <div className={styles.heading} style={{ left, top, width, gap }}>
+    <div
+      className={styles.heading}
+      style={{ left, width, gap, ...(bottom === undefined ? { top } : { bottom }) }}
+    >
       {/* The title needs `onDark` as much as the lead does. It previously did
           not get it, and because the shared ds-text-* rule sets `color` to the
           on-light ink, a display title on the brand plate rendered BLACK on
