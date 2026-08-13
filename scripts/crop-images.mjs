@@ -23,6 +23,19 @@ const run = promisify(execFile)
 const REF = 'references/slide-decks'
 const OUT = 'src/assets/imagery'
 
+/* Output is JPEG, not PNG.
+ *
+ * Every crop here is a PHOTOGRAPH with no transparency, and PNG stores those
+ * losslessly — the six full-bleed plates alone came to ~20MB as PNG versus
+ * ~2MB as quality-80 JPEG, on images that are downscaled before they ever reach
+ * a slide. Assets that genuinely need an alpha channel (team headshots, device
+ * mockups, logos) live in other directories and stay PNG.
+ *
+ * `img()` resolves by name without an extension, so this is invisible to callers.
+ */
+const FORMAT = 'jpeg'
+const QUALITY = 'best'
+
 /** [sourceFile, [x, y, w, h] in 2x px, outputName] */
 const CROPS = [
   /* --- Slide 01, "system of record" mosaic ------------------------------ */
@@ -105,17 +118,19 @@ let ok = 0
 let failed = 0
 
 for (const [src, [x, y, w, h], name] of CROPS) {
-  const out = resolve(`${OUT}/${name}.png`)
+  const out = resolve(`${OUT}/${name}.jpg`)
   mkdirSync(dirname(out), { recursive: true })
   try {
     // sips takes the offset as (y x) and the size as (height width).
     await run('sips', [
       '--cropOffset', String(y), String(x),
       '--cropToHeightWidth', String(h), String(w),
+      '-s', 'format', FORMAT,
+      '-s', 'formatOptions', QUALITY,
       resolve(`${REF}/${src}`),
       '--out', out,
     ])
-    console.log(`  ✓ ${name}.png  ${w}x${h}  ← ${src}`)
+    console.log(`  ✓ ${name}.jpg  ${w}x${h}  ← ${src}`)
     ok++
   } catch (err) {
     console.error(`  ✗ ${name}  ← ${src}: ${err.message.split('\n')[0]}`)
