@@ -5,6 +5,16 @@
   z-index: 2;
 }
 
+/* Shares the well's own grid so a group label lines up with the tiles it
+   names, rather than being positioned independently and drifting. */
+.groups {
+  white-space: pre-line;
+  position: absolute;
+  display: grid;
+  align-items: end;
+  z-index: 2;
+}
+
 .well {
   position: absolute;
   display: grid;

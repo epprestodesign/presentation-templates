@@ -114,6 +114,20 @@ const CROPS = [
   ['EP TEam-1.png', [0, 0, 2560, 1440], 'full-bleed/travel-airport-silhouettes'],
 ]
 
+/* Whole files that are converted rather than cropped.
+ *
+ * These arrived already masked, so there is no rect to take. They used to be
+ * copied by hand, which is exactly why they vanished: a cleanup pass removed
+ * the PNGs and nothing regenerated them, breaking the Cover template. Anything
+ * the build depends on belongs in this script.
+ *
+ * [sourceFile relative to REF, outputName] */
+const COPIES = [
+  ['images/Mask group.png', 'cover-search-travel'],
+  ['images/Mask group-1.png', 'cover-crowd'],
+  ['images/Mask group-2.png', 'cover-travel-apps'],
+]
+
 let ok = 0
 let failed = 0
 
@@ -138,5 +152,23 @@ for (const [src, [x, y, w, h], name] of CROPS) {
   }
 }
 
-console.log(`\n${ok} cropped, ${failed} failed → ${OUT}/`)
+for (const [src, name] of COPIES) {
+  const out = resolve(`${OUT}/${name}.jpg`)
+  mkdirSync(dirname(out), { recursive: true })
+  try {
+    await run('sips', [
+      '-s', 'format', FORMAT,
+      '-s', 'formatOptions', QUALITY,
+      resolve(`${REF}/${src}`),
+      '--out', out,
+    ])
+    console.log(`  ✓ ${name}.jpg  (converted)  ← ${src}`)
+    ok++
+  } catch (err) {
+    console.error(`  ✗ ${name}  ← ${src}: ${err.message.split('\n')[0]}`)
+    failed++
+  }
+}
+
+console.log(`\n${ok} written, ${failed} failed → ${OUT}/`)
 if (failed) process.exitCode = 1

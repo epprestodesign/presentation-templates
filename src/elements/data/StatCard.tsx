@@ -1,5 +1,5 @@
 import { radius } from '../../tokens/tokens.js'
-import type { StatSpec, TypeStep } from '../../types'
+import type { StatSpec } from '../../types'
 import { Icon } from '../brand/Icon'
 import { typeClass } from '../../lib/typeClass'
 import styles from './StatCard.module.css'
@@ -18,10 +18,6 @@ import styles from './StatCard.module.css'
  */
 export interface StatCardProps extends StatSpec {
   padding?: number
-  /** Type step for the label. Defaults to h4. Exposed so a slide whose figure
-   *  and label sit at an unusual ratio can fold back into StatCard instead of
-   *  hand-setting two lines of type in its template. */
-  labelSize?: TypeStep
 }
 
 export function StatCard({
@@ -35,6 +31,8 @@ export function StatCard({
   align = 'bottom',
   padding = 28,
   labelSize = 'h4',
+  iconBadge = false,
+  note,
 }: StatCardProps) {
   const onBrand = surface === 'brand' || surface === 'brandAlt'
 
@@ -48,15 +46,29 @@ export function StatCard({
         justifyContent: align === 'bottom' ? 'flex-end' : 'flex-start',
       }}
     >
-      {icon && (
-        <Icon
-          name={icon}
-          size={42}
-          weight={300}
-          className={styles.icon}
-          color={onBrand ? 'var(--slide-color-text-on-brand)' : 'var(--slide-color-accent)'}
-        />
-      )}
+      {icon &&
+        (iconBadge ? (
+          <span
+            className={`${styles.icon} ${styles.badge}`}
+            style={{ background: onBrand ? 'var(--slide-color-text-on-brand)' : 'var(--slide-color-accent-deep)' }}
+          >
+            <Icon
+              name={icon}
+              size={26}
+              weight={500}
+              filled
+              color={onBrand ? 'var(--slide-color-accent-deep)' : 'var(--slide-color-surface)'}
+            />
+          </span>
+        ) : (
+          <Icon
+            name={icon}
+            size={42}
+            weight={300}
+            className={styles.icon}
+            color={onBrand ? 'var(--slide-color-text-on-brand)' : 'var(--slide-color-accent)'}
+          />
+        ))}
 
       <div className={[styles.body, order === 'value-first' ? styles.reversed : ''].filter(Boolean).join(' ')}>
         {label && (
@@ -67,6 +79,11 @@ export function StatCard({
         {value && (
           <div className={[typeClass(valueSize), onBrand ? 'ds-text-on-brand' : 'ds-text-accent-deep'].join(' ')}>
             {value}
+          </div>
+        )}
+        {note && (
+          <div className={[styles.note, 'ds-text-caption', onBrand ? 'ds-text-on-brand-subtle' : 'ds-text-accent-deep'].join(' ')}>
+            {note}
           </div>
         )}
         {description && (

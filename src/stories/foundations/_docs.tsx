@@ -90,7 +90,10 @@ export function Swatch({
           height,
           borderRadius: 8,
           background: value,
-          border: '1px solid rgba(0,0,0,0.08)',
+          /* A definite light-grey edge rather than an 8% hint. On a white page
+             the pale end of a ramp — #ffffff, #fafafa, #f5f5f5 — otherwise has
+             no visible boundary and reads as empty space. */
+          border: '1px solid #d4d4d4',
         }}
       />
       <div style={{ font: `600 12px/1.3 ${sans}` }}>{label}</div>

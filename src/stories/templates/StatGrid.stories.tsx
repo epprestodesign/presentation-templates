@@ -143,6 +143,35 @@ export const RevenueDurability: Story = {
   },
 }
 
+/** Slide 12 — 2024 highlights. Two labelled column groups: completed results on
+ *  the muted fill with a check badge, pipeline targets on the gradient with the
+ *  arrow. The badge is carrying meaning here rather than decoration — done
+ *  versus forecast — which is why it is a StatCard prop and not a story-level
+ *  flourish. */
+export const HighlightsAndResults: Story = {
+  args: {
+    eyebrow: 'Company Performance',
+    watermark: true,
+    title: ['2024 Highlights & Results accounted for\n', { text: '$2.1m in revenue', accent: true, underline: true }],
+    titleWidth: 1100,
+    groups: [
+      { label: 'Q3 2024\nResults', span: 2 },
+      { label: 'Sales\nPipeline', span: 2 },
+    ],
+    columns: 4,
+    inset: 16,
+    wellWidth: 1184,
+    top: 360,
+    height: 322,
+    cards: [
+      { label: 'Active\nCustomers', value: '27', icon: 'check', iconBadge: true },
+      { label: 'Onboarding\n7 new Customers', value: '$377k', note: 'est ARR', icon: 'check', iconBadge: true },
+      { label: 'Q4\nPipeline', value: '$1.0M', icon: 'arrow_outward', surface: 'brand' },
+      { label: 'Q4\nNew Bookings Target', value: '250k', icon: 'arrow_outward', surface: 'brand' },
+    ],
+  },
+}
+
 /** An empty grid, for picking the template up as a starting point. */
 export const Blank: Story = {
   args: {

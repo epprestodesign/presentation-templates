@@ -23,7 +23,26 @@
   right: var(--stat-card-padding);
 }
 
+.badge {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--slide-radius-pill);
+  display: grid;
+  place-items: center;
+}
+
+/* Sits hard under the figure — it qualifies the number, so the default 6px
+   body gap would read as a separate line of copy. */
+.note {
+  margin-top: -2px;
+}
+
 .body {
+  /* pre-line so a "\n" in the label is an explicit break — the reference sets
+     "Active / Customers" on two lines, which natural wrapping at the tile width
+     does not reproduce. AccentText gets this for free; a plain string in a div
+     does not. */
+  white-space: pre-line;
   display: flex;
   flex-direction: column;
   gap: 6px;

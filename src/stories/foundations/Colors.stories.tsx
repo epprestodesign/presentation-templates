@@ -7,6 +7,10 @@ const meta = {
   title: 'Foundations/Colors',
   tags: ['autodocs'],
   parameters: {
+    // Explicit, not inherited. Storybook's `backgrounds` global persists across
+    // navigation, and the Templates stories set it to the grey review stage —
+    // so without this a docs page keeps whatever the last slide chose.
+    backgrounds: { value: 'white' },
     docs: {
       description: {
         component: `
@@ -102,6 +106,7 @@ export const Gradients: Story = {
                 style={{
                   height: 116,
                   borderRadius: 10,
+                  border: '1px solid #d4d4d4',
                   background: `linear-gradient(${g.angle}deg, ${g.from} 0%, ${g.to} 100%)`,
                 }}
               />
@@ -125,7 +130,7 @@ export const TableTint: Story = {
         title="Tinted table ramp"
         intro="Sampled row-by-row off the four integration slides. Deliberately NOT the orient ramp — every step reads brighter, and fitting the samples shows it is not one cyan at descending opacity either. Rows apply top-to-bottom in order, chosen by row index rather than by row data, so reordering rows keeps the ramp intact."
       >
-        <div style={{ borderRadius: 10, overflow: 'hidden', border: '1px solid rgba(0,0,0,0.08)' }}>
+        <div style={{ borderRadius: 10, overflow: 'hidden', border: '1px solid #d4d4d4' }}>
           <div
             style={{
               background: tableTint.header,

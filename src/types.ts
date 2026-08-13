@@ -174,7 +174,16 @@ export interface StatSpec {
   order?: 'label-first' | 'value-first'
   /** Material Symbols glyph pinned to the tile's top-right corner. */
   icon?: string
+  /** Render that glyph inside a filled circle. The highlights slide marks
+   *  completed results with a badge and pending ones with a bare arrow, so this
+   *  carries meaning — done versus forecast — rather than decorating. */
+  iconBadge?: boolean
+  /** Small caption under the value, e.g. 'est ARR'. Belongs with the figure
+   *  rather than in `description`, because it qualifies the number. */
+  note?: string
   valueSize?: TypeStep
+  /** Type step for the label, when a slide's figure/label ratio is unusual. */
+  labelSize?: TypeStep
   align?: 'top' | 'bottom'
 }
 

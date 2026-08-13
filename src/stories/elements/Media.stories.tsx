@@ -8,6 +8,10 @@ const meta = {
   title: 'Elements/Media',
   tags: ['autodocs'],
   parameters: {
+    // Explicit, not inherited. Storybook's `backgrounds` global persists across
+    // navigation, and the Templates stories set it to the grey review stage —
+    // so without this a docs page keeps whatever the last slide chose.
+    backgrounds: { value: 'white' },
     docs: {
       description: {
         component: `

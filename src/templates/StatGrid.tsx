@@ -29,6 +29,14 @@ export interface StatGridProps extends SlideChromeSpec {
   sublabelWidth?: number
   /** The traction slide sets this to h2 so the label wraps to two lines. */
   sublabelSize?: TypeStep
+  /** Labels sitting above GROUPS of tiles, each spanning `span` columns —
+   *  "Q3 2024 Results" over two tiles, "Sales Pipeline" over the next two.
+   *  A group label is not the same thing as `sublabel`: it names a subset of
+   *  the row, so it has to align to that subset's columns rather than to the
+   *  page margin. Spans use the same grid as the tiles, so they stay aligned
+   *  when the column count changes. */
+  groups?: { label: string; span: number }[]
+  groupsSize?: TypeStep
 
   cards?: StatSpec[]
   columns?: number
@@ -57,6 +65,8 @@ export function StatGrid({
   sublabel,
   sublabelWidth = 300,
   sublabelSize = 'h3',
+  groups,
+  groupsSize = 'h3',
   cards = [],
   columns = 3,
   top = 360,
@@ -89,6 +99,24 @@ export function StatGrid({
           style={{ width: sublabelWidth }}
         >
           {sublabel}
+        </div>
+      )}
+
+      {groups && groups.length > 0 && (
+        <div
+          className={styles.groups}
+          style={{
+            ...wellStyle,
+            height: undefined,
+            top: top - 76,
+            gridTemplateColumns: groups.map((g) => `${g.span}fr`).join(' '),
+          }}
+        >
+          {groups.map((group, i) => (
+            <div key={i} className={typeClass(groupsSize)}>
+              {group.label}
+            </div>
+          ))}
         </div>
       )}
 
