@@ -42,21 +42,24 @@ it renders, which is what you want while a round is still being negotiated.
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** Slide 17 — the raise, with the reference's placeholder tokens intact. */
+/** Slide 17 — the raise, with the reference's placeholder tokens intact.
+ *
+ *  FIGURES ARE SYNTHETIC. The layout is the real one; the numbers are not,
+ *  because story data doubles as this template's public specimen. */
 export const TheRaise: Story = {
   args: {
     eyebrow: 'Growth Thesis – EventPipe Pay',
     pageNumber: 17,
-    title: '$10M to clear the development hurdle and keep compounding.',
+    title: '$8.7M to clear the development hurdle and keep compounding.',
     lead: 'This is not survival capital. The base plan reaches profitability on its own. The raise funds the build that unlocks the next revenue layers.',
     tiers: [
-      { amount: '$5.0M', title: 'Product and infrastructure', description: 'Payments, APIs, AI workflows' },
+      { amount: '$4.5M', title: 'Product and infrastructure', description: 'Payments, APIs, AI workflows' },
       {
-        amount: '$3.5M',
+        amount: '$3.0M',
         title: 'Bridge Funding',
         description: 'Development capital, not runway. Name the specific build or launch spend this covers.',
       },
-      { amount: '$1.5M', title: 'Working capital', description: 'Operating runway and virtual-card processing float' },
+      { amount: '$1.2M', title: 'Working capital', description: 'Operating runway and virtual-card processing float' },
     ],
     sections: [
       {
@@ -90,19 +93,19 @@ export const Filled: Story = {
       {
         label: 'What this round is designed to prove',
         rows: [
-          { label: 'Payments adoption', value: '38% of bookings' },
+          { label: 'Payments adoption', value: '41% of bookings' },
           { label: 'Distribution launch', value: '3 ticketing partners' },
-          { label: 'Target revenue', value: '$8.4M' },
-          { label: 'Customers at plan end', value: '64' },
-          { label: 'Runway', value: '24 months' },
+          { label: 'Target revenue', value: '$9.7M' },
+          { label: 'Customers at plan end', value: '71' },
+          { label: 'Runway', value: '26 months' },
         ],
       },
       {
         label: 'Round structure',
         rows: [
           { label: 'Instrument', value: 'Priced equity' },
-          { label: 'Valuation / range', value: '$55–65M pre' },
-          { label: 'Committed / soft-circled', value: '$4.2M' },
+          { label: 'Valuation / range', value: '$48–58M pre' },
+          { label: 'Committed / soft-circled', value: '$3.6M' },
           { label: 'Lead status', value: 'In diligence' },
         ],
       },

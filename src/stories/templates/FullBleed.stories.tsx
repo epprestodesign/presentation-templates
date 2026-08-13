@@ -60,7 +60,12 @@ type Story = StoryObj<typeof meta>
 export const DashboardReview: Story = {
   args: {
     image: 'full-bleed/demo-dashboard-review',
-    alt: 'Two colleagues reviewing a dashboard on a laptop',
+    alt: 'Two people reviewing an analytics dashboard on a laptop',
+    title: 'Platform Walkthrough',
+    arrow: true,
+    scrim: 0.34,
+    titleSize: 'display',
+    titleTop: 470,
     watermark: false,
   },
 }
@@ -69,7 +74,12 @@ export const DashboardReview: Story = {
 export const GrowthHologram: Story = {
   args: {
     image: 'full-bleed/demo-growth-hologram',
-    alt: 'A hand holding a floating bar-chart hologram showing percentage growth',
+    alt: 'A hand holding a floating bar-chart hologram',
+    title: 'Growth & Performance',
+    arrow: true,
+    scrim: 0.34,
+    titleSize: 'display',
+    titleTop: 470,
     watermark: false,
   },
 }
@@ -78,7 +88,12 @@ export const GrowthHologram: Story = {
 export const ServerRacks: Story = {
   args: {
     image: 'full-bleed/demo-datacenter',
-    alt: 'Rows of blue-lit server racks',
+    alt: 'Blue-lit server racks in a datacenter',
+    title: 'Infrastructure at Scale',
+    arrow: true,
+    scrim: 0.34,
+    titleSize: 'display',
+    titleTop: 470,
     watermark: false,
   },
 }
@@ -87,7 +102,12 @@ export const ServerRacks: Story = {
 export const HexInterface: Story = {
   args: {
     image: 'full-bleed/demo-platform-hex-ui',
-    alt: 'A hand touching a hex-tiled interface of icons',
+    alt: 'A hand touching a hex-tiled interface',
+    title: 'Product & Integrations',
+    arrow: true,
+    scrim: 0.34,
+    titleSize: 'display',
+    titleTop: 470,
     watermark: false,
   },
 }
@@ -96,7 +116,12 @@ export const HexInterface: Story = {
 export const CodeInGlasses: Story = {
   args: {
     image: 'full-bleed/demo-code-glasses',
-    alt: 'Code reflected in a pair of glasses',
+    alt: 'Glasses reflecting lines of code',
+    title: 'PipeSights Demo',
+    arrow: true,
+    scrim: 0.34,
+    titleSize: 'display',
+    titleTop: 470,
     watermark: false,
   },
 }
@@ -105,7 +130,12 @@ export const CodeInGlasses: Story = {
 export const AirportFamily: Story = {
   args: {
     image: 'full-bleed/travel-airport-silhouettes',
-    alt: 'A family walking through an airport terminal at sunset',
+    alt: 'Silhouetted family travelling through an airport',
+    title: 'Closing Remarks',
+    arrow: true,
+    scrim: 0.34,
+    titleSize: 'display',
+    titleTop: 470,
     watermark: false,
   },
 }
@@ -141,6 +171,7 @@ export const OurTeamAndCompany: Story = {
     frame: true,
     scrim: 0.4,
     title: 'Our Team & Company',
+    arrow: true,
     titleSize: 'display',
     titleWidth: 820,
     titleTop: 470,

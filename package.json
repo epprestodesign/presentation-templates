@@ -15,7 +15,8 @@
     "build:tokens": "node scripts/build-tokens.mjs",
     "crop:images": "node scripts/crop-images.mjs",
     "imagery:fetch": "node scripts/fetch-unsplash.mjs",
-    "imagery:fetch:all": "bash scripts/fetch-unsplash-all.sh"
+    "imagery:fetch:all": "bash scripts/fetch-unsplash-all.sh",
+    "imagery:check": "node scripts/check-imagery.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

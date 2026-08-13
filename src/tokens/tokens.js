@@ -67,6 +67,15 @@ export const grid = {
 
 /** Type scale. Poppins throughout — 400/500/600/700 plus italics.
  *  `size` and `lineHeight` are px in the 1280x720 space. */
+/* Headings are 600, not 700.
+ *
+ * Poppins Bold at slide scale reads heavier than the reference face did — the
+ * letterforms are geometric and the counters close up, so a 40px headline came
+ * out denser than intended. Semibold keeps the authority without the density.
+ *
+ * `weights.bold` remains 700: it is the name of the heaviest available cut,
+ * which the {bold: '...'} run style uses to emphasise INSIDE a heading. If that
+ * were also 600 there would be no step left to emphasise with. */
 export const type = {
   fontFamily: "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
   weights: { regular: 400, medium: 500, semibold: 600, bold: 700 },
@@ -75,21 +84,21 @@ export const type = {
      *  Sized by measurement, not by feel: the statement slide's cap height is
      *  66px, and `display` at 64 measures a 50px cap, giving cap/size = 0.781
      *  for Poppins Bold. 66 / 0.781 = 85. */
-    displayLg: { size: 85, lineHeight: 1.04, weight: 700, tracking: '-0.025em' },
+    displayLg: { size: 85, lineHeight: 1.04, weight: 600, tracking: '-0.025em' },
     /** Covers and section statements. */
-    display:   { size: 64, lineHeight: 1.06, weight: 700, tracking: '-0.02em' },
+    display:   { size: 64, lineHeight: 1.06, weight: 600, tracking: '-0.02em' },
     /** The standard slide headline. Set by matching cap height to the
      *  reference deck (32px cap), not line width — Poppins runs wider per em
      *  than the face the originals used, so a width match would have left
      *  the letters visibly short. Long headlines therefore wrap one word
      *  earlier here than in the originals. */
-    h1:        { size: 40, lineHeight: 1.14, weight: 700, tracking: '-0.015em' },
-    h2:        { size: 32, lineHeight: 1.18, weight: 700, tracking: '-0.015em' },
+    h1:        { size: 40, lineHeight: 1.14, weight: 600, tracking: '-0.015em' },
+    h2:        { size: 32, lineHeight: 1.18, weight: 600, tracking: '-0.015em' },
     /** 24/600 — column headings and contact roles. Between h2 and h3 in size,
      *  and at a weight neither carries. */
     subhead:   { size: 24, lineHeight: 1.3,  weight: 600, tracking: '-0.01em' },
     /** Card and panel titles. */
-    h3:        { size: 22, lineHeight: 1.25, weight: 700, tracking: '-0.01em' },
+    h3:        { size: 22, lineHeight: 1.25, weight: 600, tracking: '-0.01em' },
     h4:        { size: 18, lineHeight: 1.3,  weight: 600, tracking: '-0.01em' },
     /** The subhead that sits under a headline. */
     lead:      { size: 17, lineHeight: 1.5,  weight: 400, tracking: '0' },
@@ -103,9 +112,9 @@ export const type = {
     bodySm:    { size: 13, lineHeight: 1.5,  weight: 400, tracking: '0' },
     caption:   { size: 11, lineHeight: 1.4,  weight: 500, tracking: '0' },
     /** Top-left section label. Uppercase + tracked. */
-    eyebrow:   { size: 12, lineHeight: 1,    weight: 700, tracking: '0.14em' },
+    eyebrow:   { size: 12, lineHeight: 1,    weight: 600, tracking: '0.14em' },
     /** Top-right page number. */
-    pageNumber:{ size: 12, lineHeight: 1,    weight: 700, tracking: '0.06em' },
+    pageNumber:{ size: 12, lineHeight: 1,    weight: 600, tracking: '0.06em' },
     /** Mid-weight figures — the by-the-numbers card stats and the arrow-row
      *  percentages both measure ~36px, and the scale previously jumped 32 → 40,
      *  so either choice was ~11% out. */

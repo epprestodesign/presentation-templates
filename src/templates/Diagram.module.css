@@ -99,6 +99,10 @@
   display: flex;
   flex: 1;
   min-width: 0;
+  /* Explicit rather than relying on the default: every card fills the well's
+     full height, so a one-line title and a two-line title still produce cards
+     of identical height. */
+  align-items: stretch;
 }
 
 .arrow {

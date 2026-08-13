@@ -66,7 +66,7 @@ export const SystemOfRecord: Story = {
         text: [
           { accent: 'The rails that book the rooms, move the money, and power the next generation of live-event travel, with ' },
           {
-            text: '$400M+ in lifetime bookings and $260M in annual booking volume.',
+            text: '$1.2B+ in lifetime bookings and $820M in annual booking volume.',
             accent: true,
             underline: true,
           },
@@ -102,9 +102,9 @@ export const TotalAddressableMarket: Story = {
       {
         text: [
           'In 2025, youth sports generated an estimated ',
-          { bold: '$186 billion in total economic impact' },
+          { bold: '$291.8 billion in total economic impact' },
           ' and more than ',
-          { bold: '124.3 million hotel room nights' },
+          { bold: '131.6 million hotel room nights' },
           '.',
         ],
         size: 'lead',
@@ -113,7 +113,7 @@ export const TotalAddressableMarket: Story = {
       {
         text: [
           'EventPipe already represents approximately ',
-          { bold: '1.8% of those room nights' },
+          { bold: '2.1% of those room nights' },
           ', giving the company a proven foothold in a large, repeatable market with significant room to grow.',
         ],
         size: 'lead',

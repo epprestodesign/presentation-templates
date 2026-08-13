@@ -1,6 +1,7 @@
 import type { RichText, SlideChromeSpec, TypeStep } from '../types'
 import { SlideFrame } from '../elements/layout/SlideFrame'
 import { SlideHeading } from '../elements/layout/SlideHeading'
+import { Icon } from '../elements/brand/Icon'
 import { img } from '../assets/imagery'
 import styles from './FullBleed.module.css'
 
@@ -44,6 +45,12 @@ export interface FullBleedProps extends SlideChromeSpec {
   lead?: RichText
   /** Where the headline sits vertically. */
   titleTop?: number
+  /** A down arrow at the right of the title row — the deck's own mark for a
+   *  section opener, meaning "the section starts here". Off by default, since
+   *  a full-bleed slide is not always a divider. */
+  arrow?: boolean
+  /** Material Symbols glyph for that mark. */
+  arrowIcon?: string
 }
 
 export function FullBleed({
@@ -59,6 +66,8 @@ export function FullBleed({
   titleWidth = 760,
   lead,
   titleTop = 420,
+  arrow = false,
+  arrowIcon = 'arrow_downward',
   ...chrome
 }: FullBleedProps) {
   return (
@@ -86,6 +95,15 @@ export function FullBleed({
       </div>
 
       {scrim > 0 && <div className={styles.scrim} style={{ opacity: scrim }} />}
+
+      {arrow && title && (
+        // Sits on the title's own line at the right margin rather than inside
+        // SlideHeading, because the heading's width is the copy measure — an
+        // arrow inside it would track the text, not the slide.
+        <div className={styles.arrow} style={{ top: titleTop }}>
+          <Icon name={arrowIcon} size={44} weight={300} color="var(--slide-color-text-on-brand)" />
+        </div>
+      )}
 
       {(title || lead) && (
         <SlideHeading

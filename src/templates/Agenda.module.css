@@ -18,7 +18,12 @@
 
 .row {
   display: flex;
-  align-items: baseline;
+  /* Centred against the copy block, not baseline-aligned.
+     Baseline put the numeral's baseline on the heading's, which — at 58px
+     against a 22px heading — threw the numeral's mass well above the two-line
+     block it belongs to, so it read as belonging to the row above. Centring
+     lines each numeral up with its own item. */
+  align-items: center;
   gap: 8px;
 }
 

@@ -89,7 +89,7 @@ export const BookingsAndRevenue: Story = {
     // percentage — declared once here rather than eight times below.
     columnFormats: [null, null, null, null, null, null, null, 'percent'],
     summaryRows: [
-      { label: 'Bookings', format: 'number', cells: [971, 432, 288, 432, 288, 1440, 469, 48] },
+      { label: 'Bookings', format: 'number', cells: [884, 432, 288, 432, 288, 1440, 469, 48] },
       { label: 'Total Revenue', format: 'currency', cells: [2088, 357, 445, 692, 2513, 4009, 1921, 92] },
     ],
     rows: [

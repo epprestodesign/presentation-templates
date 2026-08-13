@@ -232,13 +232,22 @@ export function Diagram({
           <div className={styles.flow}>
             {nodes.map((node, i) => (
               <div key={i} className={styles.flowItem}>
-                {/* Arrow first so it sits in the gap BEFORE its card — the gap
-                    after the last card would hang off the well's right edge. */}
-                {i > 0 && (
-                  <div className={styles.arrow} style={{ width: well.gap }}>
-                    <Icon name={arrow} size={arrowSize} weight={200} />
-                  </div>
-                )}
+                {/* The arrow sits in the gap BEFORE its card — a gap after the
+                    last card would hang off the well's right edge.
+
+                    The slot is ALWAYS rendered, and only its glyph is hidden on
+                    the first item. Skipping the element entirely made the first
+                    card wider than the rest by exactly the arrow column, because
+                    each flowItem is flex:1 and splits its width between arrow
+                    and card — so an item with no arrow gave all of it to the
+                    card. Reserving the slot is what makes the cards equal. */}
+                <div
+                  className={styles.arrow}
+                  style={{ width: well.gap, visibility: i === 0 ? 'hidden' : undefined }}
+                  aria-hidden={i === 0}
+                >
+                  <Icon name={arrow} size={arrowSize} weight={200} />
+                </div>
                 <div
                   className={styles.card}
                   style={{ padding: pad(well.padding), borderRadius: radius.panel }}

@@ -28,7 +28,7 @@ export function Section({
 }) {
   return (
     <section style={{ marginBottom: 44 }}>
-      <h3 style={{ font: `700 16px/1.3 ${sans}`, margin: '0 0 6px', color: '#000' }}>{title}</h3>
+      <h3 style={{ font: `600 16px/1.3 ${sans}`, margin: '0 0 6px', color: '#000' }}>{title}</h3>
       {intro && (
         <p
           style={{

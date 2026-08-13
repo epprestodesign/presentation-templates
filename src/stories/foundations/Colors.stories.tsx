@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { color, gradient, tableTint } from '../../tokens/tokens.js'
+import { color, gradient } from '../../tokens/tokens.js'
 import { Code, Grid, Page, Section, Swatch } from './_docs'
 
 /** FOUNDATIONS / Colors — the brand ramps and the semantic layer built on them. */
@@ -87,14 +87,7 @@ export const Semantic: Story = {
           <Swatch label="axis" value={color.axis as string} />
         </Grid>
       </Section>
-    </Page>
-  ),
-}
 
-/** Gradients, and why they matter to export. */
-export const Gradients: Story = {
-  render: () => (
-    <Page>
       <Section
         title="Brand gradients"
         intro="All four run deep blue → bright teal; only the angle changes. PptxGenJS has no gradient fill, so the exporter rasterises these to a background image layer and keeps the text above them live and editable."
@@ -122,43 +115,4 @@ export const Gradients: Story = {
   ),
 }
 
-/** The measured table ramp. */
-export const TableTint: Story = {
-  render: () => (
-    <Page>
-      <Section
-        title="Tinted table ramp"
-        intro="Sampled row-by-row off the four integration slides. Deliberately NOT the orient ramp — every step reads brighter, and fitting the samples shows it is not one cyan at descending opacity either. Rows apply top-to-bottom in order, chosen by row index rather than by row data, so reordering rows keeps the ramp intact."
-      >
-        <div style={{ borderRadius: 10, overflow: 'hidden', border: '1px solid #d4d4d4' }}>
-          <div
-            style={{
-              background: tableTint.header,
-              color: tableTint.headerText,
-              font: '700 13px/1 Poppins, sans-serif',
-              padding: '16px 20px',
-            }}
-          >
-            header
-          </div>
-          {tableTint.rows.map((hex, i) => (
-            <div
-              key={hex}
-              style={{
-                background: hex,
-                padding: '16px 20px',
-                font: '500 13px/1 Poppins, sans-serif',
-                display: 'flex',
-                justifyContent: 'space-between',
-                gap: 16,
-              }}
-            >
-              <span>row-{i + 1}</span>
-              <Code>{hex}</Code>
-            </div>
-          ))}
-        </div>
-      </Section>
-    </Page>
-  ),
-}
+

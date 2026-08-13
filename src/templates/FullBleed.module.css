@@ -36,3 +36,14 @@
   background: #000;
   z-index: 1;
 }
+
+/* The section-opener arrow. Positioned against the slide's right margin, not
+   against the headline — the headline's width is a copy measure, so an arrow
+   inside it would move with the text rather than sit at the slide edge. */
+.arrow {
+  position: absolute;
+  right: var(--slide-grid-margin-x);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+}

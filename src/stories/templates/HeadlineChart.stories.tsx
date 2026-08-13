@@ -43,7 +43,11 @@ type Story = StoryObj<typeof meta>
 const thousands = (v: number) => (v >= 1000 ? `${Math.round(v / 1000)}K` : String(v))
 
 /** Slide 08 — Core business. Single gradient bar series with value labels,
- *  plus the $5.2M → $8.4M pair under the paragraph. */
+ *  plus a before → after pair under the paragraph.
+ *
+ *  FIGURES ARE SYNTHETIC. The layout is the real one; the numbers are not.
+ *  Story data doubles as the public specimen for this template, so it carries
+ *  a plausible growth curve rather than the actual book of business. */
 export const CoreBusiness: Story = {
   args: {
     eyebrow: 'Core Business',
@@ -53,8 +57,8 @@ export const CoreBusiness: Story = {
     body: 'Reservation fees create a durable base. Transactional products add revenue per booking as customers adopt more of the platform. Payments and distribution layer on top of base plan for accelerated growth.',
     delta: {
       label: 'Base Plan Revenue',
-      from: { value: '$5.2M', caption: '2026' },
-      to: { value: '$8.4M', caption: '2027' },
+      from: { value: '$5.4M', caption: '2026' },
+      to: { value: '$9.7M', caption: '2027' },
     },
     chartLeft: 620,
     chartTop: 150,
@@ -67,17 +71,21 @@ export const CoreBusiness: Story = {
         unit: 'USD $000s',
         fill: 'brandVertical',
         valueLabels: true,
-        yMax: 8000,
+        yMax: 11000,
         format: thousands,
         categories: ['2023', '2024A', '2025', '2026E', '2027E'],
-        series: [{ name: 'Revenue', data: [940, 1610, 2750, 4480, 7300] }],
+        series: [{ name: 'Revenue', data: [960, 1740, 2980, 5390, 9740] }],
       },
     ],
   },
 }
 
 /** Slide 16 — Company performance. Two charts side by side: a stacked revenue
- *  bar, and an EBITA line carrying the floating margin callout. */
+ *  bar, and an EBITA line carrying the floating margin callout.
+ *
+ *  FIGURES ARE SYNTHETIC, as above. The stack still sums to the bar chart's
+ *  totals and EBITA still crosses zero in the fourth year, because a specimen
+ *  whose numbers do not hang together is a worse specimen. */
 export const CompanyPerformance: Story = {
   args: {
     eyebrow: 'Company Performance',
@@ -93,12 +101,12 @@ export const CompanyPerformance: Story = {
         kind: 'stackedBar',
         title: 'Revenue',
         subtitle: 'Figures in thousands (USD $000s)',
-        yMax: 8000,
+        yMax: 11000,
         format: thousands,
         categories: ['2023A', '2024A', '2025A', '2026E', '2027E'],
         series: [
-          { name: 'Reservation Fees', data: [780, 1050, 2600, 3300, 6280] },
-          { name: 'Transaction Revenue', data: [480, 780, 1000, 2600, 4180] },
+          { name: 'Reservation Fees', data: [640, 1120, 1980, 3150, 6040] },
+          { name: 'Transaction Revenue', data: [320, 620, 1000, 2240, 3700] },
         ],
       },
       {
@@ -110,7 +118,7 @@ export const CompanyPerformance: Story = {
         yMax: 40,
         format: (v) => `${v}`,
         categories: ['2024', '2025', '2026', '2027', '2028'],
-        series: [{ name: 'EBITA margin', data: [-120, -120, -60, -19, 18.2] }],
+        series: [{ name: 'EBITA margin', data: [-104, -111, -52, -13, 15.6] }],
         callout: { value: '15.6%', label: '2027 EBITA Margin' },
       },
     ],

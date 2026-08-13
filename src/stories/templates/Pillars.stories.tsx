@@ -47,7 +47,7 @@ type Story = StoryObj<typeof meta>
 export const PartnershipStrategy: Story = {
   args: {
     eyebrow: 'Partnership Strategy',
-    title: [{ accent: 'Over $1 billion in total bookings' }, ', with $260M annually and growing'],
+    title: [{ accent: 'Over $1 billion in total bookings' }, ', with $820M annually and growing'],
     banner: { label: 'Powering seamless hotel booking at scale', icon: 'chevron_right' },
     columns: [
       {

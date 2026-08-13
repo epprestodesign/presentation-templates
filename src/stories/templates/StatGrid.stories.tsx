@@ -49,10 +49,13 @@ type Story = StoryObj<typeof meta>
  *  margin the rest of the deck holds, and stops at 1200 — exactly clear of the
  *  85px watermark gutter.
  *
- *  The fourth tile is the same content as the third on the brand gradient. That
- *  is faithful to the original, which repeats "Annual Events / 4.8K" there —
- *  evidently a placeholder demonstrating the reversed fill. Left as-is so the
- *  rebuild matches; swap in the real fourth metric when there is one. */
+ *  FIGURES ARE SYNTHETIC. The layout is the real one; the numbers are not,
+ *  because story data doubles as this template's public specimen.
+ *
+ *  The original repeats "Annual Events / 4.8K" in the fourth tile — evidently a
+ *  placeholder demonstrating the reversed fill. Since the numbers are synthetic
+ *  anyway, the fourth tile now carries a distinct metric, which shows the
+ *  gradient variant doing something rather than echoing its neighbour. */
 export const Traction: Story = {
   args: {
     eyebrow: 'Traction',
@@ -68,16 +71,22 @@ export const Traction: Story = {
     // 4 × 284 + 3 × 16
     wellWidth: 1184,
     cards: [
-      { label: 'Reservations', value: '1.2M', icon: 'arrow_outward' },
-      { label: 'Room Nights', value: '1.9M', icon: 'arrow_outward' },
-      { label: 'Annual Events', value: '4.8K', icon: 'arrow_outward' },
-      { label: 'Annual Events', value: '4.8K', icon: 'arrow_outward', surface: 'brand' },
+      { label: 'Reservations', value: '1.4M', icon: 'arrow_outward' },
+      { label: 'Room Nights', value: '3.7M', icon: 'arrow_outward' },
+      { label: 'Annual Events', value: '5.2K', icon: 'arrow_outward' },
+      { label: 'Active Customers', value: '312', icon: 'arrow_outward', surface: 'brand' },
     ],
   },
 }
 
 /** Slide 07 — Revenue durability. Six tiles in two rows; the second row
- *  reverses onto the brand gradient. Value sits above the label here. */
+ *  reverses onto the brand gradient. Value sits above the label here.
+ *
+ *  FIGURES ARE SYNTHETIC. The reference fills all six with the same "615K"
+ *  placeholder, which reads as a bug rather than a design. Each tile now
+ *  carries a plausible figure in the UNIT its label implies — retention and
+ *  concentration as percentages, cohort expansion as a multiple — so the
+ *  specimen also demonstrates that this template handles mixed formats. */
 export const RevenueDurability: Story = {
   args: {
     eyebrow: 'Quality of Revenue',
@@ -89,7 +98,7 @@ export const RevenueDurability: Story = {
     height: 390,
     cards: [
       {
-        value: '615K',
+        value: '96%',
         label: 'Gross Revenue Retention',
         description: 'Booking volume retained from the prior-year cohort, before expansion.',
         order: 'value-first',
@@ -97,7 +106,7 @@ export const RevenueDurability: Story = {
         align: 'top',
       },
       {
-        value: '615K',
+        value: '118%',
         label: 'Net Revenue Retention',
         description: 'Including expansion inside existing accounts — the platform growing per customer.',
         order: 'value-first',
@@ -105,7 +114,7 @@ export const RevenueDurability: Story = {
         align: 'top',
       },
       {
-        value: '615K',
+        value: '93%',
         label: 'Logo Retention',
         description: 'Share of active customers retained year over year.',
         order: 'value-first',
@@ -113,7 +122,7 @@ export const RevenueDurability: Story = {
         align: 'top',
       },
       {
-        value: '615K',
+        value: '24%',
         label: 'Top-10 Concentration',
         description: 'Share of 2025 revenue from the ten largest customers.',
         order: 'value-first',
@@ -122,7 +131,7 @@ export const RevenueDurability: Story = {
         surface: 'brand',
       },
       {
-        value: '615K',
+        value: '6.2%',
         label: 'Largest Single Customer',
         description: 'The single-customer exposure an investor underwrites first.',
         order: 'value-first',
@@ -131,7 +140,7 @@ export const RevenueDurability: Story = {
         surface: 'brand',
       },
       {
-        value: '615K',
+        value: '1.31x',
         label: '2024 Cohort Expansion',
         description: 'What the 2024 cohort spent in 2025 versus 2024 — the compounding proof.',
         order: 'value-first',
@@ -152,7 +161,7 @@ export const HighlightsAndResults: Story = {
   args: {
     eyebrow: 'Company Performance',
     watermark: true,
-    title: ['2024 Highlights & Results accounted for\n', { text: '$2.1m in revenue', accent: true, underline: true }],
+    title: ['2024 Highlights & Results accounted for\n', { text: '$2.4m in revenue', accent: true, underline: true }],
     titleWidth: 1100,
     groups: [
       { label: 'Q3 2024\nResults', span: 2 },
@@ -164,10 +173,10 @@ export const HighlightsAndResults: Story = {
     top: 360,
     height: 322,
     cards: [
-      { label: 'Active\nCustomers', value: '27', icon: 'check', iconBadge: true },
-      { label: 'Onboarding\n7 new Customers', value: '$377k', note: 'est ARR', icon: 'check', iconBadge: true },
-      { label: 'Q4\nPipeline', value: '$1.0M', icon: 'arrow_outward', surface: 'brand' },
-      { label: 'Q4\nNew Bookings Target', value: '250k', icon: 'arrow_outward', surface: 'brand' },
+      { label: 'Active\nCustomers', value: '34', icon: 'check', iconBadge: true },
+      { label: 'Onboarding\n9 new Customers', value: '$412k', note: 'est ARR', icon: 'check', iconBadge: true },
+      { label: 'Q4\nPipeline', value: '$1.3M', icon: 'arrow_outward', surface: 'brand' },
+      { label: 'Q4\nNew Bookings Target', value: '285k', icon: 'arrow_outward', surface: 'brand' },
     ],
   },
 }

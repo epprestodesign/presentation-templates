@@ -153,7 +153,7 @@ export function SlideChart({ spec, width, height }: SlideChartProps) {
               [`& .${barClasses.label}`]: {
                 fontFamily: typeTokens.fontFamily,
                 fontSize: typeTokens.scale.bodySm.size,
-                fontWeight: 700,
+                fontWeight: 600,
                 fill: color.text as string,
               },
               '& .MuiChartsGrid-line': { stroke: color.gridline as string },

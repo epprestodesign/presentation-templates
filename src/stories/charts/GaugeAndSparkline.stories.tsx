@@ -51,7 +51,7 @@ export const Gauges: Story = {
             value={g.value}
             text={({ value }) => `${value}%`}
             sx={{
-              [`& .${gaugeClasses.valueText}`]: { fontSize: 22, fontWeight: 700 },
+              [`& .${gaugeClasses.valueText}`]: { fontSize: 22, fontWeight: 600 },
               [`& .${gaugeClasses.valueArc}`]: { fill: color.accent as string },
               [`& .${gaugeClasses.referenceArc}`]: { fill: color.border as string },
             }}
@@ -76,7 +76,7 @@ export const GaugeArc: Story = {
       outerRadius="100%"
       text={({ value }) => `${value}%`}
       sx={{
-        [`& .${gaugeClasses.valueText}`]: { fontSize: 26, fontWeight: 700 },
+        [`& .${gaugeClasses.valueText}`]: { fontSize: 26, fontWeight: 600 },
         [`& .${gaugeClasses.valueArc}`]: { fill: color.accentDeep as string },
         [`& .${gaugeClasses.referenceArc}`]: { fill: color.border as string },
       }}
