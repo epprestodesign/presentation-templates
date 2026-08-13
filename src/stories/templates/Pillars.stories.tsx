@@ -56,7 +56,9 @@ export const PartnershipStrategy: Story = {
         cards: [
           'Sports Housing Providers',
           'Event Producers & Organizers',
-          'Associations & Membership Organizations',
+          // Explicit break: the reference wraps after "Membership", and Poppins
+          // runs wide enough that automatic wrapping breaks a word earlier.
+          'Associations & Membership\nOrganizations',
         ],
       },
       {

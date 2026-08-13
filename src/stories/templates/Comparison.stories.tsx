@@ -40,8 +40,15 @@ The panel is a rounded, clipped column. Bands are square-cornered and know
 nothing about where they sit; the panel supplies the outer radius and the
 \`gap\` shows the white artboard through as the hairline divider.
 
-Slide 13's figures row reuses \`StatCard\` on a \`plain\` surface, so a 68px
-number here is identical to one on the traction slide.
+The gradient band is \`gradient.brandVertical\`, **not** the 45deg
+\`gradient.brand\` the stat cards use. Four-corner sampling on both references
+puts the axis 2–3deg off vertical — bright top, dark bottom — and 45deg on a
+band 5.6x wider than it is tall reads as a left-to-right wash instead.
+
+Slide 13's figures row is two lines of type rather than \`StatCard\`, because
+StatCard locks its label to \`ds-text-h4\` and the reference sets that label at
+body weight so it stays one line. A \`labelSize\` prop on StatCard would let it
+fold back in.
 
 **Rebuilt from:** \`references/slide-decks/02.png\`, \`13.png\`.
         `,
@@ -71,12 +78,16 @@ export const OldWayVsEventPipe: Story = {
   args: {
     eyebrow: 'Problem',
     pageNumber: 2,
+    // Explicit breaks. The reference splits this headline after "operational"
+    // and after "and" — a deliberate three-line shape, not where a 990px
+    // column happens to wrap — and Poppins wraps a word earlier than the
+    // original face, so left to itself it lands somewhere else.
     title: [
       'The booking looks simple. ',
-      { accent: 'Behind it is operational complexity.' },
-      ' Hotels, contracts, pickup, and commissions all have to stay in sync.',
+      { accent: 'Behind it is operational\ncomplexity.' },
+      ' Hotels, contracts, pickup, and\ncommissions all have to stay in sync.',
     ],
-    titleWidth: 990,
+    titleWidth: 1010,
     top: 269,
     bandHeight: 206,
     bandGap: 4,
@@ -88,7 +99,10 @@ export const OldWayVsEventPipe: Story = {
         // past". A flag on the band, not italic runs in the content, because it
         // applies to every word on the side.
         italic: true,
-        label: 'Organizers Old Way',
+        // Both labels break after "Organizers" in the reference. Declared, not
+        // left to the cell width — see ComparisonBand.module.css for why no
+        // single width gets both bands there.
+        label: 'Organizers\nOld Way',
         steps: [
           ['From ', { text: 'manually sourcing', bold: true }, ' hotel inventory'],
           ['To ', { text: 'juggling emails and spreadsheets', bold: true }],
@@ -100,7 +114,7 @@ export const OldWayVsEventPipe: Story = {
       {
         variant: 'inline',
         surface: 'brand',
-        label: 'Organizers with EventPipe',
+        label: 'Organizers\nwith EventPipe',
         steps: [
           ['From ', { text: 'in-app hotel contracting', bold: true }],
           ['To ', { text: 'launching custom booking sites', bold: true }, ' in minutes'],
@@ -127,8 +141,10 @@ export const TodayVsEventPipe: Story = {
   args: {
     eyebrow: 'Partnership Strategy',
     pageNumber: 13,
-    title: ['Put the hotel offer ', { accent: 'where the event decision already happens' }],
-    titleWidth: 700,
+    // The reference breaks after "event", which no automatic wrap picks — the
+    // two halves are too uneven for `text-wrap: balance` to choose it.
+    title: ['Put the hotel offer ', { accent: 'where the event\ndecision already happens' }],
+    titleWidth: 760,
     lead: 'Today, a fan buys a ticket or an attendee registers, then leaves to find a hotel. EventPipe already manages the contracted inventory. The missing piece is opening that door at the moment of intent.',
     // The lead runs the full width of the slide while the headline breaks at
     // 700px, so the two need separate measures.

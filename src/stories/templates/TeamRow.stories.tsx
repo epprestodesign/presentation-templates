@@ -41,16 +41,21 @@ type Story = StoryObj<typeof meta>
 
 /** Slide 15 — Leadership.
  *
- *  Prior-employer marks are STAND-INS. The originals are Motus, ConnectEDU,
- *  EducationDynamics, Halyard Capital, Fidelity, Redfin, Macy's, Walmart,
- *  Krossover, Runzheimer, Everway and Enterprise Fleet — none of which is in
- *  src/assets/partners, which holds this deck's customer and event marks
- *  instead. The strips below therefore prove the layout, not the biographies:
- *  drop the real marks into src/assets/partners and swap the names.
+ *  Prior-employer marks and their per-person assignment were both read off the
+ *  reference's own logo band, cropped at 1:1 out of the 2x PNG rather than
+ *  eyeballed from a thumbnail. Every column opens on `motus` except Christine
+ *  Mancini's, which opens on `macys` — that top row is easy to lose when the
+ *  band is read at reduced size, and it is also why the source export contained
+ *  five byte-identical copies of the Motus mark.
  *
- *  Roles are verbatim from the reference, including the one that runs to two
- *  lines ('Chief Technology Officer & Co-founder') — that is the case the 126px
- *  column has to survive, so it is worth keeping in the story. */
+ *  `connectedu` genuinely appears three times (columns 1, 4 and 5). Counts run
+ *  4/3/2/4/2/4, so the strip has to take a variable number of marks without the
+ *  row pitch drifting between people — which is why LogoGrid takes a row height
+ *  rather than distributing.
+ *
+ *  Roles are verbatim from the reference, including the one that runs long
+ *  ('Chief Technology Officer & Co-founder') — that is the case the 126px column
+ *  has to survive, so it is worth keeping in the story. */
 export const Leadership: Story = {
   args: {
     eyebrow: 'EventPipe Team',
@@ -66,37 +71,37 @@ export const Leadership: Story = {
         name: 'Tim Brown',
         role: 'Chief Executive Officer',
         photo: 'rounded/tim-brown',
-        priorLogos: ['team-travel-source', '365', 'traveloc', 'atlas-travel-stay'],
+        priorLogos: ['motus', 'connectedu', 'education-dynamics', 'halyard-capital'],
       },
       {
         name: 'Michael Addesa',
         role: 'Chief Technology Officer & Co-founder',
         photo: 'rounded/michael-addesa',
-        priorLogos: ['288-travel', '435-housing', 'ah-travel'],
+        priorLogos: ['motus', 'fidelity-investments', 'agencyport'],
       },
       {
         name: 'Jeff Duke Logan',
         role: 'Chief Product Officer',
         photo: 'rounded/jeff-duke-logan',
-        priorLogos: ['team-travel-source', 'bounce-travel'],
+        priorLogos: ['motus', 'redfin'],
       },
       {
         name: 'Christine Mancini',
         role: 'President',
         photo: 'rounded/christine-mancini',
-        priorLogos: ['804-travel', '365', 'absolut-sport', 'asl'],
+        priorLogos: ['macys', 'connectedu', 'walmart', 'krossover'],
       },
       {
         name: 'Dante Leone',
         role: 'Vice President Finance & Strategy',
         photo: 'rounded/dante-leone',
-        priorLogos: ['team-travel-source', '365'],
+        priorLogos: ['motus', 'connectedu'],
       },
       {
         name: 'Brandon Hollmann',
         role: 'Chief Revenue Officer',
         photo: 'rounded/brandon-hollmann',
-        priorLogos: ['288-travel', 'academy-of-management', 'berkshire-choral', 'ausa'],
+        priorLogos: ['motus', 'runzheimer', 'everway', 'enterprise-fleet-management'],
       },
     ],
   },
@@ -124,9 +129,14 @@ export const Blank: Story = {
     title: ['Headline goes here, with ', { accent: 'the emphasis in teal.' }],
     columns: 3,
     people: [
-      { name: 'First Last', role: 'Job title', photo: 'rounded/tim-brown' },
-      { name: 'First Last', role: 'Job title', photo: 'rounded/christine-mancini' },
-      { name: 'First Last', role: 'Job title', photo: 'rounded/dante-leone' },
+      { name: 'First Last', role: 'Job title', photo: 'rounded/tim-brown', priorLogos: ['motus'] },
+      {
+        name: 'First Last',
+        role: 'Job title',
+        photo: 'rounded/christine-mancini',
+        priorLogos: ['motus'],
+      },
+      { name: 'First Last', role: 'Job title', photo: 'rounded/dante-leone', priorLogos: ['motus'] },
     ],
   },
 }

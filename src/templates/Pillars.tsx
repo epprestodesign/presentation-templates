@@ -101,8 +101,11 @@ export function Pillars({
   padding = 16,
   cardGap = 5,
   bannerHeight = 40,
-  headingGap = 24,
-  stackGap = 19,
+  /* 26 and 17 are what land the heading's cap-top on the reference's 289.5 and
+     the top of the card stack on its 330. They are a pair: headingGap feeds the
+     panel's top padding, so raising it pushes the stack down too. */
+  headingGap = 26,
+  stackGap = 17,
   headingSize = 'h3',
   cardSize = 'h3',
   ...chrome

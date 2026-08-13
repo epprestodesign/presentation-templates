@@ -48,7 +48,16 @@ export function SlideHeading({
 }: SlideHeadingProps) {
   return (
     <div className={styles.heading} style={{ left, top, width, gap }}>
-      {title && <AccentText content={title} className={typeClass(size)} />}
+      {/* The title needs `onDark` as much as the lead does. It previously did
+          not get it, and because the shared ds-text-* rule sets `color` to the
+          on-light ink, a display title on the brand plate rendered BLACK on
+          teal — invisible in review only if you were not looking for it. */}
+      {title && (
+        <AccentText
+          content={title}
+          className={[typeClass(size), onDark ? 'ds-text-on-brand' : ''].filter(Boolean).join(' ')}
+        />
+      )}
       {lead && (
         <AccentText
           as="p"

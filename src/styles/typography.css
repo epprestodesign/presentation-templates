@@ -11,6 +11,7 @@
  * opt into a role without restating four properties. Templates should
  * prefer these over ad-hoc font declarations.
  * --------------------------------------------------------------- */
+.ds-text-display-lg,
 .ds-text-display,
 .ds-text-h1,
 .ds-text-h2,
@@ -23,6 +24,7 @@
 .ds-text-eyebrow,
 .ds-text-page-number,
 .ds-text-stat,
+.ds-text-stat-md,
 .ds-text-stat-sm {
   font-family: var(--slide-font-family);
   color: var(--slide-color-text);
@@ -32,6 +34,7 @@
   -webkit-font-smoothing: antialiased;
 }
 
+.ds-text-display-lg  { font-size: var(--slide-text-display-lg-size);  line-height: var(--slide-text-display-lg-line-height);  font-weight: var(--slide-text-display-lg-weight);  letter-spacing: var(--slide-text-display-lg-tracking); }
 .ds-text-display     { font-size: var(--slide-text-display-size);     line-height: var(--slide-text-display-line-height);     font-weight: var(--slide-text-display-weight);     letter-spacing: var(--slide-text-display-tracking); }
 .ds-text-h1          { font-size: var(--slide-text-h1-size);          line-height: var(--slide-text-h1-line-height);          font-weight: var(--slide-text-h1-weight);          letter-spacing: var(--slide-text-h1-tracking); }
 .ds-text-h2          { font-size: var(--slide-text-h2-size);          line-height: var(--slide-text-h2-line-height);          font-weight: var(--slide-text-h2-weight);          letter-spacing: var(--slide-text-h2-tracking); }
@@ -41,6 +44,7 @@
 .ds-text-body        { font-size: var(--slide-text-body-size);        line-height: var(--slide-text-body-line-height);        font-weight: var(--slide-text-body-weight);        letter-spacing: var(--slide-text-body-tracking); }
 .ds-text-body-sm     { font-size: var(--slide-text-body-sm-size);     line-height: var(--slide-text-body-sm-line-height);     font-weight: var(--slide-text-body-sm-weight);     letter-spacing: var(--slide-text-body-sm-tracking); }
 .ds-text-caption     { font-size: var(--slide-text-caption-size);     line-height: var(--slide-text-caption-line-height);     font-weight: var(--slide-text-caption-weight);     letter-spacing: var(--slide-text-caption-tracking); }
+.ds-text-stat-md     { font-size: var(--slide-text-stat-md-size);     line-height: var(--slide-text-stat-md-line-height);     font-weight: var(--slide-text-stat-md-weight);     letter-spacing: var(--slide-text-stat-md-tracking); }
 .ds-text-stat        { font-size: var(--slide-text-stat-size);        line-height: var(--slide-text-stat-line-height);        font-weight: var(--slide-text-stat-weight);        letter-spacing: var(--slide-text-stat-tracking); }
 .ds-text-stat-sm     { font-size: var(--slide-text-stat-sm-size);     line-height: var(--slide-text-stat-sm-line-height);     font-weight: var(--slide-text-stat-sm-weight);     letter-spacing: var(--slide-text-stat-sm-tracking); }
 

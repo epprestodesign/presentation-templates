@@ -54,6 +54,7 @@ export type RichText = TextRun[] | string
 
 /** Steps in the type scale. Mirrors the keys of `type.scale` in tokens.js. */
 export type TypeStep =
+  | 'displayLg'
   | 'display'
   | 'h1'
   | 'h2'
@@ -66,6 +67,7 @@ export type TypeStep =
   | 'eyebrow'
   | 'pageNumber'
   | 'stat'
+  | 'statMd'
   | 'statSm'
 
 /* -------------------------------------------------------------------------

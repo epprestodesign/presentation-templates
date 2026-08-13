@@ -83,8 +83,11 @@ export interface DiagramProps extends SlideChromeSpec {
   width?: number
   height?: number
   gap?: number
-  /** Padding inside a node. */
-  padding?: number
+  /** Padding inside a node: one number for all sides, or [top, sides, bottom].
+   *  The flow cards need the asymmetric form — 24px sides so a two-word title
+   *  wraps as late as possible, but 40px above it, and 28px below the caption to
+   *  land it on the reference's baseline. */
+  padding?: number | readonly [number, number, number]
   /** Rendered icon size. 72 in the orbit cells, 150 on the flow cards. */
   iconSize?: number
 
@@ -101,9 +104,32 @@ export interface DiagramProps extends SlideChromeSpec {
  * 'flow': full width, x 47→1195 (the reference runs 4px further, to 1199, which
  * is inside the watermark gutter), y 232, 360 tall, 54px gaps. */
 const WELL = {
-  orbit: { left: 538, top: 116, width: 632, height: 488, gap: 6, padding: 28, iconSize: 72 },
-  flow: { left: 47, top: 232, width: 1148, height: 360, gap: 54, padding: 40, iconSize: 150 },
+  orbit: {
+    left: 538,
+    top: 116,
+    width: 632,
+    height: 488,
+    gap: 6,
+    padding: 28,
+    iconSize: 72,
+  },
+  flow: {
+    left: 47,
+    top: 232,
+    width: 1148,
+    height: 360,
+    gap: 54,
+    padding: [40, 24, 28],
+    iconSize: 150,
+  },
 } as const
+
+/** One number or [top, sides, bottom] → a CSS padding shorthand. */
+function pad(value: number | readonly [number, number, number]): string {
+  return typeof value === 'number'
+    ? `${value}px`
+    : `${value[0]}px ${value[1]}px ${value[2]}px`
+}
 
 export function Diagram({
   fit = 'contain',
@@ -183,7 +209,7 @@ export function Diagram({
                   ]
                     .filter(Boolean)
                     .join(' ')}
-                  style={{ padding: well.padding, borderRadius: radius.panel }}
+                  style={{ padding: pad(well.padding), borderRadius: radius.panel }}
                 >
                   <AccentText
                     as="h3"
@@ -215,7 +241,7 @@ export function Diagram({
                 )}
                 <div
                   className={styles.card}
-                  style={{ padding: well.padding, borderRadius: radius.panel }}
+                  style={{ padding: pad(well.padding), borderRadius: radius.panel }}
                 >
                   <AccentText
                     as="h3"
@@ -264,7 +290,12 @@ function Hub({
   detail,
   size = 336,
   ring = 5,
-  copyWidth = 230,
+  // 260 rather than the measured 213 the reference's title occupies: Poppins
+  // runs wider per em than the face the original used, and at 230 the title
+  // wrapped to two lines and the detail to three. 260 still clears the circle's
+  // chord at the copy block's height and restores the reference's 1-line title
+  // over a 2-line detail.
+  copyWidth = 260,
 }: DiagramHub) {
   return (
     <div

@@ -95,7 +95,14 @@ export const EcosystemFlow: Story = {
     titleWidth: 1120,
     nodes: [
       { label: 'EventPipe', logo: true, caption: 'The B2B SaaS backbone' },
-      { label: 'Housing Companies', icon: 'apartment', caption: 'Powered by EventPipe software' },
+      {
+        label: 'Housing Companies',
+        // 'corporate_fare' rather than 'apartment': the original draws a hotel
+        // tower, and 'apartment' is a flat grid of window squares that reads as
+        // a spreadsheet at 150px.
+        icon: 'corporate_fare',
+        caption: 'Powered by EventPipe software',
+      },
       {
         label: 'Event / Tournament Operators',
         icon: 'stadium',
@@ -115,7 +122,11 @@ export const FlowFourSteps: Story = {
     ...EcosystemFlow.args,
     nodes: [
       { label: 'EventPipe', logo: true, caption: 'The B2B SaaS backbone' },
-      { label: 'Housing Companies', icon: 'apartment', caption: 'Powered by EventPipe software' },
+      {
+        label: 'Housing Companies',
+        icon: 'corporate_fare',
+        caption: 'Powered by EventPipe software',
+      },
       { label: 'Event Operators', icon: 'stadium', caption: 'Serviced by Housing Companies' },
       { label: 'Teams & Attendees', icon: 'family_restroom', caption: 'Book on branded sites' },
     ],

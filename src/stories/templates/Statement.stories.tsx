@@ -50,7 +50,11 @@ type Story = StoryObj<typeof meta>
  *  right edge on the 40px page margin.
  *
  *  Anchors measured off the reference: statement cap-top at y = 136, contact
- *  row at y = 486, contact columns at x = 40 and x = 435. */
+ *  row at y = 486, contact columns at x = 40 and x = 435.
+ *
+ *  The statement carries an explicit break rather than trusting the column
+ *  width to wrap it after "built." — a closing line is read as two beats, and
+ *  where it divides is content, not a consequence of the measure. */
 export const ClosingStatement: Story = {
   args: {
     eyebrow: 'Investor Presentation',

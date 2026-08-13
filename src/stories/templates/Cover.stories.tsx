@@ -89,13 +89,19 @@ export const WhitePanel: Story = {
 
 /** The same template carrying real cover copy, which the reference variants
  *  leave empty. The well fills from its floor up, so a one-line and a two-line
- *  title both sit on the same baseline. */
+ *  title both sit on the same baseline.
+ *
+ *  The title breaks explicitly, one clause per line, so the cover does not
+ *  depend on where the well's 536px measure happens to run out. Three lines,
+ *  not two: at display size "The booking layer" is about 570px, which the well
+ *  cannot hold — a cover title that wants two lines wants fewer words, not a
+ *  wider well. */
 export const WithTitle: Story = {
   args: {
     watermark: false,
     panel: 'brand',
     media: MEDIA,
-    title: 'The booking layer for live events',
+    title: 'The booking\nlayer for\nlive events',
     subtitle: 'Series A — investor presentation',
     meta: 'August 2026 · Confidential',
   },

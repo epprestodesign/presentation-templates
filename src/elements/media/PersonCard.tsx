@@ -72,6 +72,16 @@ export interface PersonCardProps extends PersonSpec {
   photoGap?: number
   /** Gap between the name and the role. */
   roleGap?: number
+  /** Reserved height for the name block, and for the role block.
+   *
+   *  Set by TeamRow so every column's prior-employer strip starts on the same
+   *  line. Without them a one-line name or a three-line role shifts that
+   *  column's logos up or down and the row reads ragged — which the reference
+   *  does not, because its six roles all happen to wrap to two lines and
+   *  Poppins' third one does not exist there. Left undefined for the row
+   *  layout, where each person is on their own line anyway. */
+  nameHeight?: number
+  roleHeight?: number
   /** Gap between the role and whatever follows it — logos or contact icons. */
   trailingGap?: number
   /** Prior-employer strip: marks per row, and the row height. */
@@ -97,6 +107,8 @@ export function PersonCard({
   roleSize = 'bodySm',
   photoGap = 20,
   roleGap = 10,
+  nameHeight,
+  roleHeight,
   trailingGap = 18,
   logoColumns = 1,
   logoRowHeight = 36,
@@ -121,9 +133,15 @@ export function PersonCard({
         {/* h4 rather than h3/h2 as the ELEMENT regardless of the type step: a
             slide's headline is the h1 and these names sit under it, so the
             visual size and the heading level are decided separately. */}
-        <h4 className={typeClass(nameSize)}>{name}</h4>
+        <h4 className={typeClass(nameSize)} style={{ minHeight: nameHeight }}>
+          {name}
+        </h4>
 
-        {role && <div className={`${typeClass(roleSize)} ds-text-subtle`}>{role}</div>}
+        {role && (
+          <div className={`${typeClass(roleSize)} ds-text-subtle`} style={{ minHeight: roleHeight }}>
+            {role}
+          </div>
+        )}
 
         {/* Both trailing blocks hang off the same wrapper so `trailingGap`
             means the same thing whichever one a person has. The stack's gap

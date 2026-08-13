@@ -20,6 +20,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const NOTES: Record<keyof typeof radius, string> = {
+  sm: 'Cover panels and photo tiles — at cover scale an 8px arc reads as a button',
   image: 'Photos, mosaic frames, device shots',
   card: 'Stat and feature cards',
   panel: 'Large gradient panels and wells',

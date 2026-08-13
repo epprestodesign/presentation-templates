@@ -31,11 +31,11 @@
   min-width: 0;
 }
 
-/* Circle, and a fixed box so a non-square source crops rather than distorting. */
+/* A fixed box so a non-square source crops rather than distorting. The radius
+   is set in the component, from PersonSpec's `shape`. */
 .portrait {
   flex: none;
   object-fit: cover;
-  border-radius: var(--slide-radius-pill);
 }
 
 /* Gaps below are the measured distances between the reference's baselines,
@@ -51,8 +51,14 @@
   margin-top: 16px;
 }
 
+/* Bottom-anchored, not offset by a fixed gap. In the reference the last contact
+   line already sits flush against the card's bottom padding — the 25px that
+   would otherwise separate it from the role is exactly what is left over. Auto
+   margin reproduces that and means a third line (a LinkedIn URL) grows upward
+   into the slack instead of pushing out through the bottom of a card whose
+   height is measured and fixed. */
 .contact {
-  margin-top: 25px;
+  margin-top: auto;
   display: flex;
   flex-direction: column;
   /* The reference sets the two contact lines 32.5px apart, which is 7px more

@@ -12,9 +12,9 @@ import styles from './ComparisonBand.module.css'
  * Two bands stacked make the argument the deck keeps making — "here is the old
  * way, here is the way with EventPipe" — and the reference always builds it the
  * same way: the neutral band on top in #f5f5f5 with grey ink, the EventPipe
- * band beneath it on the brand gradient with the ink reversed to white. That
- * inversion is the whole rhetorical move, so it lives in `surface` and nothing
- * else about the band changes with it.
+ * band beneath it on the near-vertical brand gradient, ink reversed to white.
+ * That inversion is the whole rhetorical move, so it lives in `surface` and
+ * nothing else about the band changes with it.
  *
  * The interior comes in two variants, measured off the two reference slides:
  *
@@ -57,9 +57,8 @@ export interface ComparisonBandProps {
    *
    *  152, measured off slide 02, which with a 16px gap lands the five step
    *  columns at x = 275, 466, 657, 848, 1039 against the reference's 272.5,
-   *  456.5, 664.5, 848.5, 1032.5. Where the label itself breaks is left to
-   *  `text-wrap: balance` on the cell rather than a tighter width — see the
-   *  CSS, the two bands disagree about how wide their label is. */
+   *  456.5, 664.5, 848.5, 1032.5. Where the label breaks is the content's
+   *  business — put a `\n` in it — not this width's. */
   labelWidth?: number
   /** Type step for the label and the steps. */
   size?: TypeStep

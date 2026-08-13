@@ -68,13 +68,18 @@ export const ReachOut: Story = {
   },
 }
 
-/** One contact, to show the card row filling the well rather than the card
- *  keeping half the slide and leaving a hole. */
-export const SingleContact: Story = {
+/** A third contact line per person, to show the block growing downward inside the
+ *  measured card rather than the card being resized to suit it.
+ *
+ *  The headline stays plain white. An accent run is the deck's usual emphasis, but
+ *  on the brand gradient the teal has almost no contrast against its own
+ *  background — emphasis on this surface has to come from weight or a line break,
+ *  not from colour. */
+export const WithLinkedIn: Story = {
   args: {
     eyebrow: 'EventPipe',
     tag: 'CONFIDENTIAL',
-    title: ['Thanks — ', { accent: 'let’s keep going.' }],
+    title: 'Thanks — let’s keep going.',
     people: [
       {
         name: 'Brandon Hollmann',
@@ -84,6 +89,15 @@ export const SingleContact: Story = {
         email: 'Brandon@eventpipe.com',
         phone: '512-468-3632',
         linkedin: 'linkedin.com/in/brandonhollmann',
+      },
+      {
+        name: 'Todd Beckerman',
+        role: 'Account Executive',
+        photo: 'circle/todd-beckerman-lg',
+        shape: 'circle',
+        email: 'Todd@eventpipe.com',
+        phone: '(402)-202-4072',
+        linkedin: 'linkedin.com/in/toddbeckerman',
       },
     ],
   },

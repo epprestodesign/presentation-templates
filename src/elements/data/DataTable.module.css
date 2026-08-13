@@ -71,7 +71,12 @@
   border-bottom: 1px solid var(--slide-color-border);
 }
 
-.financial .row:first-of-type {
+/* `:first-of-type` cannot work here: .headerRow is the first div child, so
+   :first-of-type resolves to IT, and it carries no .row class — the top border
+   silently never rendered on any table that had headers. Match the row after
+   the header explicitly, and keep a fallback for header-less tables. */
+.financial .headerRow + .row,
+.financial .row:first-child {
   border-top: 1px solid var(--slide-color-border);
 }
 

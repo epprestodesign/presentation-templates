@@ -2,6 +2,7 @@ import { grid, radius } from '../tokens/tokens.js'
 import type { RichText, SlideChromeSpec, TypeStep } from '../types'
 import { SlideFrame } from '../elements/layout/SlideFrame'
 import { SlideHeading } from '../elements/layout/SlideHeading'
+import { AccentText } from '../elements/text/AccentText'
 import { ArrowStatRow, type ArrowStatSpec } from '../elements/data/ArrowStatRow'
 import { CompareBars, type CompareBarSpec } from '../elements/data/CompareBars'
 import { typeClass } from '../lib/typeClass'
@@ -24,7 +25,10 @@ import styles from './Numbers.module.css'
 export interface NumbersCardSpec {
   /** The headline figure, pre-formatted — '480K', '$214M'. */
   value: string
-  label: string
+  /** RichText rather than a string so a long label can be broken at a chosen
+   *  word with "\n" — the card's copy column stops where the bars begin, and a
+   *  natural wrap there breaks in the wrong place. */
+  label: RichText
   /** Prior and current year, drawn as two bars beside the figure. */
   prior?: CompareBarSpec
   current?: CompareBarSpec
@@ -107,7 +111,7 @@ export function Numbers({
             >
               <div className={styles.copy}>
                 <div className={`${typeClass(valueSize)} ds-text-accent`}>{card.value}</div>
-                <div className="ds-text-h3">{card.label}</div>
+                <AccentText as="div" content={card.label} className="ds-text-h3" />
               </div>
 
               {card.prior && card.current && (

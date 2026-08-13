@@ -71,7 +71,12 @@ export const type = {
   fontFamily: "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
   weights: { regular: 400, medium: 500, semibold: 600, bold: 700 },
   scale: {
-    /** Cover and full-slide statements. */
+    /** The largest step, for a full-slide statement that IS the slide.
+     *  Sized by measurement, not by feel: the statement slide's cap height is
+     *  66px, and `display` at 64 measures a 50px cap, giving cap/size = 0.781
+     *  for Poppins Bold. 66 / 0.781 = 85. */
+    displayLg: { size: 85, lineHeight: 1.04, weight: 700, tracking: '-0.025em' },
+    /** Covers and section statements. */
     display:   { size: 64, lineHeight: 1.06, weight: 700, tracking: '-0.02em' },
     /** The standard slide headline. Set by matching cap height to the
      *  reference deck (32px cap), not line width — Poppins runs wider per em
@@ -92,6 +97,10 @@ export const type = {
     eyebrow:   { size: 12, lineHeight: 1,    weight: 700, tracking: '0.14em' },
     /** Top-right page number. */
     pageNumber:{ size: 12, lineHeight: 1,    weight: 700, tracking: '0.06em' },
+    /** Mid-weight figures — the by-the-numbers card stats and the arrow-row
+     *  percentages both measure ~36px, and the scale previously jumped 32 → 40,
+     *  so either choice was ~11% out. */
+    statMd:    { size: 36, lineHeight: 1.05, weight: 600, tracking: '-0.02em' },
     /** Hero KPI numbers. */
     stat:      { size: 68, lineHeight: 1,    weight: 600, tracking: '-0.02em' },
     statSm:    { size: 44, lineHeight: 1,    weight: 600, tracking: '-0.02em' },
@@ -112,7 +121,15 @@ export const gradient = {
   brand: { angle: 45, from: orient[800], to: fountainBlue[600] },
   /** Full-bleed section dividers and covers — near-horizontal, dark left. */
   brandBleed: { angle: 80, from: orient[900], to: fountainBlue[600] },
-  /** Chart bars and columns — dark at the base, bright at the top. */
+  /** Chart bars and columns — dark at the base, bright at the top.
+   *
+   *  REASONED, NOT MEASURED. Unlike the other entries here this one was not
+   *  sampled off a reference; it was inferred from how the chart bars look.
+   *  Attempts to sample slide 08's bars cleanly kept landing outside the bar,
+   *  and the difference at stake is a few steps of green on a 90px bar, so it
+   *  was not worth further churn — but do not cite this as measured. The
+   *  comparison bars on the by-the-numbers slide WERE measured, and they are
+   *  `brand` at 45deg, not this. */
   brandVertical: { angle: 0, from: orient[800], to: fountainBlue[600] },
   /** The opposite diagonal — dark top-left to bright bottom-right. Available
    *  as StatCard's `brandAlt` surface.
@@ -166,6 +183,10 @@ export const color = {
    *  number does not vibrate against white. */
   accentDeep: '#02859d',
   accentSoft: fountainBlue[50],
+  /** Flat mid-teal, sampled from the cover's brand panel placeholder. Notably
+   *  NOT a gradient — the reference is a single solid value at every point
+   *  inside that panel — and a shade lighter than `brandNavy`. */
+  brandFlat: '#02718f',
   /** The dark ink in the logo wordmark ("event"), taken straight from the
    *  current artwork (references/logo/Eventpipe Logo.svg). The superseded logo
    *  file used #093e60; this is the value that ships. Kept exact — the logo is
@@ -186,6 +207,9 @@ export const color = {
 
 /** Corner radii, measured off the reference deck. */
 export const radius = {
+  /** Measured on the cover's panels and photo tiles — tighter than `image`,
+   *  because at cover scale an 8px arc reads as a rounded button. */
+  sm: 4,
   image: 8,
   card: 10,
   panel: 16,

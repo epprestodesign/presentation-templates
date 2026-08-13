@@ -36,6 +36,13 @@ shadows merge, so no detector setting separates them and
 \`radius: 0\`, because the corners are already rounded inside the pixels and
 re-applying the image radius would clip the shadows.
 
+> **Asset defect.** That crop starts at 2x (1268, 234), which is *inside* the
+> reference headline, so the bottom of "…ent" from "Management" is baked into
+> the asset's top-left corner. It hides under this deck's own headline on the
+> rebuilt slide and nowhere else, so the asset needs retouching (or re-exporting
+> from source) before it is reused — the crop rect cannot simply move, because
+> the topmost photo begins 2px below it.
+
 **Rebuilt from:** \`references/slide-decks/2-01.png\`.
         `,
       },
@@ -87,7 +94,15 @@ export const HotelRfpAndContracts: Story = {
 }
 
 /** The same shape with placeholder copy, for picking the template up as a
- *  starting point for the next module slide in the section. */
+ *  starting point for the next module slide in the section.
+ *
+ *  Three separate photos on the cluster's footprint rather than the
+ *  pre-composed asset, for two reasons. It shows the template does not care how
+ *  many images the right-hand side is — and `clusters/rfp-photo-cluster` cannot
+ *  be reused as-is: its crop rect starts at 2x (1268, 234), which is inside the
+ *  reference headline, so the bottom of "…ent" from "Management" is baked into
+ *  the asset's top-left corner. On the faithful rebuild it hides under this
+ *  deck's own headline; anywhere else it is a floating black smudge. */
 export const Blank: Story = {
   args: {
     eyebrow: 'Company Overview',
@@ -98,16 +113,13 @@ export const Blank: Story = {
       [{ bold: 'The second capability, phrased the same way.' }],
       [{ bold: 'The third capability.' }],
     ],
+    // Drawn from `mosaic/`, which are clean photo crops. The `operating-layer/`
+    // set is not usable here: those crops come off the slide-03 cards and still
+    // carry the card's title text along their bottom edge.
     images: [
-      {
-        src: 'clusters/rfp-photo-cluster',
-        alt: 'Placeholder photo cluster',
-        x: 634,
-        y: 117,
-        w: 540,
-        h: 557,
-        radius: 0,
-      },
+      { src: 'mosaic/woman-airport', alt: 'Traveller walking through an airport', x: 928, y: 118, w: 243, h: 304 },
+      { src: 'mosaic/reception-bell', alt: 'Hand pressing a hotel reception bell', x: 637, y: 221, w: 275, h: 205 },
+      { src: 'mosaic/phone-travel-apps', alt: 'Phone home screen of travel booking apps', x: 755, y: 442, w: 352, h: 230 },
     ],
   },
 }

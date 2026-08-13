@@ -13,10 +13,19 @@
   background-color: var(--slide-color-surface-muted);
 }
 
-/* Dark bottom-left to bright top-right — the same 45deg brand gradient the
-   stat cards use, sampled at #01adb3 in the band's top-right corner. */
+/* Near-vertical, bright top to dark bottom — NOT the 45deg card gradient.
+   Four-corner sampled on both references, 10px inside the rounded corners:
+
+     slide 02   TL #009aa8  TR #00a6a7  BL #006e90  BR #008796
+     slide 13   TL #019ba9  TR #01adb3              mid-B #02839c
+
+   Reading the green channel against the #01658b → #02adb3 ramp, the vertical
+   fall is ~3.7x the horizontal rise across a band 5.6x wider than it is tall,
+   which puts the gradient axis 2-3deg off vertical. `brand` at 45deg would make
+   the horizontal spread dominant on a band this shape (and did, visibly, on the
+   first pass); `brandBleed` at 80deg is near-horizontal and wrong by 90. */
 .brand {
-  background-image: var(--slide-gradient-brand);
+  background-image: var(--slide-gradient-brand-vertical);
 }
 
 /* The old-way side is set in italic throughout. Declared on the band so it
@@ -53,13 +62,12 @@
   color: var(--slide-color-text-on-brand);
 }
 
-/* Balanced on purpose, and it is doing real work. The reference breaks both
-   side labels after "Organizers" — "Organizers / Old Way" and "Organizers /
-   with EventPipe" — and no single cell width reproduces that in Poppins,
-   because the old-way band is italic and italic runs narrower: any width that
-   keeps "with EventPipe" together also fits "Organizers Old". Balancing picks
-   the split with the shortest longest line, which is the reference's break in
-   both bands regardless of the face. */
+/* Balanced as a fallback only. Labels that care where they break say so with a
+   `\n` in the content, which wins over balancing; this covers the ones that do
+   not, where the shortest-longest-line split is the right guess. It matters
+   here because no single cell width breaks both reference labels after
+   "Organizers": the old-way band is italic and italic runs narrower, so any
+   width that keeps "with EventPipe" together also fits "Organizers Old". */
 .labelCell {
   flex: none;
   text-wrap: balance;

@@ -85,6 +85,10 @@
   --slide-font-weight-medium: 500;
   --slide-font-weight-semibold: 600;
   --slide-font-weight-bold: 700;
+  --slide-text-display-lg-size: 85px;
+  --slide-text-display-lg-line-height: 1.04;
+  --slide-text-display-lg-weight: 700;
+  --slide-text-display-lg-tracking: -0.025em;
   --slide-text-display-size: 64px;
   --slide-text-display-line-height: 1.06;
   --slide-text-display-weight: 700;
@@ -129,6 +133,10 @@
   --slide-text-page-number-line-height: 1;
   --slide-text-page-number-weight: 700;
   --slide-text-page-number-tracking: 0.06em;
+  --slide-text-stat-md-size: 36px;
+  --slide-text-stat-md-line-height: 1.05;
+  --slide-text-stat-md-weight: 600;
+  --slide-text-stat-md-tracking: -0.02em;
   --slide-text-stat-size: 68px;
   --slide-text-stat-line-height: 1;
   --slide-text-stat-weight: 600;
@@ -153,6 +161,7 @@
   --slide-color-accent: #02adb3;
   --slide-color-accent-deep: #02859d;
   --slide-color-accent-soft: #ebfffd;
+  --slide-color-brand-flat: #02718f;
   --slide-color-brand-navy: #02658c;
   --slide-color-border: #e5e5e5;
   --slide-color-rule: #d4d4d4;
@@ -188,6 +197,7 @@
   /* ------------------------------------------------------------------
    * Radii
    * ------------------------------------------------------------------ */
+  --slide-radius-sm: 4px;
   --slide-radius-image: 8px;
   --slide-radius-card: 10px;
   --slide-radius-panel: 16px;

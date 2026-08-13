@@ -136,7 +136,16 @@ export function Closing({
                 src={portrait(person.photo)}
                 alt={person.name}
                 className={styles.portrait}
-                style={{ width: photoSize, height: photoSize }}
+                style={{
+                  width: photoSize,
+                  height: photoSize,
+                  // The reference is circles throughout, but PersonSpec declares
+                  // the shape, so honour it rather than silently ignoring it.
+                  borderRadius:
+                    person.shape === 'rounded'
+                      ? 'var(--slide-radius-card)'
+                      : 'var(--slide-radius-pill)',
+                }}
               />
             )}
 

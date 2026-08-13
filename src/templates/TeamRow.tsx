@@ -54,7 +54,21 @@ export interface TeamRowProps extends SlideChromeSpec {
   photoSize?: number
   nameSize?: TypeStep
   roleSize?: TypeStep
-  /** Prior-employer strip: row height and the cap on each mark. */
+  /** Reserved heights for the name and role blocks, so every column's
+   *  prior-employer strip starts on the same line however each person's copy
+   *  wraps. Defaults are two lines of h3 (55) and three lines of bodySm (58) —
+   *  three because Poppins runs wider than the face the original used and
+   *  'Chief Technology Officer & Co-founder' takes a third line here that it does
+   *  not take there. Reserving the worst case keeps the strips aligned; letting
+   *  the blocks grow would drop one column's logos 20px below its neighbours. */
+  nameHeight?: number
+  roleHeight?: number
+  /** Gap between the role block and the logo strip. 12 rather than the
+   *  element's default 18: with the worst-case role height reserved above, 18
+   *  pushed a four-mark strip 6px past the panel's bottom padding. */
+  trailingGap?: number
+  /** Prior-employer strip: row height and the cap on each mark. Measured row
+   *  pitch is 36; marks in the original run 17–21 tall. */
   logoRowHeight?: number
   logoMaxHeight?: number
 }
@@ -75,8 +89,11 @@ export function TeamRow({
   photoSize = 108,
   nameSize = 'h3',
   roleSize = 'bodySm',
+  nameHeight = 55,
+  roleHeight = 58,
+  trailingGap = 12,
   logoRowHeight = 36,
-  logoMaxHeight = 22,
+  logoMaxHeight = 19,
   ...chrome
 }: TeamRowProps) {
   const panelStyle: CSSProperties = {
@@ -106,6 +123,9 @@ export function TeamRow({
               photoSize={photoSize}
               nameSize={nameSize}
               roleSize={roleSize}
+              nameHeight={nameHeight}
+              roleHeight={roleHeight}
+              trailingGap={trailingGap}
               logoRowHeight={logoRowHeight}
               logoMaxHeight={logoMaxHeight}
             />
