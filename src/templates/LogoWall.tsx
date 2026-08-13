@@ -3,6 +3,7 @@ import type { RichText, SlideChromeSpec } from '../types'
 import { SlideFrame } from '../elements/layout/SlideFrame'
 import { SlideHeading } from '../elements/layout/SlideHeading'
 import { LogoGrid } from '../elements/media/LogoGrid'
+import { img } from '../assets/imagery'
 import styles from './LogoWall.module.css'
 
 /**
@@ -27,9 +28,20 @@ export interface LogoWallGroup {
   /** Uppercase label centred in the dotted leader, e.g. 'CUSTOMERS'. */
   label?: string
   /** Aliases or filenames from src/assets/partners — see `logo()`. */
-  logos: string[]
+  logos?: string[]
   /** Overrides the wall's column count for this group alone. */
   columns?: number
+  /** A pre-composed wall supplied as ONE transparent image, e.g.
+   *  'logos/customers-wall'.
+   *
+   *  Both routes exist because they answer different needs. The reference wall
+   *  carries 26 customer and 22 event marks, laid out and optically sized by
+   *  hand — a composite reproduces that exactly and completely, which the
+   *  individual-logo path cannot while marks are still missing. But a composite
+   *  cannot reflow, so a NEW deck with a different customer list wants `logos`.
+   *
+   *  Set one or the other. `wall` wins if both are given. */
+  wall?: string
 }
 
 export interface LogoWallProps extends SlideChromeSpec {
@@ -88,12 +100,20 @@ export function LogoWall({
                 <span className={styles.leader} />
               </div>
             )}
-            <LogoGrid
-              logos={group.logos}
-              columns={group.columns ?? columns}
-              rowHeight={rowHeight}
-              maxHeight={logoMaxHeight}
-            />
+            {group.wall ? (
+              // A pre-composed wall. Width-constrained only, so its own
+              // internal spacing and optical sizing survive — re-fitting it to a
+              // row height would undo the hand-balancing that makes 26 marks of
+              // wildly different aspect ratios read evenly.
+              <img src={img(group.wall)} alt={group.label ?? ''} className={styles.wallImage} />
+            ) : (
+              <LogoGrid
+                logos={group.logos ?? []}
+                columns={group.columns ?? columns}
+                rowHeight={rowHeight}
+                maxHeight={logoMaxHeight}
+              />
+            )}
           </div>
         ))}
       </div>

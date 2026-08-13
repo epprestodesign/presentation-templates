@@ -128,6 +128,25 @@ const COPIES = [
   ['images/Mask group-2.png', 'cover-travel-apps'],
 ]
 
+/* Files from elsewhere under references/, cropped then resized.
+ *
+ * [absolute-ish path from references/, [x, y, w, h] source px, outputName, targetWidth] */
+const REF_ROOT = '..'
+const OTHER = [
+  /* The company photo, supplied as a 2768x2080 screenshot. Cropped to 16:9
+   * from y=300 for two reasons at once: it frames the group properly, and it
+   * drops the Slack icon the screenshot carries in its top-right corner —
+   * which would otherwise sit on the finished slide. */
+  ['photos', [0, 300, 2768, 1557], 'full-bleed/team-topgolf', 2560],
+]
+
+/* Transparent artwork, copied as PNG. JPEG would flatten the alpha to black.
+ * [sourceFile relative to references/logo, outputName] */
+const LOGO_WALLS = [
+  ['Frame 751.png', 'logos/customers-wall'],
+  ['Frame 788.png', 'logos/events-wall'],
+]
+
 let ok = 0
 let failed = 0
 
@@ -166,6 +185,49 @@ for (const [src, name] of COPIES) {
     ok++
   } catch (err) {
     console.error(`  ✗ ${name}  ← ${src}: ${err.message.split('\n')[0]}`)
+    failed++
+  }
+}
+
+import { readdirSync } from 'node:fs'
+
+for (const [dir, [x, y, w, h], name, width] of OTHER) {
+  const out = resolve(`${OUT}/${name}.jpg`)
+  mkdirSync(dirname(out), { recursive: true })
+  try {
+    // The source filename contains spaces and a timestamp, so it is resolved by
+    // listing the directory rather than hard-coded — renaming the file upstream
+    // should not break the build.
+    const src = readdirSync(resolve(`references/${dir}`)).find((f) => /\.(png|jpe?g)$/i.test(f))
+    if (!src) throw new Error(`no image in references/${dir}`)
+    await run('sips', [
+      '--cropOffset', String(y), String(x),
+      '--cropToHeightWidth', String(h), String(w),
+      '-Z', String(width),
+      '-s', 'format', FORMAT,
+      '-s', 'formatOptions', QUALITY,
+      resolve(`references/${dir}/${src}`),
+      '--out', out,
+    ])
+    console.log(`  ✓ ${name}.jpg  ${width}w  ← ${dir}/${src}`)
+    ok++
+  } catch (err) {
+    console.error(`  ✗ ${name}: ${err.message.split('\n')[0]}`)
+    failed++
+  }
+}
+
+for (const [src, name] of LOGO_WALLS) {
+  const out = resolve(`${OUT}/${name}.png`)
+  mkdirSync(dirname(out), { recursive: true })
+  try {
+    // PNG, not JPEG: these are transparent and JPEG would flatten the alpha to
+    // a black box behind every mark.
+    await run('cp', [resolve(`references/logo/${src}`), out])
+    console.log(`  ✓ ${name}.png  (transparent, kept as PNG)  ← ${src}`)
+    ok++
+  } catch (err) {
+    console.error(`  ✗ ${name}: ${err.message.split('\n')[0]}`)
     failed++
   }
 }

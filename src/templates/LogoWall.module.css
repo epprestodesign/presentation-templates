@@ -46,3 +46,13 @@
   background-repeat: repeat-x;
   background-position: center;
 }
+
+/* A pre-composed wall image. Constrained by width only: the composite already
+   carries its own row spacing and optical sizing, and forcing a height would
+   undo the hand-balancing that lets 26 marks of very different aspect ratios
+   read as one even field. */
+.wallImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}

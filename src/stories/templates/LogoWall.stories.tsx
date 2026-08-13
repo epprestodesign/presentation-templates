@@ -57,35 +57,13 @@ export const CustomerProof: Story = {
     titleWidth: 1120,
     columns: 5,
     groups: [
-      {
-        label: 'Customers',
-        logos: [
-          'team-travel-source',
-          '365',
-          'traveloc',
-          '435-housing',
-          '288-travel',
-          'atlas-travel-stay',
-          'absolut-sport',
-          '804-travel',
-          'ah-travel',
-          'bounce-travel',
-        ],
-      },
-      {
-        label: 'Events',
-        logos: [
-          'balloon-fiesta',
-          'hockey-night-in-boston',
-          'bearpaw-lacrosse',
-          '3up-sports',
-          'ausa',
-          'asl',
-          'bismarck-mandan',
-          'berkshire-choral',
-          'academy-of-management',
-        ],
-      },
+      // The complete walls as supplied — 26 customer marks and 22 event marks,
+      // laid out and optically balanced by hand. The individual-logo path still
+      // exists (see `SingleWall`) for a deck with a different customer list, but
+      // for THIS slide the composite is both exact and complete, where the
+      // per-logo route was a third as dense because only 19 marks existed.
+      { label: 'Customers', wall: 'logos/customers-wall' },
+      { label: 'Events', wall: 'logos/events-wall' },
     ],
   },
 }

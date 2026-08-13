@@ -37,6 +37,14 @@ const modules = {
     import: 'default',
     query: '?url',
   }),
+  // Added after the fact: the 18 event marks were ported to src/assets/events
+  // AFTER this component was written, so its registry silently did not include
+  // them and half the available logos were unreachable by name.
+  ...import.meta.glob<string>('../../assets/events/*.{png,jpg,jpeg,svg}', {
+    eager: true,
+    import: 'default',
+    query: '?url',
+  }),
   ...import.meta.glob<string>('../../assets/employers/*.{png,jpg,jpeg,svg}', {
     eager: true,
     import: 'default',

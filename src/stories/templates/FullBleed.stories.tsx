@@ -125,3 +125,25 @@ export const FramedWithHeadline: Story = {
     titleTop: 420,
   },
 }
+
+/** The company photo — the one genuinely EventPipe image in the set.
+ *
+ *  Supplied as a 2768x2080 screenshot and cropped to 16:9 from y=300, which
+ *  frames the group properly AND drops the Slack icon the screenshot carried in
+ *  its top-right corner. That icon would otherwise have shipped on the slide.
+ *
+ *  Uses the CSS `frame` rather than a baked-in one, because unlike the recovered
+ *  full-bleed plates this photo arrives unframed. */
+export const OurTeamAndCompany: Story = {
+  args: {
+    image: 'full-bleed/team-topgolf',
+    alt: 'The EventPipe team at Topgolf',
+    frame: true,
+    scrim: 0.4,
+    title: 'Our Team & Company',
+    titleSize: 'display',
+    titleWidth: 820,
+    titleTop: 470,
+    watermark: false,
+  },
+}
