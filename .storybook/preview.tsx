@@ -85,6 +85,7 @@ const preview: Preview = {
             'Comparison',
             'Tint Table',
             'Financial Table',
+            'Use of Funds',
             'Split Panel',
             'Bullet + Image',
             'Team',

@@ -1,0 +1,76 @@
+.tiers {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hairline between tiers, and one above the first — the reference rules the
+   whole stack rather than only its interior. */
+.tier {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--slide-color-border);
+}
+
+.tier:first-child {
+  border-top: 1px solid var(--slide-color-border);
+}
+
+/* The amount cell is a filled column, not a padded cell: its tint runs the full
+   height of the row and is separated from the copy by its own rule. */
+.amount {
+  flex: none;
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  border-right: 1px solid var(--slide-color-border);
+}
+
+.tierCopy {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 24px 28px;
+  justify-content: center;
+}
+
+/* --- the gradient spec panel ---------------------------------------- */
+.panel {
+  position: absolute;
+  z-index: 2;
+  background: var(--slide-gradient-brand);
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionLabel {
+  font-weight: var(--slide-font-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* Label left, value right, with a hairline under each — the panel reads as a
+   spec sheet, so the rules carry the alignment rather than a table would. */
+.specRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  /* 4px, not 7. The reference fits 9 rows plus two section labels inside a
+     434px panel, which needs a ~31px row pitch; 7px padding gave 38px and
+     clipped the last row off the bottom. */
+  padding: 4px 0;
+  border-bottom: 1px solid var(--slide-color-rule-on-brand);
+}
