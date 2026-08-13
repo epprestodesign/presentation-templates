@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { imagery, imageryNames } from '../../assets/imagery'
+import { img, imageryNames, isRemote } from '../../assets/imagery'
 import { radius } from '../../tokens/tokens.js'
 import { Code, Grid, Page, Section, Specimen } from './_docs'
 
@@ -85,7 +85,14 @@ export const Photos: Story = {
                 style={{ padding: 10 }}
               >
                 <img
-                  src={imagery[name]}
+                  /* img(), not the local map. `imageryNames` is the union of
+                     what is on disk and what the host carries, so indexing the
+                     local map alone produced 182 <img> with no src at all in a
+                     deployed build — the one page whose entire job is to show
+                     the library rendered as 182 empty boxes. */
+                  src={img(name)}
+                  loading="lazy"
+                  title={isRemote(name) ? `${name} — served from the image host` : name}
                   alt=""
                   style={{
                     maxWidth: '100%',

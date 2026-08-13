@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type 
 import { canvas } from '../../tokens/tokens.js'
 import type { SlideChromeSpec, SlideSurface } from '../../types'
 import { SlideChrome } from './SlideChrome'
-import { img } from '../../assets/imagery'
+import { imgOrNull } from '../../assets/imagery'
 import styles from './SlideFrame.module.css'
 
 /**
@@ -84,7 +84,12 @@ export function SlideFrame({
     ...(exact ? {} : { transform: `scale(${scale})`, transformOrigin: 'top left' }),
     ...(surface === 'image' && image ? { backgroundImage: `url("${image}")` } : {}),
     // A named plate overrides the CSS gradient for brand surfaces.
-    ...(surface === 'brand' && plate ? { backgroundImage: `url("${img(plate)}")` } : {}),
+    /* A named plate that cannot be resolved falls through to the CSS gradient
+       rather than painting a grey placeholder over it — the gradient IS the
+       brand surface, and the plate only adds a hex or chevron motif on top. */
+    ...(surface === 'brand' && plate && imgOrNull(plate)
+      ? { backgroundImage: `url("${imgOrNull(plate)}")` }
+      : {}),
   }
 
   /** Chrome ink flips to white on any dark surface. */

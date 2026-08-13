@@ -37,3 +37,20 @@
 .copy h4 {
   margin: 0;
 }
+
+/* Initials in place of a headshot. Same box as .photo — set inline by the
+   component — so a row of people keeps its rhythm whether or not the
+   photographs are on disk. */
+.monogram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--slide-color-surface-cool);
+  color: var(--slide-color-accent-deep);
+  font-family: var(--slide-font-family);
+  font-weight: var(--slide-font-weight-semibold);
+  /* Scales with the box rather than a fixed step: the same component renders a
+     108px card and a 64px row item. */
+  font-size: 34%;
+  letter-spacing: 0.02em;
+}

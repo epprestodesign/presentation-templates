@@ -20,3 +20,18 @@
   max-width: 100%;
   object-fit: contain;
 }
+
+/* Name in place of a mark. Sized to sit inside the same cell the artwork would
+   occupy, so a wall with no artwork keeps its rhythm. */
+.wordmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--slide-font-family);
+  font-weight: var(--slide-font-weight-semibold);
+  font-size: 15px;
+  line-height: 1.25;
+  color: var(--slide-color-text-muted);
+  overflow: hidden;
+}

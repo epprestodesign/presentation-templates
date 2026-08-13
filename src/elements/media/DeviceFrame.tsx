@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react'
+import { IMAGERY_HOST, REMOTE_DEVICES } from '../../assets/imagery/manifest'
 import styles from './DeviceFrame.module.css'
 
 /**
@@ -89,9 +90,18 @@ export interface DeviceFrameProps {
 }
 
 export function DeviceFrame({ device, width, alt = '', className, style }: DeviceFrameProps) {
-  const src = devices[device]
+  /* Local first, then the host, then nothing. Throwing here took the whole
+     slide down in a deployed build, where the mockups are gitignored — a device
+     showcase missing its mockup is still a readable slide; a red error panel is
+     not. Dev still throws, so a misspelt device stops you immediately. */
+  const src =
+    devices[device] ??
+    (REMOTE_DEVICES[device] ? `${IMAGERY_HOST}/${REMOTE_DEVICES[device]}` : undefined)
   if (!src) {
-    throw new Error(`Unknown device "${device}". Available:\n  ${deviceNames.join('\n  ')}`)
+    if (import.meta.env.DEV) {
+      throw new Error(`Unknown device "${device}". Available:\n  ${deviceNames.join('\n  ')}`)
+    }
+    return null
   }
   /** An unmeasured asset falls back to its whole canvas, so a newly dropped-in
    *  mockup renders — just with its own margin included — rather than throwing. */

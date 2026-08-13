@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react'
+import { IMAGERY_HOST, REMOTE_LOGOS } from '../../assets/imagery/manifest'
 import styles from './LogoGrid.module.css'
 
 /**
@@ -87,16 +88,41 @@ const ALIASES: Record<string, string> = {
   traveloc: 'traveloc.png',
 }
 
-/** Resolve a partner mark by alias or by raw filename, failing loudly. */
-export function logo(name: string): string {
+/** Resolve a partner mark by alias or by raw filename, or null if unavailable.
+ *
+ *  Throws while authoring so a wrong alias stops you with the list of what
+ *  exists; returns null in a deployed build. Partner, employer and event marks
+ *  are gitignored and never published — they are other companies' trademarks,
+ *  and using one on a private slide is not the same as republishing it from our
+ *  own domain — so in production this always returns null and the grid renders
+ *  the company's NAME instead. */
+export function logo(name: string): string | null {
   const file = ALIASES[name] ?? name
   const url = byFile[file] ?? byFile[`${file}.png`] ?? byFile[`${file}.jpg`]
-  if (!url) {
+  if (url) return url
+
+  const remote =
+    REMOTE_LOGOS[file] ?? REMOTE_LOGOS[`${file}.png`] ?? REMOTE_LOGOS[`${file}.jpg`]
+  if (remote) return `${IMAGERY_HOST}/${remote}`
+
+  if (import.meta.env.DEV) {
     throw new Error(
       `Unknown logo "${name}". Aliases:\n  ${Object.keys(ALIASES).sort().join('\n  ')}\nFiles:\n  ${Object.keys(byFile).sort().join('\n  ')}`
     )
   }
-  return url
+  return null
+}
+
+/** 'team-travel-source' → 'Team Travel Source'. The wordmark stand-in when the
+ *  artwork is not available. Reads as a deliberate list of names, which is what
+ *  a logo wall is anyway — the marks are decoration on top of it. */
+export function logoLabel(name: string): string {
+  const base = (ALIASES[name] ?? name).replace(/\.\w+$/, '')
+  return base
+    .replace(/[-_]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
 /** Every name `logo()` accepts — aliases plus raw basenames. For documentation
@@ -148,7 +174,16 @@ export function LogoGrid({
     >
       {logos.map((name, i) => (
         <div key={`${name}-${i}`} className={styles.cell} style={cellStyle}>
-          <img src={logo(name)} alt="" className={styles.mark} style={{ maxHeight }} />
+          {logo(name) ? (
+            <img src={logo(name)!} alt="" className={styles.mark} style={{ maxHeight }} />
+          ) : (
+            /* No artwork — the marks are gitignored and never published. The
+               company's name in its place keeps the cell's geometry and still
+               says who the partner is, which is the whole point of the wall. */
+            <span className={styles.wordmark} style={{ maxHeight }}>
+              {logoLabel(name)}
+            </span>
+          )}
         </div>
       ))}
     </div>

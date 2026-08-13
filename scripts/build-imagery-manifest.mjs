@@ -1,84 +1,162 @@
-/* Writes the manifest of PUBLISHABLE imagery — the files served by the separate
- * image host — into src/assets/imagery/manifest.ts.
+/* Writes the manifest of PUBLISHABLE assets — everything served by the image
+ * host — into src/assets/imagery/manifest.ts, and stages the files for upload.
  *
- *   node scripts/build-imagery-manifest.mjs
+ *   node scripts/build-imagery-manifest.mjs            # manifest only
+ *   node scripts/build-imagery-manifest.mjs --stage DIR  # + copy files to DIR
  *
- * WHY A MANIFEST AT ALL: the photos themselves are gitignored, so a deployed
- * build has no files to glob and no way to know that 'unsplash/hotels-housing/
- * hotel-lobby-1' is a .jpg rather than a .png. The manifest is TRACKED, so it
- * ships with the repo and lets img() construct a remote URL for an asset it
- * cannot see.
+ * WHY A MANIFEST: the assets themselves are gitignored, so a deployed build has
+ * nothing to glob and no way to know that 'mosaic/reception-bell' is a .jpg. The
+ * manifest is TRACKED, so it ships with the repo and lets each resolver build a
+ * remote URL for a file it cannot see.
  *
- * WHAT IS DELIBERATELY EXCLUDED, and why it must stay that way:
+ * WHAT IS PUBLISHED: all of
+ * src/assets/{imagery,team,partners,employers,events,devices,logo}.
  *
- *   src/assets/imagery/**  (non-unsplash)  recovered compositions from the
- *       original decks — EventPipe's own artwork, with its own figures on it.
- *   src/assets/team/**                      staff headshots. Photographs of
- *       real people are not ours to publish to a public CDN.
- *   src/assets/partners|employers|events/**  third-party logos and wordmarks.
- *       Someone else's trademarks; fair use on a private slide is not the same
- *       as republishing them from our own domain.
+ * WHAT IS NOT, and must not be:
  *
- * Only Unsplash photography is listed. Those are freely licensed for this use
- * and every one is credited in credits.json, which is published alongside them.
+ *   references/**                  the original decks. Never leaves the machine;
+ *       gitignored in the design system and excluded here.
+ *   imagery/operating-layer-flattened/**
+ *       photographs with the slide's own scrim and TITLE COMPOSITED INTO THE
+ *       PIXELS. They are pictures of finished slides, so publishing them
+ *       publishes deck copy — the one thing the whole gitignore exists to stop.
+ *       They are excluded by path, not by filter, so adding a file to that
+ *       directory cannot accidentally publish it.
+ *
+ * Everything else — including team headshots and partner marks — is published
+ * on the repo owner's explicit instruction.
  */
-import { readdirSync, statSync, writeFileSync } from 'node:fs'
-import { resolve, dirname, relative } from 'node:path'
+import { cpSync, mkdirSync, readdirSync, statSync, writeFileSync } from 'node:fs'
+import { dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const UNSPLASH = resolve(root, 'src/assets/imagery/unsplash')
+const ASSETS = resolve(root, 'src/assets')
 
 /** The public host. A project Pages site, same account as the design system. */
 const HOST = 'https://epprestodesign.github.io/presentation-imagery'
 
+/** Excluded by PATH so a new file in one of these can never slip through. */
+const EXCLUDE = [resolve(ASSETS, 'imagery/operating-layer-flattened')]
+
+const IMAGE = /\.(png|jpe?g|svg)$/i
+
 function walk(dir) {
   const out = []
-  for (const entry of readdirSync(dir)) {
+  let entries
+  try {
+    entries = readdirSync(dir)
+  } catch {
+    return out
+  }
+  for (const entry of entries) {
     const full = resolve(dir, entry)
+    if (EXCLUDE.some((x) => full === x || full.startsWith(x + '/'))) continue
     if (statSync(full).isDirectory()) out.push(...walk(full))
-    else if (/\.(png|jpe?g|svg)$/i.test(entry)) out.push(full)
+    else if (IMAGE.test(entry)) out.push(full)
   }
   return out
 }
 
-let files = []
-try {
-  files = walk(UNSPLASH)
-} catch {
-  console.error('No src/assets/imagery/unsplash — run `pnpm imagery:fetch` first.')
-  process.exit(1)
+const posix = (p) => p.split('\\').join('/')
+const dropExt = (p) => p.replace(IMAGE, '')
+
+/* --- imagery: keys are exactly what img() is called with ------------------ */
+const imageryFiles = walk(resolve(ASSETS, 'imagery'))
+const imagery = Object.fromEntries(
+  imageryFiles
+    .map((f) => {
+      const rel = posix(relative(resolve(ASSETS, 'imagery'), f))
+      return [dropExt(rel), `imagery/${rel}`]
+    })
+    .sort(([a], [b]) => a.localeCompare(b))
+)
+
+/* --- team: keys are what teamPhoto() is called with ('circle/tim-brown') -- */
+const team = Object.fromEntries(
+  walk(resolve(ASSETS, 'team'))
+    .map((f) => {
+      const rel = posix(relative(resolve(ASSETS, 'team'), f))
+      return [dropExt(rel), `team/${rel}`]
+    })
+    .sort(([a], [b]) => a.localeCompare(b))
+)
+
+/* --- logos: keys are FILENAMES, which is what logo() resolves aliases to -- */
+/* --- devices + logo artwork: keyed by BASENAME, as their resolvers are ---- */
+const devices = {}
+for (const group of ['devices', 'logo']) {
+  for (const f of walk(resolve(ASSETS, group))) {
+    const rel = posix(relative(resolve(ASSETS, group), f))
+    devices[dropExt(rel.split('/').pop())] = `${group}/${rel}`
+  }
 }
 
-/** 'unsplash/hotels-housing/hotel-lobby-1' → 'unsplash/hotels-housing/hotel-lobby-1.jpg' */
-const entries = files
-  .map((f) => {
-    const rel = relative(resolve(root, 'src/assets/imagery'), f).split('\\').join('/')
-    return [rel.replace(/\.(png|jpe?g|svg)$/i, ''), rel]
-  })
-  .sort(([a], [b]) => a.localeCompare(b))
+const logos = {}
+for (const group of ['partners', 'employers', 'events']) {
+  for (const f of walk(resolve(ASSETS, group))) {
+    const rel = posix(relative(resolve(ASSETS, group), f))
+    // Basename, because byFile in LogoGrid is keyed by basename.
+    logos[rel.split('/').pop()] = `${group}/${rel}`
+  }
+}
 
 const out = `/* GENERATED by scripts/build-imagery-manifest.mjs — do not edit by hand.
  *
- * Maps a publishable imagery NAME to its filename on the image host. Tracked on
- * purpose: the photos are gitignored, so this is the only thing that tells a
+ * Maps every publishable asset name to its path on the image host. Tracked on
+ * purpose: the files are gitignored, so this is the only thing that tells a
  * deployed build what exists and what extension it has.
  *
- * Regenerate with \`pnpm imagery:manifest\` after fetching new photography.
- * Only Unsplash imagery appears here — see the script header for what is
- * excluded and why.
+ * Regenerate with \`pnpm imagery:manifest\` after adding assets.
+ * See the script header for what is excluded and why.
  */
 
-/** Public host for imagery the repo does not carry. */
+/** Public host for assets the repo does not carry. */
 export const IMAGERY_HOST = '${HOST}'
 
-/** name → filename, for every publishable asset. */
-export const REMOTE_IMAGERY: Record<string, string> = ${JSON.stringify(
-  Object.fromEntries(entries),
+/** img() names → host path. */
+export const REMOTE_IMAGERY: Record<string, string> = ${JSON.stringify(imagery, null, 2)}
+
+/** teamPhoto() names → host path. */
+export const REMOTE_TEAM: Record<string, string> = ${JSON.stringify(team, null, 2)}
+
+/** logo() filenames → host path. */
+export const REMOTE_LOGOS: Record<string, string> = ${JSON.stringify(
+  Object.fromEntries(Object.entries(logos).sort(([a], [b]) => a.localeCompare(b))),
+  null,
+  2
+)}
+
+/** Device mockup and logo artwork basenames → host path. */
+export const REMOTE_DEVICES: Record<string, string> = ${JSON.stringify(
+  Object.fromEntries(Object.entries(devices).sort(([a], [b]) => a.localeCompare(b))),
   null,
   2
 )}
 `
 
-writeFileSync(resolve(root, 'src/assets/imagery/manifest.ts'), out)
-console.log(`✓ wrote src/assets/imagery/manifest.ts — ${entries.length} publishable assets`)
+writeFileSync(resolve(ASSETS, 'imagery/manifest.ts'), out)
+console.log(
+  `✓ manifest — ${Object.keys(imagery).length} imagery · ${Object.keys(team).length} team · ${
+    Object.keys(logos).length
+  } logos`
+)
+
+/* --- optional staging for upload ----------------------------------------- */
+const stageIdx = process.argv.indexOf('--stage')
+if (stageIdx !== -1) {
+  const dest = resolve(process.argv[stageIdx + 1])
+  let n = 0
+  const copy = (from, to) => {
+    mkdirSync(dirname(to), { recursive: true })
+    cpSync(from, to)
+    n++
+  }
+  for (const [, rel] of Object.entries(imagery)) copy(resolve(ASSETS, 'imagery', rel.slice(8)), resolve(dest, rel))
+  for (const [, rel] of Object.entries(team)) copy(resolve(ASSETS, 'team', rel.slice(5)), resolve(dest, rel))
+  for (const [, rel] of Object.entries({ ...logos, ...devices })) {
+    const group = rel.split('/')[0]
+    copy(resolve(ASSETS, group, rel.slice(group.length + 1)), resolve(dest, rel))
+  }
+  console.log(`✓ staged ${n} files → ${dest}`)
+}

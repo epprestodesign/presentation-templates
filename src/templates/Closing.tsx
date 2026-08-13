@@ -4,6 +4,7 @@ import { SlideFrame } from '../elements/layout/SlideFrame'
 import { SlideHeading } from '../elements/layout/SlideHeading'
 import { OutlineCard } from '../elements/layout/OutlineCard'
 import { img } from '../assets/imagery'
+import { IMAGERY_HOST, REMOTE_TEAM } from '../assets/imagery/manifest'
 import styles from './Closing.module.css'
 
 /**
@@ -73,17 +74,27 @@ const team: Record<string, string> = Object.fromEntries(
   ])
 )
 
-/** Resolve a headshot, failing loudly with the available names. `imagery/`-style
- *  names ('team/circle/x') and bare paths ('circle/x') both work. */
-function portrait(name: string): string {
+/** Resolve a headshot. `imagery/`-style names ('team/circle/x') and bare paths
+ *  ('circle/x') both work.
+ *
+ *  Local first, then the image host, then null. Throwing was right while
+ *  authoring and wrong in a deployed build, where the headshots are gitignored —
+ *  it took the whole closing slide down rather than leaving one contact without
+ *  a picture. Dev still throws so a misspelt name stops you with the list. */
+function portrait(name: string): string | null {
   const key = name.replace(/^team\//, '')
   const url = team[key]
-  if (!url) {
+  if (url) return url
+
+  const remote = REMOTE_TEAM[key]
+  if (remote) return `${IMAGERY_HOST}/${remote}`
+
+  if (import.meta.env.DEV) {
     throw new Error(
       `Unknown team photo "${name}". Available:\n  ${Object.keys(team).sort().join('\n  ')}`
     )
   }
-  return url
+  return null
 }
 
 export function Closing({
@@ -123,9 +134,9 @@ export function Closing({
       <div className={styles.row} style={{ left: grid.marginX, top, right, height, gap }}>
         {people.map((person, i) => (
           <OutlineCard key={i} radius={cardRadius} padding={padding} className={styles.card}>
-            {person.photo && (
+            {person.photo && portrait(person.photo) && (
               <img
-                src={portrait(person.photo)}
+                src={portrait(person.photo)!}
                 alt={person.name}
                 className={styles.portrait}
                 style={{

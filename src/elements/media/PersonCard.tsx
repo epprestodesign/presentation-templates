@@ -4,6 +4,7 @@ import type { PersonSpec, TypeStep } from '../../types'
 import { typeClass } from '../../lib/typeClass'
 import { ContactIconRow } from './ContactIconRow'
 import { LogoGrid } from './LogoGrid'
+import { IMAGERY_HOST, REMOTE_TEAM } from '../../assets/imagery/manifest'
 import styles from './PersonCard.module.css'
 
 /**
@@ -46,16 +47,39 @@ const byName: Record<string, string> = Object.fromEntries(
   ])
 )
 
-/** Resolve a headshot name to a URL, failing loudly with the list of what
- *  exists — the same contract as `img()`, so a typo never renders blank. */
-export function teamPhoto(name: string): string {
+/** Resolve a headshot name to a URL, or null when there is no photograph.
+ *
+ *  Same contract as `imgOrNull()`: throws while authoring so a typo stops you
+ *  with the list of what exists, returns null in a deployed build. Headshots are
+ *  gitignored and are never published — photographs of real people are not ours
+ *  to put on a public CDN — so in production this ALWAYS returns null, and the
+ *  card falls back to initials. That fallback is the honest rendering: a
+ *  monogram says "this person, no photo", where a stock face would say
+ *  something false. */
+export function teamPhoto(name: string): string | null {
   const url = byName[name]
-  if (!url) {
+  if (url) return url
+
+  const remote = REMOTE_TEAM[name]
+  if (remote) return `${IMAGERY_HOST}/${remote}`
+
+  if (import.meta.env.DEV) {
     throw new Error(
       `Unknown headshot "${name}". Available:\n  ${Object.keys(byName).sort().join('\n  ')}`
     )
   }
-  return url
+  return null
+}
+
+/** 'Tim Brown' → 'TB'. Two letters at most; a three-initial monogram reads as
+ *  an acronym rather than as a person. */
+export function initials(name: string): string {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0]?.toUpperCase() ?? '')
+    .join('')
 }
 
 /** All headshot names, for documentation stories. */
@@ -127,7 +151,21 @@ export function PersonCard({
       className={[styles.card, styles[layout], className].filter(Boolean).join(' ')}
       style={{ gap: photoGap }}
     >
-      {photo && <img src={teamPhoto(photo)} alt={name} className={styles.photo} style={photoStyle} />}
+      {photo &&
+        (teamPhoto(photo) ? (
+          <img src={teamPhoto(photo)!} alt={name} className={styles.photo} style={photoStyle} />
+        ) : (
+          /* No photograph available — the deployed build never has them. The
+             monogram keeps the card's geometry exactly, so a row of people does
+             not re-flow depending on who has a headshot on disk. */
+          <div
+            className={`${styles.photo} ${styles.monogram}`}
+            style={photoStyle}
+            aria-label={name}
+          >
+            {initials(name ?? '')}
+          </div>
+        ))}
 
       <div className={styles.copy} style={{ gap: roleGap }}>
         {/* h4 rather than h3/h2 as the ELEMENT regardless of the type step: a

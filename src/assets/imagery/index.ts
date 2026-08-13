@@ -60,16 +60,45 @@ export const imagery: Record<string, string> = Object.fromEntries(
  *  A name that is in neither still throws with the full list, which is what
  *  catches a typo at authoring time. */
 export function img(name: string): string {
+  return imgOrNull(name) ?? MISSING_IMAGE
+}
+
+/** Same resolution, but `null` instead of a placeholder when nothing matches.
+ *
+ *  For callers that can do something better than show a grey box — SlideFrame
+ *  falls back to the CSS brand gradient when a named background plate is not
+ *  available, which is indistinguishable from the real thing on most slides. */
+export function imgOrNull(name: string): string | null {
   const local = imagery[name]
   if (local) return local
 
   const remote = REMOTE_IMAGERY[name]
   if (remote) return `${IMAGERY_HOST}/${remote}`
 
-  throw new Error(
-    `Unknown image "${name}". Available locally:\n  ${Object.keys(imagery).sort().join('\n  ')}`
-  )
+  /* DEV THROWS, PRODUCTION DEGRADES.
+   *
+   * Throwing is right while authoring: a typo in an image name should stop you
+   * immediately, with the list of what exists. It is exactly wrong in a
+   * deployed build, where the imagery is gitignored by design — there, every
+   * missing asset took its whole story down with it, and 13 of 14 template
+   * slides rendered as a red error panel instead of as a slide missing one
+   * picture. A deck that is missing a photograph is still a deck. */
+  if (import.meta.env.DEV) {
+    throw new Error(
+      `Unknown image "${name}". Available locally:\n  ${Object.keys(imagery).sort().join('\n  ')}`
+    )
+  }
+  return null
 }
+
+/** A neutral plate, so a slot with no asset reads as an empty frame rather than
+ *  as a broken-image glyph. Inline SVG: no network request, and it cannot 404. */
+const MISSING_IMAGE =
+  'data:image/svg+xml;utf8,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9">' +
+      '<rect width="16" height="9" fill="%23eceff1"/></svg>'
+  )
 
 /** True when this asset can only come from the remote host — used by the
  *  Imagery foundation page to say so rather than showing a silent gap. */
