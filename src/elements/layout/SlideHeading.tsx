@@ -22,6 +22,12 @@ export interface SlideHeadingProps {
    *  to a fixed y below it eventually collides. Keeping the whole copy column
    *  in one flex stack makes that impossible. */
   body?: RichText
+  /** Several paragraphs at ONE size, which `lead` + `body` cannot express —
+   *  those are deliberately 17px and 15px, so using them for two equal
+   *  paragraphs silently steps the second one down. Rendered at `body` unless
+   *  `paragraphSize` says otherwise. */
+  paragraphs?: RichText[]
+  paragraphSize?: TypeStep
   /** Type step for the headline: 'display' | 'h1' | 'h2'. */
   size?: TypeStep
   /** How wide the copy column runs, in slide px. */
@@ -39,6 +45,8 @@ export function SlideHeading({
   title,
   lead,
   body,
+  paragraphs,
+  paragraphSize = 'body',
   size = 'h1',
   width = 720,
   top = grid.titleY,
@@ -72,6 +80,16 @@ export function SlideHeading({
           className={['ds-text-body', onDark ? 'ds-text-on-brand-subtle' : ''].filter(Boolean).join(' ')}
         />
       )}
+      {paragraphs?.map((paragraph, i) => (
+        <AccentText
+          key={i}
+          as="p"
+          content={paragraph}
+          className={[typeClass(paragraphSize), onDark ? 'ds-text-on-brand-subtle' : '']
+            .filter(Boolean)
+            .join(' ')}
+        />
+      ))}
     </div>
   )
 }

@@ -64,6 +64,12 @@ export const neutral = {
  *  #546e7a (Blue Grey 600) — a cooler gray than `neutral`, and distinct
  *  enough on screen to keep rather than flatten. */
 export const blueGrey = {
+  /* The light end was added after the comparison slide turned out to use a cool
+     grey family throughout — band, step cards and rail. Substituting the neutral
+     ramp read visibly warm against the teal beside it. */
+  50: '#eceff1',
+  100: '#cfd8dc',
+  200: '#b0bec5',
   300: '#90a4ae',
   400: '#78909c',
   500: '#607d8b',

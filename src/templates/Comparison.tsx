@@ -17,6 +17,12 @@ import styles from './Comparison.module.css'
  * slides 02 (the operational-complexity problem statement) and 13 (the
  * partnership-strategy "today vs with EventPipe" split).
  *
+ * Both reference headlines break at a chosen word rather than wherever the
+ * column runs out, so the stories declare those breaks with `\n` in the content.
+ * Do the same on any new slide of this shape — widening `titleWidth` to coax a
+ * break out of the wrap is how a headline ends up one word short on the next
+ * font update.
+ *
  * ONE template with a band variant, not two templates. The two slides look
  * different at a glance, and the temptation is to call them separate layouts —
  * but the pixels say otherwise. Both are a single 16px-radius panel starting at
@@ -44,6 +50,7 @@ export interface ComparisonFigure {
   label?: RichText
   valueSize?: TypeStep
 }
+
 export interface ComparisonProps extends SlideChromeSpec {
   fit?: 'contain' | 'none'
 
@@ -54,8 +61,8 @@ export interface ComparisonProps extends SlideChromeSpec {
   /** Where the lead starts.
    *
    *  It is positioned rather than stacked under the headline, because the two
-   *  need different measures: slide 13's headline breaks after "event" at
-   *  700px while its lead runs the full 1140px width. `grid.leadY` is defined
+   *  need different measures: slide 13's headline is set on a 760px column
+   *  while its lead runs the full 1140px width. `grid.leadY` is defined
    *  as exactly this anchor — where a lead sits below a two-line headline — so
    *  the fixed y is the documented grid, not a magic number. */
   leadTop?: number

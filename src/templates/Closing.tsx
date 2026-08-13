@@ -1,9 +1,8 @@
 import { grid } from '../tokens/tokens.js'
 import type { PersonSpec, RichText, SlideChromeSpec, TypeStep } from '../types'
 import { SlideFrame } from '../elements/layout/SlideFrame'
-import { AccentText } from '../elements/text/AccentText'
+import { SlideHeading } from '../elements/layout/SlideHeading'
 import { OutlineCard } from '../elements/layout/OutlineCard'
-import { typeClass } from '../lib/typeClass'
 import { img } from '../assets/imagery'
 import styles from './Closing.module.css'
 
@@ -119,14 +118,7 @@ export function Closing({
         />
       )}
 
-      {/* Not SlideHeading: its `onDark` only recolours the lead, so the
-          headline itself would keep `ds-text-*`'s black ink over the gradient.
-          Same reason Agenda sets its own title. See the note in the story. */}
-      <AccentText
-        content={title}
-        className={[styles.title, typeClass(titleSize), 'ds-text-on-brand'].join(' ')}
-        style={{ top: titleTop, width: titleWidth }}
-      />
+      <SlideHeading title={title} size={titleSize} width={titleWidth} top={titleTop} onDark />
 
       <div className={styles.row} style={{ left: grid.marginX, top, right, height, gap }}>
         {people.map((person, i) => (

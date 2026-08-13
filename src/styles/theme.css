@@ -48,6 +48,9 @@
   --color-neutral-900: #202020;
   --color-neutral-950: #000000;
   /* blue-grey */
+  --color-blue-grey-50: #eceff1;
+  --color-blue-grey-100: #cfd8dc;
+  --color-blue-grey-200: #b0bec5;
   --color-blue-grey-300: #90a4ae;
   --color-blue-grey-400: #78909c;
   --color-blue-grey-500: #607d8b;
@@ -101,6 +104,10 @@
   --slide-text-h2-line-height: 1.18;
   --slide-text-h2-weight: 700;
   --slide-text-h2-tracking: -0.015em;
+  --slide-text-subhead-size: 24px;
+  --slide-text-subhead-line-height: 1.3;
+  --slide-text-subhead-weight: 600;
+  --slide-text-subhead-tracking: -0.01em;
   --slide-text-h3-size: 22px;
   --slide-text-h3-line-height: 1.25;
   --slide-text-h3-weight: 700;
@@ -113,6 +120,14 @@
   --slide-text-lead-line-height: 1.5;
   --slide-text-lead-weight: 400;
   --slide-text-lead-tracking: 0;
+  --slide-text-body-xl-size: 22px;
+  --slide-text-body-xl-line-height: 1.45;
+  --slide-text-body-xl-weight: 400;
+  --slide-text-body-xl-tracking: 0;
+  --slide-text-body-lg-size: 18px;
+  --slide-text-body-lg-line-height: 1.5;
+  --slide-text-body-lg-weight: 400;
+  --slide-text-body-lg-tracking: 0;
   --slide-text-body-size: 15px;
   --slide-text-body-line-height: 1.55;
   --slide-text-body-weight: 400;
@@ -152,6 +167,9 @@
   --slide-color-surface: #ffffff;
   --slide-color-surface-muted: #f5f5f5;
   --slide-color-surface-sunken: #fafafa;
+  --slide-color-surface-cool: #eceff1;
+  --slide-color-surface-cool-sunken: #cfd8dc;
+  --slide-color-rule-cool: #b0bec5;
   --slide-color-text: #000000;
   --slide-color-text-subtle: #808080;
   --slide-color-text-muted: #7b7b7b;
@@ -166,6 +184,7 @@
   --slide-color-border: #e5e5e5;
   --slide-color-rule: #d4d4d4;
   --slide-color-rule-on-brand: rgba(255, 255, 255, 0.28);
+  --slide-color-rule-on-brand-strong: rgba(255, 255, 255, 0.40);
   --slide-color-series-1: #02adb3;
   --slide-color-series-2: #007aa9;
   --slide-color-series-3: #1bf5ef;
@@ -181,6 +200,7 @@
   --slide-gradient-brand: linear-gradient(45deg, #01658b 0%, #02adb3 100%);
   --slide-gradient-brand-bleed: linear-gradient(80deg, #075373 0%, #02adb3 100%);
   --slide-gradient-brand-vertical: linear-gradient(0deg, #01658b 0%, #02adb3 100%);
+  --slide-gradient-brand-band: linear-gradient(4deg, #02adb3 0%, #01658b 100%);
   --slide-gradient-brand-card-alt: linear-gradient(135deg, #02718f 0%, #01a2b1 100%);
 
   /* ------------------------------------------------------------------
@@ -201,6 +221,7 @@
   --slide-radius-image: 8px;
   --slide-radius-card: 10px;
   --slide-radius-panel: 16px;
+  --slide-radius-panel-lg: 24px;
   --slide-radius-pill: 999px;
 
   /* ------------------------------------------------------------------

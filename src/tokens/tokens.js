@@ -85,11 +85,20 @@ export const type = {
      *  earlier here than in the originals. */
     h1:        { size: 40, lineHeight: 1.14, weight: 700, tracking: '-0.015em' },
     h2:        { size: 32, lineHeight: 1.18, weight: 700, tracking: '-0.015em' },
+    /** 24/600 — column headings and contact roles. Between h2 and h3 in size,
+     *  and at a weight neither carries. */
+    subhead:   { size: 24, lineHeight: 1.3,  weight: 600, tracking: '-0.01em' },
     /** Card and panel titles. */
     h3:        { size: 22, lineHeight: 1.25, weight: 700, tracking: '-0.01em' },
     h4:        { size: 18, lineHeight: 1.3,  weight: 600, tracking: '-0.01em' },
     /** The subhead that sits under a headline. */
     lead:      { size: 17, lineHeight: 1.5,  weight: 400, tracking: '0' },
+    /** 18/400 — measured on the comparison slide's steps. `h4` is 18 but at
+     *  600, and `lead` is 400 but at 17, so neither was right. */
+    /** 22/400 — h3's size at body weight, for a label that should read as copy
+     *  rather than as a heading. */
+    bodyXl:    { size: 22, lineHeight: 1.45, weight: 400, tracking: '0' },
+    bodyLg:    { size: 18, lineHeight: 1.5,  weight: 400, tracking: '0' },
     body:      { size: 15, lineHeight: 1.55, weight: 400, tracking: '0' },
     bodySm:    { size: 13, lineHeight: 1.5,  weight: 400, tracking: '0' },
     caption:   { size: 11, lineHeight: 1.4,  weight: 500, tracking: '0' },
@@ -131,6 +140,13 @@ export const gradient = {
    *  comparison bars on the by-the-numbers slide WERE measured, and they are
    *  `brand` at 45deg, not this. */
   brandVertical: { angle: 0, from: orient[800], to: fountainBlue[600] },
+  /** The comparison slide's bands. Measured at 2-3deg off vertical, bright top
+   *  to dark bottom: on a band 5.6x wider than tall the vertical fall is ~3.7x
+   *  the horizontal rise. `brand` at 45deg makes the horizontal spread dominant
+   *  on this shape (visibly wrong), and `brandBleed` at 80deg is off by ~90deg.
+   *  Kept as its own token rather than reusing brandVertical because the few
+   *  degrees of lean are what stops it looking mechanical. */
+  brandBand: { angle: 4, from: fountainBlue[600], to: orient[800] },
   /** The opposite diagonal — dark top-left to bright bottom-right. Available
    *  as StatCard's `brandAlt` surface.
    *
@@ -163,6 +179,11 @@ export const color = {
   /** The #f5f5f5 card fill used on every stat and feature card. */
   surfaceMuted: neutral[100],
   surfaceSunken: neutral[50],
+  /** Cool counterparts, for panels that sit against the brand teal. Measured on
+   *  the comparison slide, where the neutral ramp read visibly warm. */
+  surfaceCool: blueGrey[50],
+  surfaceCoolSunken: blueGrey[100],
+  ruleCool: blueGrey[200],
 
   /* Text on light surfaces */
   text: neutral[950],
@@ -197,6 +218,10 @@ export const color = {
   border: neutral[200],
   rule: neutral[300],
   ruleOnBrand: 'rgba(255, 255, 255, 0.28)',
+  /** The outlined cards on the closing slide measure 40% white, not 28%:
+   *  rgb(102,195,203) over rgb(0,155,169) solves to alpha 0.40. At card size
+   *  0.28 reads as almost no border at all. */
+  ruleOnBrandStrong: 'rgba(255, 255, 255, 0.40)',
 
   /* Chart series, in application order. */
   series: [fountainBlue[600], orient[700], fountainBlue[400], orient[500], fountainBlue[800]],
@@ -213,6 +238,10 @@ export const radius = {
   image: 8,
   card: 10,
   panel: 16,
+  /** Measured on the closing contact cards and the full-bleed photo frame —
+   *  two unrelated places arriving at the same value, which is what makes it a
+   *  step rather than a one-off. */
+  panelLg: 24,
   pill: 999,
 }
 

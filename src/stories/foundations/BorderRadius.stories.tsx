@@ -24,6 +24,7 @@ const NOTES: Record<keyof typeof radius, string> = {
   image: 'Photos, mosaic frames, device shots',
   card: 'Stat and feature cards',
   panel: 'Large gradient panels and wells',
+  panelLg: 'Closing contact cards and the full-bleed photo frame',
   pill: 'Fully rounded — badges and dots',
 }
 

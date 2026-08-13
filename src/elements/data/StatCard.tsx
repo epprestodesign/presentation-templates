@@ -1,5 +1,5 @@
 import { radius } from '../../tokens/tokens.js'
-import type { StatSpec } from '../../types'
+import type { StatSpec, TypeStep } from '../../types'
 import { Icon } from '../brand/Icon'
 import { typeClass } from '../../lib/typeClass'
 import styles from './StatCard.module.css'
@@ -18,6 +18,10 @@ import styles from './StatCard.module.css'
  */
 export interface StatCardProps extends StatSpec {
   padding?: number
+  /** Type step for the label. Defaults to h4. Exposed so a slide whose figure
+   *  and label sit at an unusual ratio can fold back into StatCard instead of
+   *  hand-setting two lines of type in its template. */
+  labelSize?: TypeStep
 }
 
 export function StatCard({
@@ -30,6 +34,7 @@ export function StatCard({
   valueSize = 'stat',
   align = 'bottom',
   padding = 28,
+  labelSize = 'h4',
 }: StatCardProps) {
   const onBrand = surface === 'brand' || surface === 'brandAlt'
 
@@ -55,7 +60,7 @@ export function StatCard({
 
       <div className={[styles.body, order === 'value-first' ? styles.reversed : ''].filter(Boolean).join(' ')}>
         {label && (
-          <div className={['ds-text-h4', onBrand ? 'ds-text-on-brand' : ''].filter(Boolean).join(' ')}>
+          <div className={[typeClass(labelSize), onBrand ? 'ds-text-on-brand' : ''].filter(Boolean).join(' ')}>
             {label}
           </div>
         )}
