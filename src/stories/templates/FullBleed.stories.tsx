@@ -64,8 +64,6 @@ export const DashboardReview: Story = {
     title: 'Platform Walkthrough',
     arrow: true,
     scrim: 0.34,
-    titleSize: 'display',
-    titleTop: 470,
     watermark: false,
   },
 }
@@ -78,8 +76,6 @@ export const GrowthHologram: Story = {
     title: 'Growth & Performance',
     arrow: true,
     scrim: 0.34,
-    titleSize: 'display',
-    titleTop: 470,
     watermark: false,
   },
 }
@@ -92,8 +88,6 @@ export const ServerRacks: Story = {
     title: 'Infrastructure at Scale',
     arrow: true,
     scrim: 0.34,
-    titleSize: 'display',
-    titleTop: 470,
     watermark: false,
   },
 }
@@ -106,8 +100,6 @@ export const HexInterface: Story = {
     title: 'Product & Integrations',
     arrow: true,
     scrim: 0.34,
-    titleSize: 'display',
-    titleTop: 470,
     watermark: false,
   },
 }
@@ -120,8 +112,6 @@ export const CodeInGlasses: Story = {
     title: 'PipeSights Demo',
     arrow: true,
     scrim: 0.34,
-    titleSize: 'display',
-    titleTop: 470,
     watermark: false,
   },
 }
@@ -134,8 +124,6 @@ export const AirportFamily: Story = {
     title: 'Closing Remarks',
     arrow: true,
     scrim: 0.34,
-    titleSize: 'display',
-    titleTop: 470,
     watermark: false,
   },
 }
@@ -152,7 +140,6 @@ export const FramedWithHeadline: Story = {
     eyebrow: 'EventPipe',
     title: ['Every room, ', { accent: 'one contract.' }],
     titleWidth: 720,
-    titleTop: 420,
   },
 }
 
@@ -172,9 +159,6 @@ export const OurTeamAndCompany: Story = {
     scrim: 0.4,
     title: 'Our Team & Company',
     arrow: true,
-    titleSize: 'display',
-    titleWidth: 820,
-    titleTop: 470,
     watermark: false,
   },
 }

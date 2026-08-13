@@ -1,0 +1,29 @@
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 22px;
+}
+
+.end {
+  justify-content: flex-end;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* The label and its swatch must never be split across a wrap. */
+  white-space: nowrap;
+}
+
+.swatch {
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  flex: none;
+}
+
+.label {
+  color: var(--slide-color-text-muted);
+}

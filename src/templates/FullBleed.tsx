@@ -1,7 +1,8 @@
+import { type as typeScale } from '../tokens/tokens.js'
 import type { RichText, SlideChromeSpec, TypeStep } from '../types'
 import { SlideFrame } from '../elements/layout/SlideFrame'
 import { SlideHeading } from '../elements/layout/SlideHeading'
-import { Icon } from '../elements/brand/Icon'
+import { ArrowGlyph } from '../elements/brand/ArrowGlyph'
 import { img } from '../assets/imagery'
 import styles from './FullBleed.module.css'
 
@@ -41,6 +42,13 @@ export interface FullBleedProps extends SlideChromeSpec {
   scrim?: number
   title?: RichText
   titleSize?: TypeStep
+  /** Copy measure for the headline.
+   *
+   *  1080, not the 760 this used at the smaller `display` step. At 85px a
+   *  two-word title like "Platform Walkthrough" needs ~830px, so 760 wrapped it
+   *  to two lines — and a two-line headline anchored at 512 finishes 17px off
+   *  the bottom of the artboard. The ceiling is ~1116 (the arrow starts at
+   *  1188), so 1080 leaves a comfortable gap before the mark. */
   titleWidth?: number
   lead?: RichText
   /** Where the headline sits vertically. */
@@ -49,9 +57,8 @@ export interface FullBleedProps extends SlideChromeSpec {
    *  section opener, meaning "the section starts here". Off by default, since
    *  a full-bleed slide is not always a divider. */
   arrow?: boolean
-  /** Material Symbols glyph for that mark. */
-  arrowIcon?: string
-  /** Glyph size inside the 72px plate. */
+  /** Drawn height of that mark, in slide px. Defaults to the cap height of the
+   *  headline beside it, so the two read as one line of the same voice. */
   arrowSize?: number
 }
 
@@ -64,15 +71,23 @@ export function FullBleed({
   frameRadius = 24,
   scrim = 0,
   title,
-  titleSize = 'display',
-  titleWidth = 760,
+  titleSize = 'displayLg',
+  titleWidth = 1080,
   lead,
-  titleTop = 420,
+  titleTop = 512,
   arrow = false,
-  arrowIcon = 'arrow_downward',
-  arrowSize = 34,
+  arrowSize,
   ...chrome
 }: FullBleedProps) {
+  /* Cap height of the headline, which is what the arrow is sized and aligned to.
+   *
+   * 0.781 is Poppins' cap-to-em ratio, measured when the display step was
+   * derived (see tokens.js). Matching the arrow to the CAP rather than to the
+   * font size matters: an em-tall arrow beside a 85px headline overshoots the
+   * letters by a fifth and reads as a separate, larger object rather than as
+   * punctuation on the same line. */
+  const titleCap = Math.round((typeScale.scale[titleSize]?.size ?? 64) * 0.781)
+
   return (
     <SlideFrame
       fit={fit}
@@ -103,16 +118,8 @@ export function FullBleed({
         // Sits on the title's own line at the right margin rather than inside
         // SlideHeading, because the heading's width is the copy measure — an
         // arrow inside it would track the text, not the slide.
-        <div className={styles.arrow} style={{ top: titleTop }}>
-          <Icon
-            name={arrowIcon}
-            size={arrowSize}
-            /* 500, not 300. A hairline glyph inside the plate reads as a
-               rendering artefact at slide scale; the ring can carry the light
-               weight, the arrow inside it cannot. */
-            weight={500}
-            color="var(--slide-color-text-on-brand)"
-          />
+        <div className={styles.arrow} style={{ top: titleTop, height: titleCap }}>
+          <ArrowGlyph size={arrowSize ?? titleCap} />
         </div>
       )}
 

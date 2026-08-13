@@ -21,9 +21,12 @@
    two panels side by side the rules are what stop the captions reading as one
    continuous paragraph. */
 .caption {
-  /* Wide enough to clear the x-axis tick labels, which are drawn on the very
-     last row of the plot's own box — at 14px the rule sat on top of them. */
-  margin-top: 22px;
-  padding-top: 12px;
+  /* Generous, and deliberately so. 22/12 cleared the x-axis tick labels
+     geometrically but still read as crowded: the tick row is the plot's own
+     last line, so a rule 22px under it looks 22px under the CHART while sitting
+     only ~6px under the numbers a reader actually sees. Measuring to the ink
+     rather than to the box is what the extra space pays for. */
+  margin-top: 40px;
+  padding-top: 20px;
   border-top: 1px solid var(--slide-color-border);
 }

@@ -4,7 +4,7 @@ import { Page, Row, Section, Stage } from './_stage'
 
 /** ELEMENTS / Text — the run model every headline is built from. */
 const meta = {
-  title: 'Elements/Text',
+  title: 'Components/Text',
   component: AccentText,
   tags: ['autodocs'],
   parameters: {

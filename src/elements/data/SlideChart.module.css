@@ -35,20 +35,10 @@
 /* The floating figure the reference deck drops over the plot (slide 16's
    "15.6% / 2027 EBITA Margin"). Positioned rather than anchored to a data
    point — it is a headline, not a label. */
-.callout {
-  position: absolute;
-  right: 6%;
-  bottom: 16%;
-  width: 132px;
-  height: 132px;
-  border-radius: 50%;
-  background: var(--slide-color-surface);
-  box-shadow: var(--slide-shadow-card);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  text-align: center;
-  padding: 8px;
+
+/* The key sits under the plot, on the chart's left edge. Its 30px band is
+   subtracted from the plot height in SlideChart, so adding a legend shortens the
+   chart rather than pushing it past the bottom of the slide. */
+.chartLegend {
+  margin-top: 10px;
 }

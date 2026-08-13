@@ -6,7 +6,7 @@ import { Page, Row, Section, Stage } from './_stage'
 
 /** ELEMENTS / Data — KPI tiles, charts and tables. */
 const meta = {
-  title: 'Elements/Data',
+  title: 'Components/Data',
   tags: ['autodocs'],
   parameters: {
     // Explicit, not inherited. Storybook's `backgrounds` global persists across

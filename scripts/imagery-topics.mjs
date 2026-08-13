@@ -102,6 +102,37 @@ export const IMAGERY_BRIEF = [
       { slug: 'network-abstract', query: 'abstract network connection lines' },
     ],
   },
+  /* --- Added for the documentation templates ---------------------------
+   *
+   * Timeline, Process, Quote and KPI Board arrived after the original brief was
+   * written, and they want pictures the deck did not previously need: a face
+   * for an attributed quote, and the ordinary operational scenes an internal
+   * deck uses — onboarding, a working session, a review.
+   *
+   * Portraits are squarish because Quote crops them to a circle; a landscape
+   * frame crops to a slice of cheek. */
+  {
+    group: 'documentation',
+    why: 'Internal and external explainer decks: onboarding, process, QBRs, all-hands.',
+    topics: [
+      { slug: 'onboarding-session', query: 'training session laptop colleagues' },
+      { slug: 'whiteboard-planning', query: 'whiteboard planning sticky notes team' },
+      { slug: 'working-session', query: 'two people working laptop desk office' },
+      { slug: 'quarterly-review', query: 'business review meeting presentation screen' },
+      { slug: 'documentation-desk', query: 'organised desk notebook laptop overhead' },
+      { slug: 'video-call', query: 'video call remote meeting laptop screen' },
+    ],
+  },
+  {
+    group: 'portraits',
+    why: 'Attributed quotes and team slides. Squarish because Quote and TeamGrid crop to a circle.',
+    topics: [
+      { slug: 'portrait-woman-professional', query: 'professional woman portrait plain background', orientation: 'squarish' },
+      { slug: 'portrait-man-professional', query: 'professional man portrait plain background', orientation: 'squarish' },
+      { slug: 'portrait-smiling-candid', query: 'candid smiling professional headshot', orientation: 'squarish' },
+      { slug: 'portrait-outdoor-natural', query: 'natural light portrait person outdoors', orientation: 'squarish' },
+    ],
+  },
 ]
 
 /** Flattened topic list, with defaults applied. */

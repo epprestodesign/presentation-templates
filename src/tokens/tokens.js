@@ -259,6 +259,19 @@ export const color = {
 
   /* Chart series, in application order. */
   series: [fountainBlue[600], orient[700], fountainBlue[400], orient[500], fountainBlue[800]],
+  /** Sequential brand ramp, for a STACKED chart — segments that are parts of
+   *  one total rather than independent lines.
+   *
+   *  `series` above alternates deliberately, so two adjacent LINES never look
+   *  related. Stack those same colours and the effect inverts: segments that
+   *  are parts of one quantity sit edge to edge, and mid-teal against deep blue
+   *  against neon cyan reads as three unrelated things clashing rather than as
+   *  one bar divided up. Running dark to light instead says "these belong
+   *  together, and here is the order", which is what a stack means.
+   *
+   *  Each step is at least two ramp stops from its neighbour, so the segments
+   *  stay separable in greyscale and on a projector. */
+  seriesSequential: [orient[800], orient[600], fountainBlue[600], fountainBlue[400], fountainBlue[200]],
   /** Categorical series, for a chart whose slices are unrelated CATEGORIES
    *  rather than steps of one quantity — a product-mix pie, a stacked bar of
    *  event types. `series` above is five teals and blues, which is right for an

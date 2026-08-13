@@ -5,7 +5,7 @@ import { Page, Row, Section, Stage } from './_stage'
 
 /** ELEMENTS / Layout — the artboard, its chrome, and the copy stack. */
 const meta = {
-  title: 'Elements/Layout',
+  title: 'Components/Layout',
   tags: ['autodocs'],
   parameters: {
     // Explicit, not inherited. Storybook's `backgrounds` global persists across

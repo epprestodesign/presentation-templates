@@ -67,9 +67,12 @@ const preview: Preview = {
           ['Overview', 'Bar', 'Line', 'Pie', 'Scatter', 'Radar', 'Gauge & Sparkline'],
           'Data Grid',
           ['Overview', 'Basics', 'Static'],
-          // 3) Elements — the pieces a slide is assembled from
-          'Elements',
-          ['Text', 'Data', 'Media', 'Layout', 'Brand'],
+          // 3) Components — the pieces a slide is assembled from.
+          //    Overview leads, because the first question about a shared
+          //    component is "what breaks if I change it", and that page answers
+          //    it from the source rather than from memory.
+          'Components',
+          ['Overview', 'Text', 'Data', 'Media', 'Layout', 'Brand'],
           // 4) Templates — the slide archetypes, grouped by the JOB the slide
           //    does rather than by what it is made of. A deck is written in
           //    roughly this order, so the sidebar reads as the shape of a

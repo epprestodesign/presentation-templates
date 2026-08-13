@@ -43,3 +43,8 @@ references/
 src/assets/**
 !src/assets/**/
 !src/assets/**/*.ts
+
+# Review screenshots dropped in by hand while editing slides. Same reason as
+# references/: they are pictures of real decks with real figures on them, and
+# this repo is public.
+edits/

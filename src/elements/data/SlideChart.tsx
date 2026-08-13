@@ -3,6 +3,8 @@ import { LineChart } from '@mui/x-charts/LineChart'
 import { barClasses } from '@mui/x-charts/BarChart'
 import { color, gradient, type as typeTokens } from '../../tokens/tokens.js'
 import type { ChartSpec } from '../../types'
+import { ChartCallout } from './ChartCallout'
+import { ChartLegend } from './ChartLegend'
 import styles from './SlideChart.module.css'
 
 /**
@@ -39,18 +41,40 @@ export interface SlideChartProps {
    *  numeric height regardless. */
   width: number
   height: number
+  /** Show the key. Defaults to AUTO: on as soon as a chart has three or more
+   *  named series, because at that point the colours carry meaning the reader
+   *  has no other way to recover. Pass false to suppress it where the series
+   *  are named elsewhere on the slide. */
+  legend?: boolean
 }
 
-export function SlideChart({ spec, width, height }: SlideChartProps) {
-  const seriesColors = color.series as string[]
+export function SlideChart({ spec, width, height, legend }: SlideChartProps) {
+  /* A stack gets the sequential ramp; everything else gets the alternating one.
+     See the note on `seriesSequential` in tokens.js — the two orderings solve
+     opposite problems, and using one palette for both is what made the stacked
+     bar's segments clash. */
+  const seriesColors = (
+    spec.kind === 'stackedBar' ? color.seriesSequential : color.series
+  ) as string[]
   const g = gradient.brandVertical
   const fmt = spec.format ?? ((v: number) => String(v))
   // Ids must not collide when two charts share a slide (slide 16 has two).
   const gradientId = `slide-chart-grad-${spec.title?.replace(/\W+/g, '-').toLowerCase() ?? 'x'}`
   const useGradient = spec.kind === 'bar' && spec.fill !== 'flat'
 
-  /** Plot area height, after the header block takes its share. */
-  const plotHeight = height - (spec.title || spec.unit ? 58 : 0)
+  /* Only series that actually carry a name can appear in a key. */
+  const named = spec.series.filter((s) => Boolean(s.name))
+  const showLegend = legend ?? named.length >= 3
+  const legendItems = showLegend
+    ? named.map((s, i) => ({
+        label: s.name as string,
+        color: s.color ?? seriesColors[i % seriesColors.length],
+      }))
+    : []
+
+  /** Plot area height, after the header block and any key take their share. */
+  const plotHeight =
+    height - (spec.title || spec.unit ? 58 : 0) - (legendItems.length ? 30 : 0)
 
   const yAxis = [
     {
@@ -179,12 +203,11 @@ export function SlideChart({ spec, width, height }: SlideChartProps) {
         )}
 
         {spec.callout && (
-          <div className={styles.callout}>
-            <div className="ds-text-h2 ds-text-accent-deep">{spec.callout.value}</div>
-            {spec.callout.label && <div className="ds-text-body-sm">{spec.callout.label}</div>}
-          </div>
+          <ChartCallout value={spec.callout.value} label={spec.callout.label} />
         )}
       </div>
+
+      {legendItems.length > 0 && <ChartLegend items={legendItems} className={styles.chartLegend} />}
     </div>
   )
 }

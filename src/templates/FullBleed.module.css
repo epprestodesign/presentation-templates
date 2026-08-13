@@ -40,32 +40,27 @@
 /* The section-opener arrow. Positioned against the slide's right margin, not
    against the headline — the headline's width is a copy measure, so an arrow
    inside it would move with the text rather than sit at the slide edge. */
-/* The section-opener mark, in a ringed plate.
+/* The section-opener mark: the supplied arrow, bare, on the headline's own line.
  *
- * A bare 300-weight glyph was effectively invisible here. Every one of these
- * slides is a photograph — busy, mid-tone, and different in every story — so a
- * hairline stroke in white had nothing reliable to sit against and disappeared
- * into whatever was behind it. The ring gives it a constant edge, and the wash
- * inside gives the stroke a constant ground, so the mark reads the same on the
- * dark laptop shot and the pale airport one without tuning per slide.
+ * It briefly wore a ringed plate, because the Material Symbols glyph it used
+ * before was a 300-weight hairline that vanished into the photograph. The
+ * supplied artwork does not have that problem — it is a solid shape with real
+ * mass — so the plate is gone and the arrow sits directly on the picture, which
+ * is what the reference does.
  *
- * backdrop-filter rather than a flat fill: a solid disc would punch a grey hole
- * in the photograph, while a blur keeps the picture reading through it. It does
- * rasterise correctly in headless Chromium, which is what the exports use. */
+ * The drop shadow is the one concession to legibility: white artwork over
+ * uncontrolled photography needs SOMETHING to separate it from a pale sky. A
+ * soft shadow does that without drawing a shape of its own, unlike a ring.
+ *
+ * Height is set inline from the headline's cap height, and the glyph inside is
+ * drawn to exactly that, so the arrow's top and bottom sit on the headline's
+ * cap and baseline. */
 .arrow {
   position: absolute;
   right: var(--slide-grid-margin-x);
   z-index: 3;
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 72px;
-  height: 72px;
-  /* Pull up by half the plate so the ring centres on the title's cap line
-     rather than hanging below it — `top` positions the box, not the glyph. */
-  margin-top: -14px;
-  border-radius: var(--slide-radius-pill);
-  border: 2px solid var(--slide-color-rule-on-brand-strong);
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(6px);
+  justify-content: flex-end;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.35));
 }

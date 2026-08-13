@@ -1,0 +1,39 @@
+/* The disc. Width, height and placement come from props — see the geometry note
+   in ChartCallout.tsx for why the CONTENT box is narrower than the circle. */
+.callout {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--slide-color-surface);
+  box-shadow: var(--slide-shadow-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Above the plot, below nothing else — a callout that a gridline crosses
+     stops reading as a floating object. */
+  z-index: 2;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+}
+
+.value {
+  /* The figure is the subject, so it holds its size and the label yields.
+     line-height 1 keeps the pair optically centred in the disc: the default
+     1.05 on the stat step adds a half-line of space under the number that
+     reads as the whole group sitting high. */
+  line-height: 1;
+}
+
+.label {
+  color: var(--slide-color-text-muted);
+  /* Two lines are fine and often better than one long one — a wrapped label
+     uses the disc's height, which is otherwise wasted, instead of fighting for
+     width it cannot have. */
+  line-height: 1.25;
+  text-wrap: balance;
+}

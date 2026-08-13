@@ -5,7 +5,7 @@ import { img } from '../../assets/imagery'
 
 /** ELEMENTS / Media — photography, people and logos. */
 const meta = {
-  title: 'Elements/Media',
+  title: 'Components/Media',
   tags: ['autodocs'],
   parameters: {
     // Explicit, not inherited. Storybook's `backgrounds` global persists across

@@ -6,7 +6,7 @@ import { Page, Row, Section, Stage } from './_stage'
 
 /** ELEMENTS / Brand — the mark, icons, and co-branding. */
 const meta = {
-  title: 'Elements/Brand',
+  title: 'Components/Brand',
   tags: ['autodocs'],
   parameters: {
     // Explicit, not inherited. Storybook's `backgrounds` global persists across
