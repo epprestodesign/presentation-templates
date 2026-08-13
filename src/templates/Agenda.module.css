@@ -1,0 +1,41 @@
+.title {
+  position: absolute;
+  left: var(--slide-grid-margin-x);
+  top: 96px;
+  z-index: 2;
+}
+
+/* Rows share the available height evenly. An agenda's length is genuinely
+   variable, so this is the one well in the system that distributes rather than
+   pinning to fixed anchors — a 4-row and a 6-row agenda both look deliberate. */
+.list {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+/* Lighter than the headings it sits beside: the numeral is an index, not a
+   value, so it should not compete with the copy. */
+.number {
+  flex: none;
+  font-size: 58px;
+  line-height: 1;
+  font-weight: var(--slide-font-weight-regular);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}

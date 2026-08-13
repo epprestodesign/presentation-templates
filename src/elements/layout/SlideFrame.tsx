@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type 
 import { canvas } from '../../tokens/tokens.js'
 import type { SlideChromeSpec, SlideSurface } from '../../types'
 import { SlideChrome } from './SlideChrome'
+import { img } from '../../assets/imagery'
 import styles from './SlideFrame.module.css'
 
 /**
@@ -23,6 +24,14 @@ export interface SlideFrameProps extends SlideChromeSpec {
   surface?: SlideSurface
   /** Full-bleed background image URL, used when `surface` is 'image'. */
   image?: string
+  /** Named brand background plate, e.g. 'backgrounds/brand-hex'.
+   *
+   *  Only meaningful with `surface: 'brand'`, where it replaces the CSS
+   *  gradient. The plates are the supplied artwork — the same gradient plus a
+   *  hex tessellation or chevron motif that CSS cannot reproduce exactly. The
+   *  CSS gradient remains the fallback so a brand slide still renders without
+   *  naming one. */
+  plate?: string
   /** Scrim over a background image so text stays legible. 0–1. */
   scrim?: number
   /** 'contain' scales to fit the container; 'none' renders at exact size. */
@@ -33,6 +42,7 @@ export interface SlideFrameProps extends SlideChromeSpec {
 export function SlideFrame({
   surface = 'light',
   image,
+  plate,
   scrim = 0,
   fit = 'contain',
   children,
@@ -73,6 +83,8 @@ export function SlideFrame({
     height: canvas.height,
     ...(exact ? {} : { transform: `scale(${scale})`, transformOrigin: 'top left' }),
     ...(surface === 'image' && image ? { backgroundImage: `url("${image}")` } : {}),
+    // A named plate overrides the CSS gradient for brand surfaces.
+    ...(surface === 'brand' && plate ? { backgroundImage: `url("${img(plate)}")` } : {}),
   }
 
   /** Chrome ink flips to white on any dark surface. */

@@ -64,12 +64,15 @@ const CROPS = [
    * preserves the soft drop shadows, which would be hard to rebuild. */
   ['2-01.png', [1268, 234, 1080, 1114], 'clusters/rfp-photo-cluster'],
 
-  /* --- Brand backgrounds ------------------------------------------------
-   * The section divider is a gradient PLUS a subtle hex pattern. The gradient
-   * alone is a token (`gradient.brandBleed`, sampled from these very corners),
-   * but the hex overlay is artwork — cheap to keep as an asset, fiddly and
-   * inexact to rebuild in CSS. Templates layer content over this. */
-  ['20.png', [0, 0, 2560, 1440], 'backgrounds/brand-gradient-hex'],
+  /* --- Brand background plates -----------------------------------------
+   * Supplied as clean, content-free plates. Each is a gradient PLUS artwork —
+   * a hex tessellation, and in one case chevron arrows. The gradient alone is
+   * already a token (`gradient.brandBleed`, sampled from these very corners),
+   * but the overlay pattern is artwork: cheap to keep as an asset, fiddly and
+   * inexact to rebuild in CSS. SlideFrame layers content over these via
+   * `plate`, and falls back to the CSS gradient when no plate is named. */
+  ['20.png', [0, 0, 2560, 1440], 'backgrounds/brand-hex'],
+  ['06-1_bg.png', [0, 0, 2560, 1440], 'backgrounds/brand-arrows'],
 
   /* --- Full-bleed slides -----------------------------------------------
    * Cropped at full canvas. These are a photo inside a branded gradient
