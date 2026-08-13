@@ -54,7 +54,7 @@ export interface ChartDuoProps extends SlideChromeSpec {
 /** Caption band height. Sized for TWO lines of `body` plus the rule and its
  *  clearance, because the band is reserved on every panel and a one-line
  *  caption beside a two-line one must not shorten its plot. */
-const CAPTION_BAND = 80
+const CAPTION_BAND = 116
 /** Inset when `framed`, matching the deck's card padding. */
 const FRAME_PADDING = 20
 
@@ -107,7 +107,17 @@ export function ChartDuo({
           >
             <SlideChart spec={panel.chart} width={chartWidth} height={chartHeight} />
             {panel.caption && (
-              <AccentText as="p" content={panel.caption} className={`${styles.caption} ds-text-body`} />
+              /* The BAND owns the spacing, not the paragraph.
+               *
+               * AccentText's own module sets `margin: 0` on its root, and module
+               * CSS is injected in an order that put that reset after this
+               * template's rule — so `.caption { margin-top }` computed to 0 and
+               * the sentence sat flush against the legend with no gap at all.
+               * Same trap as the `font: inherit` note in AccentText.module.css.
+               * A wrapper cannot be overridden by the child's reset. */
+              <div className={styles.captionBand}>
+                <AccentText as="p" content={panel.caption} className="ds-text-body" />
+              </div>
             )}
           </div>
         ))}

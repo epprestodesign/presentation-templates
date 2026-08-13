@@ -19,14 +19,15 @@
 
 /* A rule rather than a gap: the caption belongs to the plot above it, and on
    two panels side by side the rules are what stop the captions reading as one
-   continuous paragraph. */
-.caption {
-  /* Generous, and deliberately so. 22/12 cleared the x-axis tick labels
-     geometrically but still read as crowded: the tick row is the plot's own
-     last line, so a rule 22px under it looks 22px under the CHART while sitting
-     only ~6px under the numbers a reader actually sees. Measuring to the ink
-     rather than to the box is what the extra space pays for. */
-  margin-top: 40px;
+   continuous paragraph.
+
+   Spacing lives on this WRAPPER because the paragraph inside it resets its own
+   margin — see the note in ChartDuo.tsx. 36px of air above the rule and 20px
+   below it: the sentence is a conclusion drawn FROM the chart, and it needs
+   enough separation to read as a separate thought rather than as an axis
+   label. */
+.captionBand {
+  margin-top: 36px;
   padding-top: 20px;
   border-top: 1px solid var(--slide-color-border);
 }
