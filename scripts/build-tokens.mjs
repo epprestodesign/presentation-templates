@@ -1,4 +1,4 @@
-/* Generates src/css/tokens.generated.css from src/tokens/*.js.
+/* Generates src/styles/theme.css from src/tokens/*.js.
  *
  * The JS modules are the source of truth because the PPTX emitter needs
  * numeric values, not CSS strings — keeping a hand-written stylesheet in
@@ -13,7 +13,7 @@ import { palette } from '../src/tokens/palette.js'
 import { canvas, grid, type, gradient, tableTint, color, radius, space, shadow } from '../src/tokens/tokens.js'
 
 const here = dirname(fileURLToPath(import.meta.url))
-const out = resolve(here, '../src/css/tokens.generated.css')
+const out = resolve(here, '../src/styles/theme.css')
 
 /** camelCase / numeric key → kebab-case CSS ident. */
 const kebab = (s) => String(s).replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()

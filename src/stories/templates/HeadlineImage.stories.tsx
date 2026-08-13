@@ -7,6 +7,11 @@ const meta = {
   component: HeadlineImage,
   tags: ['autodocs'],
   parameters: {
+    // A slide is a fixed 1280x720 artboard: fullscreen so nothing crops it, and
+    // the grey stage so its white edge stays visible. Styles pages keep the
+    // responsive default instead.
+    layout: 'fullscreen',
+    backgrounds: { value: 'stage' },
     docs: {
       description: {
         component: `

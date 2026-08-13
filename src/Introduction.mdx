@@ -1,0 +1,144 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Introduction" />
+
+<div style={{ maxWidth: 920 }}>
+
+# EventPipe Slide Design System
+
+The single source of truth for **EventPipe presentations** — brand tokens, slide
+styles, the elements a slide is assembled from, and the slide templates
+themselves, all measured from the real decks.
+
+Built with **React 19 · TypeScript · MUI X Charts · Storybook 10 · Vite ·
+Poppins · Material Symbols**.
+
+<div style={{ display: "flex", gap: 12, flexWrap: "wrap", margin: "20px 0 28px" }}>
+  <span style={{ background: "#02adb3", color: "#fff", padding: "6px 14px", borderRadius: 999, fontSize: 13, fontWeight: 600 }}>Accent · #02adb3</span>
+  <span style={{ background: "#01658b", color: "#fff", padding: "6px 14px", borderRadius: 999, fontSize: 13, fontWeight: 600 }}>Orient · #01658b</span>
+  <span style={{ background: "#02859d", color: "#fff", padding: "6px 14px", borderRadius: 999, fontSize: 13, fontWeight: 600 }}>KPI numbers · #02859d</span>
+  <span style={{ background: "#000", color: "#fff", padding: "6px 14px", borderRadius: 999, fontSize: 13, fontWeight: 600 }}>Poppins</span>
+</div>
+
+Everything renders from one token set, so a deck stays consistent from a single
+KPI tile to a full 40-slide presentation — and exports to **editable Google
+Slides** rather than flat pictures.
+
+---
+
+## The one idea this system is built on
+
+**A slide is data, not markup.**
+
+```tsx
+<StatGrid
+  eyebrow="Traction"
+  title="Growth across every operation metric."
+  cards={[
+    { label: "Reservations", value: "1.2M", icon: "arrow_outward" },
+    { label: "Room Nights",  value: "1.9M", icon: "arrow_outward" },
+  ]}
+/>
+```
+
+That is the whole authoring model, and it buys three things at once:
+
+1. **Agents can write slides.** A content object is cheap to generate and
+   TypeScript rejects a wrong shape at the boundary, so a new deck is a data
+   file rather than a day of layout.
+2. **One slide, three renderers.** The same object feeds the React/HTML view you
+   see here, the PptxGenJS emitter (→ Google Slides / PowerPoint), and a PNG@2x
+   raster. Hand-authored HTML could only ever export as a flattened image.
+3. **Consistency is structural.** Templates own the geometry, so a slide cannot
+   quietly drift 8px off the deck's margin.
+
+### Why 1280 × 720 specifically
+
+Not arbitrary. At 96px/inch that is exactly **13.333in × 7.5in** — PowerPoint's
+and Google Slides' 16:9 slide. So `1px === 1/96in` and the exporter is a
+divide-by-96 with no layout re-flow. Every length in this system is px in that
+space.
+
+---
+
+## How the library is organized
+
+The sidebar runs top-to-bottom the way you'd build with it: brand primitives
+first, then the pieces, then whole slides.
+
+### 🎨 Styles
+The foundations, rendered live from the tokens.
+
+**Color · Typography · Icons · Logos · Gradients · Shape · Elevation ·
+Grid & Safe Areas · Imagery · Charts**
+
+These pages are documentation, so they **reflow with the browser** — only
+Templates use the fixed 16:9 artboard.
+
+### 🧱 Elements
+The building blocks a slide is assembled from.
+
+**Text** — AccentText, SlideHeading
+**Data** — StatCard, SlideChart, DataTable
+**Media** — ImageMosaic, PersonCard, LogoWall, DeviceFrame
+**Layout** — SlideFrame, SlideChrome, GradientCard, OutlineCard
+**Brand** — EpLogo, Icon, CoBrandLockup
+
+### 🖼️ Templates
+The slide archetypes. **Each template's stories are the real rebuilt slides** —
+so a story is simultaneously the documentation and the deck.
+
+| Template | Rebuilt from |
+| --- | --- |
+| Cover | `0-01` ×3 |
+| Section Divider | `20`, `19` |
+| Statement | `18` |
+| Headline + Image | `01`, `04` |
+| Headline + Chart | `08`, `16` |
+| Stat Grid | `37`, `07`, `393` |
+| Feature Cards | `03`, `10` |
+| Staircase Cards | `09-wef`, `24` |
+| Comparison | `02`, `13` |
+| Tint Table | the five integration slides |
+| Financial Table | `12`, `17` |
+| Split Panel | `11` |
+| Bullet + Image | `2-01` |
+| Team | `15`, the 2×2 account-team grid |
+| Logo Wall | `06` |
+| Diagram | `09`, the ecosystem slide |
+| Full Bleed / Device | `Demo` ×4, `EP Team` ×2 |
+| Closing | the contact slide |
+
+---
+
+## Brand & tokens
+
+Two ramps, both derived from the EventPipe logo: **`orient`** (its blue half)
+and **`fountain-blue`** (its teal half). A semantic layer sits on top, and
+elements reference *only* that layer — never a raw ramp step.
+
+Values were **sampled from the reference decks, not chosen.** The accent
+(`#02adb3`) is literally the fill of the logo glyph; card surfaces are the
+measured `#f5f5f5`; the tinted table ramp was read row-by-row and turned out to
+be its own ramp rather than a step of `orient`.
+
+Tokens live in `src/tokens/*.js` as the single source of truth and generate
+`src/styles/theme.css`. They stay JS because the PPTX emitter needs numeric
+values — a hand-mirrored stylesheet would drift.
+
+## Working in this repo
+
+```bash
+pnpm storybook        # this catalogue, on :6008
+pnpm build:tokens     # src/tokens/*.js → src/styles/theme.css
+pnpm crop:images      # recover source photos from the reference PNGs
+pnpm export:pptx      # → editable Google Slides / PowerPoint
+pnpm export:png       # → 2x rasters
+```
+
+Two scripts exist because guessing was not good enough:
+`scripts/detect-images.mjs` finds photo rects by reading pixels, and
+`scripts/shoot.mjs` screenshots a slide at exact size so a rebuild can be
+diffed against its reference rather than eyeballed.
+
+</div>

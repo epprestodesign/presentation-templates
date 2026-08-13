@@ -201,15 +201,19 @@ export interface ImageSpec {
   radius?: number
 }
 
+/** One cell after the label column. Either a paragraph, or a bullet list —
+ *  declared by the cell itself rather than flagged on the row, since a row can
+ *  mix a plain cell and a bulleted one. */
+export type TableCell = RichText | { bullets: RichText[] }
+
 /** A row in a tinted table. The tint is chosen by row index from
- *  `tableTint.rows`, so a row never names its own colour. */
+ *  `tableTint.rows`, so a row never names its own colour and reordering rows
+ *  keeps the ramp intact. */
 export interface TableRowSpec {
   /** Left-hand cell. Underlined in the reference deck. */
   label: RichText
-  /** Right-hand cell — a paragraph, or bullets. */
-  cells: RichText[]
-  /** Render `cells` as a bulleted list rather than paragraphs. */
-  bullets?: boolean
+  /** One entry per column after the label. */
+  cells: TableCell[]
 }
 
 export interface TableSpec {

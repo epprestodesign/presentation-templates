@@ -1,0 +1,86 @@
+.table {
+  display: grid;
+  align-content: start;
+  overflow: hidden;
+}
+
+/* --- header --------------------------------------------------------- */
+.headerRow {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  background: var(--slide-table-header);
+}
+
+.headerCell {
+  color: var(--slide-table-header-text);
+  font-weight: var(--slide-font-weight-bold);
+  padding: 14px 22px;
+  display: flex;
+  align-items: center;
+}
+
+/* --- rows ----------------------------------------------------------- */
+.row {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+}
+
+.labelCell,
+.cell {
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+}
+
+/* pre-line so a "\n" in a label is an explicit line break. The reference
+   breaks these labels at a chosen word ("Event Pages / (on the event
+   website)"), which natural wrapping at the column width does not reproduce. */
+.labelCell {
+  white-space: pre-line;
+}
+
+/* The reference underlines the left-hand label in every tinted table. */
+.tint .label {
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+}
+
+.bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Hanging indent, so a wrapped bullet aligns to its text and not the marker. */
+.bullet {
+  position: relative;
+  padding-left: 18px;
+}
+
+.bullet::before {
+  content: '•';
+  position: absolute;
+  left: 2px;
+  top: -0.05em;
+}
+
+/* --- financial variant --------------------------------------------- */
+.financial .row {
+  border-bottom: 1px solid var(--slide-color-border);
+}
+
+.financial .row:first-of-type {
+  border-top: 1px solid var(--slide-color-border);
+}
+
+.financial .totalRow {
+  background: var(--slide-color-accent);
+  border-color: var(--slide-color-accent);
+}
+
+.financial .totalRow .labelCell,
+.financial .totalRow .cell {
+  color: var(--slide-color-text-on-brand);
+}

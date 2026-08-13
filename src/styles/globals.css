@@ -1,0 +1,71 @@
+/* =============================================================
+ * Global slide styles. Imported once by .storybook/preview.js and by the
+ * standalone deck entry.
+ *
+ * Fonts and icons are self-hosted npm packages, never CDN links: the
+ * export scripts render slides in headless Chromium and CI has no
+ * network guarantee, so a webfont that fails to load would silently
+ * change every measurement.
+ * ============================================================= */
+
+/* Poppins — the deck typeface. Only the weights the type scale actually
+   uses, plus italics for the emphasis runs in the comparison slides. */
+@import '@fontsource/poppins/400.css';
+@import '@fontsource/poppins/400-italic.css';
+@import '@fontsource/poppins/500.css';
+@import '@fontsource/poppins/600.css';
+@import '@fontsource/poppins/600-italic.css';
+@import '@fontsource/poppins/700.css';
+@import '@fontsource/poppins/700-italic.css';
+
+/* Material Symbols — the full ~3,700-glyph library as one variable font.
+   All three styles ship so a deck can pick a voice; Rounded is the
+   default because it sits best with Poppins' geometry and the rounded
+   card language of the deck. */
+@import 'material-symbols/rounded.css';
+@import 'material-symbols/outlined.css';
+@import 'material-symbols/sharp.css';
+
+@import './theme.css';
+@import './typography.css';
+
+/* ---------------------------------------------------------------
+ * Reset — scoped tight. Slides are absolutely positioned inside a
+ * fixed canvas, so the usual flow-layout resets do not apply.
+ * --------------------------------------------------------------- */
+.ds-slide *,
+.ds-slide *::before,
+.ds-slide *::after {
+  box-sizing: border-box;
+}
+
+.ds-slide h1,
+.ds-slide h2,
+.ds-slide h3,
+.ds-slide h4,
+.ds-slide p,
+.ds-slide ul,
+.ds-slide ol,
+.ds-slide figure {
+  margin: 0;
+  padding: 0;
+}
+
+.ds-slide ul,
+.ds-slide ol {
+  list-style: none;
+}
+
+.ds-slide img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ---------------------------------------------------------------
+ * Storybook canvas.
+ *
+ * Templates set `layout: 'fullscreen'` themselves, so the padded layout is
+ * left alone here — the Styles pages are documentation and want it. An
+ * earlier global `padding: 0` override killed that padding and pushed every
+ * docs page flush against the viewport edge.
+ * --------------------------------------------------------------- */

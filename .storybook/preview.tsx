@@ -1,30 +1,52 @@
 import type { Preview } from '@storybook/react-vite'
-import '../src/css/app.css'
+import '../src/styles/globals.css'
 
 const preview: Preview = {
   parameters: {
-    layout: 'fullscreen',
+    // Documentation is the DEFAULT here, not the exception: Styles and Elements
+    // pages are reference material and should reflow with the browser. Only the
+    // Templates opt into `layout: 'fullscreen'` plus the grey stage, because a
+    // slide is a fixed 1280x720 artboard and anything else crops it.
+    layout: 'padded',
     backgrounds: {
       options: {
-        // Default is the mid grey a slide gets reviewed against, so the white
-        // edge of the artboard stays visible.
-        stage: { name: 'stage', value: '#e8eaed' },
         white: { name: 'white', value: '#ffffff' },
+        // The mid grey a slide gets reviewed against, so the white edge of the
+        // artboard stays visible.
+        stage: { name: 'stage', value: '#e8eaed' },
         dark: { name: 'dark', value: '#202020' },
       },
     },
     controls: { matchers: { color: /(background|color)$/i, date: /Date$/i } },
+    a11y: {
+      // 'todo' — surface violations in the test UI without failing CI.
+      test: 'todo',
+    },
     options: {
-      // Layout taxonomy: Foundations, then the elements slides are built
-      // from, then the templates. Real rebuilt slides live as stories under
-      // the template whose layout they use.
       storySort: {
+        method: 'alphabetical',
         order: [
-          'Getting Started',
-          'Foundations',
-          ['Colors', 'Typography', 'Icons', 'Logos', 'Grid & Safe Areas', 'Charts', 'Imagery'],
+          // 0) Overview page, always first
+          'Introduction',
+          // 1) Styles / foundations, rendered live from the tokens
+          'Styles',
+          [
+            'Color',
+            'Typography',
+            'Icons',
+            'Logos',
+            'Gradients',
+            'Shape',
+            'Elevation',
+            'Grid & Safe Areas',
+            'Imagery',
+            'Charts',
+          ],
+          // 2) Elements — the pieces a slide is assembled from
           'Elements',
           ['Text', 'Data', 'Media', 'Layout', 'Brand'],
+          // 3) Templates — the slide archetypes, with real rebuilt slides as
+          //    their stories
           'Templates',
           [
             'Cover',
@@ -37,6 +59,9 @@ const preview: Preview = {
             'Staircase Cards',
             'Comparison',
             'Tint Table',
+            'Financial Table',
+            'Split Panel',
+            'Bullet + Image',
             'Team',
             'Logo Wall',
             'Diagram',
@@ -49,7 +74,7 @@ const preview: Preview = {
       },
     },
   },
-  initialGlobals: { backgrounds: { value: 'stage' } },
+  initialGlobals: { backgrounds: { value: 'white' } },
 }
 
 export default preview

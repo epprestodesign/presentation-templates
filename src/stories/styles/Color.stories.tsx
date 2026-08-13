@@ -1,0 +1,191 @@
+import type { Meta, StoryObj } from '@storybook/react-vite'
+import { palette } from '../../tokens/palette.js'
+import { color, gradient, tableTint } from '../../tokens/tokens.js'
+import { Code, Grid, Page, Section, Swatch } from './_docs'
+
+/** STYLES / Color — the brand ramps and the semantic layer built on them. */
+const meta = {
+  title: 'Styles/Color',
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+## Color
+
+Two tiers. **Ramps** are raw values derived from the EventPipe logo —
+\`orient\` is its blue half, \`fountain-blue\` its teal half. **Semantic
+tokens** attach meaning, and are the only thing elements and templates may
+reference.
+
+Every semantic value was *sampled off the reference deck* rather than chosen, so
+a rebuilt slide matches the original: the highlighted headline clause is
+\`accent\` (#02adb3 — the same teal as the logo glyph's own fill), KPI numbers
+are the deeper \`accent-deep\` (#02859d), and card fills are \`surface-muted\`
+(#f5f5f5).
+        `,
+      },
+    },
+  },
+} satisfies Meta
+
+export default meta
+type Story = StoryObj<typeof meta>
+
+const kebab = (s: string) => s.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+
+/** The four primitive ramps. */
+export const Ramps: Story = {
+  render: () => (
+    <Page>
+      {Object.entries(palette).map(([name, steps]) => (
+        <Section
+          key={name}
+          title={kebab(name)}
+          intro={
+            name === 'orient'
+              ? 'The blue half of the logo. Deep ends of gradients, chart series 2.'
+              : name === 'fountainBlue'
+                ? 'The teal half of the logo. The primary slide accent: highlighted headline clauses, KPI numbers, rules, chart series 1.'
+                : name === 'neutral'
+                  ? 'True hue-less gray. Slide surfaces read as neutral in the reference deck, not as the product UI’s cool graphite. Step 100 is exactly the #f5f5f5 card fill.'
+                  : 'One borrowed Material ramp. The reference sets card body copy in #546e7a — cooler than neutral, and distinct enough on screen to keep rather than flatten.'
+          }
+        >
+          <Grid min={124}>
+            {Object.entries(steps).map(([step, hex]) => (
+              <Swatch key={step} label={step} value={hex} height={64} />
+            ))}
+          </Grid>
+        </Section>
+      ))}
+    </Page>
+  ),
+}
+
+/** The semantic layer — what templates actually use. */
+export const Semantic: Story = {
+  render: () => (
+    <Page>
+      <Section title="Surfaces">
+        <Grid>
+          <Swatch label="surface" value={color.surface as string} />
+          <Swatch label="surface-muted" value={color.surfaceMuted as string} note="Stat and feature card fill" />
+          <Swatch label="surface-sunken" value={color.surfaceSunken as string} />
+        </Grid>
+      </Section>
+
+      <Section
+        title="Text"
+        intro="Primary copy is pure black in the reference deck. The two grays are distinct roles, not a fallback chain — text-cool is reserved for body copy inside cards."
+      >
+        <Grid>
+          <Swatch label="text" value={color.text as string} />
+          <Swatch label="text-subtle" value={color.textSubtle as string} />
+          <Swatch label="text-muted" value={color.textMuted as string} />
+          <Swatch label="text-cool" value={color.textCool as string} note="Card body copy" />
+        </Grid>
+      </Section>
+
+      <Section title="Accents">
+        <Grid>
+          <Swatch label="accent" value={color.accent as string} note="Highlighted headline clause" />
+          <Swatch label="accent-deep" value={color.accentDeep as string} note="Large KPI numbers" />
+          <Swatch label="accent-soft" value={color.accentSoft as string} />
+          <Swatch label="brand-navy" value={color.brandNavy as string} note="Logo wordmark ink" />
+        </Grid>
+      </Section>
+
+      <Section
+        title="Chart series"
+        intro="Applied in order. Two teals alternate with two blues so a stacked series stays readable at slide scale."
+      >
+        <Grid>
+          {(color.series as string[]).map((hex, i) => (
+            <Swatch key={hex} label={`series-${i + 1}`} value={hex} />
+          ))}
+        </Grid>
+      </Section>
+
+      <Section title="Lines">
+        <Grid>
+          <Swatch label="border" value={color.border as string} />
+          <Swatch label="rule" value={color.rule as string} />
+          <Swatch label="gridline" value={color.gridline as string} />
+          <Swatch label="axis" value={color.axis as string} />
+        </Grid>
+      </Section>
+    </Page>
+  ),
+}
+
+/** Gradients, and why they matter to export. */
+export const Gradients: Story = {
+  render: () => (
+    <Page>
+      <Section
+        title="Brand gradients"
+        intro="All four run deep blue → bright teal; only the angle changes. PptxGenJS has no gradient fill, so the exporter rasterises these to a background image layer and keeps the text above them live and editable."
+      >
+        <Grid min={240}>
+          {Object.entries(gradient).map(([name, g]) => (
+            <div key={name} style={{ display: 'flex', flexDirection: 'column', gap: 6, minWidth: 0 }}>
+              <div
+                style={{
+                  height: 116,
+                  borderRadius: 10,
+                  background: `linear-gradient(${g.angle}deg, ${g.from} 0%, ${g.to} 100%)`,
+                }}
+              />
+              <div style={{ font: '600 12px/1.3 Poppins, sans-serif' }}>{kebab(name)}</div>
+              <Code>
+                {g.angle}deg · {g.from} → {g.to}
+              </Code>
+            </div>
+          ))}
+        </Grid>
+      </Section>
+    </Page>
+  ),
+}
+
+/** The measured table ramp. */
+export const TableTint: Story = {
+  render: () => (
+    <Page>
+      <Section
+        title="Tinted table ramp"
+        intro="Sampled row-by-row off the four integration slides. Deliberately NOT the orient ramp — every step reads brighter, and fitting the samples shows it is not one cyan at descending opacity either. Rows apply top-to-bottom in order, chosen by row index rather than by row data, so reordering rows keeps the ramp intact."
+      >
+        <div style={{ borderRadius: 10, overflow: 'hidden', border: '1px solid rgba(0,0,0,0.08)' }}>
+          <div
+            style={{
+              background: tableTint.header,
+              color: tableTint.headerText,
+              font: '700 13px/1 Poppins, sans-serif',
+              padding: '16px 20px',
+            }}
+          >
+            header
+          </div>
+          {tableTint.rows.map((hex, i) => (
+            <div
+              key={hex}
+              style={{
+                background: hex,
+                padding: '16px 20px',
+                font: '500 13px/1 Poppins, sans-serif',
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: 16,
+              }}
+            >
+              <span>row-{i + 1}</span>
+              <Code>{hex}</Code>
+            </div>
+          ))}
+        </div>
+      </Section>
+    </Page>
+  ),
+}

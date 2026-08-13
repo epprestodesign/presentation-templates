@@ -1,0 +1,11 @@
+.table {
+  position: absolute;
+  z-index: 2;
+}
+
+.note {
+  position: absolute;
+  left: var(--slide-grid-margin-x);
+  z-index: 2;
+  color: var(--slide-color-text);
+}
