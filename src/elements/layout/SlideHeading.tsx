@@ -1,0 +1,68 @@
+import { grid } from '../../tokens/tokens.js'
+import type { RichText, TypeStep } from '../../types'
+import { AccentText } from '../text/AccentText'
+import { typeClass } from '../../lib/typeClass'
+import styles from './SlideHeading.module.css'
+
+/**
+ * SlideHeading — the title block that opens almost every content slide:
+ * headline, then an optional lead paragraph beneath it.
+ *
+ * It anchors to the measured grid rather than accepting coordinates, because
+ * the whole point of the anchors is that 40 slides put their headline in the
+ * same place. Templates choose a width and a size step; nothing else.
+ */
+export interface SlideHeadingProps {
+  title?: RichText
+  lead?: RichText
+  /** A body paragraph below the lead.
+   *
+   *  It belongs in this stack rather than being positioned separately: the
+   *  headline's height depends on where its copy wraps, so anything anchored
+   *  to a fixed y below it eventually collides. Keeping the whole copy column
+   *  in one flex stack makes that impossible. */
+  body?: RichText
+  /** Type step for the headline: 'display' | 'h1' | 'h2'. */
+  size?: TypeStep
+  /** How wide the copy column runs, in slide px. */
+  width?: number
+  /** Vertical start. Defaults to the deck's standard headline anchor. */
+  top?: number
+  left?: number
+  /** Gap between headline and lead. */
+  gap?: number
+  /** Set on brand / photographic surfaces so the lead keeps its contrast. */
+  onDark?: boolean
+}
+
+export function SlideHeading({
+  title,
+  lead,
+  body,
+  size = 'h1',
+  width = 720,
+  top = grid.titleY,
+  left = grid.marginX,
+  gap = 18,
+  onDark = false,
+}: SlideHeadingProps) {
+  return (
+    <div className={styles.heading} style={{ left, top, width, gap }}>
+      {title && <AccentText content={title} className={typeClass(size)} />}
+      {lead && (
+        <AccentText
+          as="p"
+          content={lead}
+          className={['ds-text-lead', onDark ? 'ds-text-on-brand-subtle' : ''].filter(Boolean).join(' ')}
+        />
+      )}
+      {body && (
+        <AccentText
+          as="p"
+          content={body}
+          className={['ds-text-body', onDark ? 'ds-text-on-brand-subtle' : ''].filter(Boolean).join(' ')}
+        />
+      )}
+    </div>
+  )
+}

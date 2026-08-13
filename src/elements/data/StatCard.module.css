@@ -1,0 +1,47 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.muted { background: var(--slide-color-surface-muted); }
+.brand { background: var(--slide-gradient-brand); }
+.brandAlt { background: var(--slide-gradient-brand-card-alt); }
+.plain { background: transparent; }
+.outline {
+  background: transparent;
+  border: 1px solid var(--slide-color-rule-on-brand);
+}
+
+.icon {
+  position: absolute;
+  /* Tracks the card's padding via a custom property set in the component,
+     so an icon stays in the corner when padding is overridden. */
+  top: var(--stat-card-padding);
+  right: var(--stat-card-padding);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* The label/value pair swaps visual order without changing the DOM, so the
+   label stays the accessible heading regardless of how it reads. */
+.reversed {
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+}
+
+/* column-reverse would also throw the description to the top, so it opts
+   back out. */
+.reversed .desc {
+  order: -1;
+}
+
+.desc {
+  margin-top: 4px;
+}

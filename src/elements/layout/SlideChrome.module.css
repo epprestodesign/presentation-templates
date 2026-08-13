@@ -1,0 +1,65 @@
+/* The chrome layer never intercepts pointer events and always sits above
+   content. Content that needs to cover it is a design error, not a z-index
+   problem. */
+.chrome {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.eyebrow {
+  position: absolute;
+  left: var(--slide-grid-margin-x);
+  top: var(--slide-grid-chrome-y);
+  color: var(--slide-color-text);
+}
+
+.page {
+  position: absolute;
+  right: var(--slide-grid-margin-x);
+  top: var(--slide-grid-chrome-y);
+  color: var(--slide-color-text);
+}
+
+.tag {
+  position: absolute;
+  left: var(--slide-grid-margin-x);
+  bottom: var(--slide-grid-margin-bottom);
+  color: var(--slide-color-text);
+}
+
+.onDark .eyebrow,
+.onDark .page,
+.onDark .tag {
+  color: var(--slide-color-text-on-brand);
+}
+
+/* Wordmark and glyph share a centre line at x≈1241; the glyph sits 39px off
+   the bottom edge. */
+.watermark {
+  position: absolute;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+}
+
+.wordmarkSlot {
+  display: grid;
+  place-items: center;
+}
+
+.wordmarkSlot > * {
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+/* A co-brand lockup reads horizontally, so it sits above the rotated stack
+   rather than inside it. */
+.coBrand {
+  transform: rotate(-90deg);
+  transform-origin: center;
+  margin-bottom: 28px;
+}

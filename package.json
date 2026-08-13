@@ -15,17 +15,25 @@
     "build:tokens": "node scripts/build-tokens.mjs"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@fontsource/poppins": "^5.1.0",
+    "@mui/material": "^9.3.1",
+    "@mui/x-charts": "^9.11.1",
     "material-symbols": "^0.45.10",
-    "vue": "^3.5.13"
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
     "@storybook/addon-docs": "^10.4.6",
-    "@storybook/vue3-vite": "^10.4.6",
-    "@vitejs/plugin-vue": "^5.2.1",
+    "@storybook/react-vite": "^10.5.7",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.0.5",
     "playwright": "^1.49.0",
     "pptxgenjs": "^4.0.1",
     "storybook": "^10.4.6",
-    "vite": "^6.0.0"
+    "typescript": "^5.9.3",
+    "vite": "^8.2.1"
   }
 }

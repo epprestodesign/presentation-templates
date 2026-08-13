@@ -1,0 +1,54 @@
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: var(--slide-color-accent);
+  flex: none;
+}
+
+.plot {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+/* The floating figure the reference deck drops over the plot (slide 16's
+   "15.6% / 2027 EBITA Margin"). Positioned rather than anchored to a data
+   point — it is a headline, not a label. */
+.callout {
+  position: absolute;
+  right: 6%;
+  bottom: 16%;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  background: var(--slide-color-surface);
+  box-shadow: var(--slide-shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  text-align: center;
+  padding: 8px;
+}

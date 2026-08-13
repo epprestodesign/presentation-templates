@@ -1,0 +1,38 @@
+.lockup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.partner {
+  width: auto;
+  object-fit: contain;
+}
+
+/* Deliberately loud: a missing partner logo should look wrong in review
+   rather than quietly ship as blank space. */
+.placeholder {
+  display: inline-grid;
+  place-items: center;
+  padding: 0 10px;
+  border: 1px dashed var(--slide-color-rule);
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: var(--slide-font-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--slide-color-text-subtle);
+  white-space: nowrap;
+}
+
+.divider {
+  width: 1px;
+  background: var(--slide-color-rule);
+}
+
+.onDark .divider { background: var(--slide-color-rule-on-brand); }
+
+.onDark .placeholder {
+  border-color: var(--slide-color-rule-on-brand);
+  color: var(--slide-color-text-on-brand-subtle);
+}

@@ -1,0 +1,21 @@
+.root {
+  /* Deliberately declares NO font properties. The size step arrives as a
+     ds-text-* utility class from the template, and declaring `font: inherit`
+     here would silently beat it — same specificity, but module CSS is
+     injected after app.css, so it wins the cascade and every headline
+     collapses to body size. That bug cost a debugging round; do not
+     "tidy up" by adding a font shorthand. */
+
+  /* Headlines in the deck wrap on their own terms: templates set the width
+     and the copy breaks naturally. */
+  text-wrap: balance;
+}
+
+.accent { color: var(--slide-color-accent); }
+.bold { font-weight: var(--slide-font-weight-bold); }
+.italic { font-style: italic; }
+.underline {
+  text-decoration: underline;
+  text-underline-offset: 0.08em;
+}
+.muted { color: var(--slide-color-text-subtle); }

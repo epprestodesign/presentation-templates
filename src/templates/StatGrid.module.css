@@ -1,0 +1,12 @@
+.sublabel {
+  position: absolute;
+  left: var(--slide-grid-margin-x);
+  top: 265px;
+  z-index: 2;
+}
+
+.well {
+  position: absolute;
+  display: grid;
+  z-index: 2;
+}

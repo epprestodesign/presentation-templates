@@ -1,0 +1,32 @@
+/* Sits on the floor of the copy column, as on the core-business slide. */
+.delta {
+  position: absolute;
+  left: var(--slide-grid-margin-x);
+  bottom: 96px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.deltaRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+}
+
+.arrow {
+  font-size: 34px;
+  line-height: 1;
+  color: var(--slide-color-rule);
+  /* Optically centres the arrow against the cap height of the numbers rather
+     than their full line box. */
+  margin-top: 18px;
+}
+
+.chartWell {
+  position: absolute;
+  display: flex;
+  align-items: stretch;
+  z-index: 2;
+}

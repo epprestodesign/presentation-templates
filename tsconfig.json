@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+
+    /* The token modules stay plain .js with JSDoc types rather than .ts:
+       scripts/build-tokens.mjs imports them directly with node, which would
+       otherwise need a TS loader. allowJs + checkJs means they are still
+       type-checked and still give completions at every call site. */
+    "allowJs": true,
+    "checkJs": true
+  },
+  /* scripts/ is deliberately excluded: those are standalone node ESM scripts
+     run directly with `node`, not bundled app code. Including them under
+     checkJs only produces noise about node: builtins and implicit any in
+     throwaway local helpers. */
+  "include": ["src", ".storybook"]
+}

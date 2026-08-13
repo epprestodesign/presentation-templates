@@ -1,0 +1,40 @@
+/* Nothing may escape the artboard — a slide that bleeds is a bug that
+   otherwise only shows up after export. */
+.host {
+  overflow: hidden;
+}
+
+.slide {
+  position: relative;
+  overflow: hidden;
+  font-family: var(--slide-font-family);
+  color: var(--slide-color-text);
+  background-color: var(--slide-color-surface);
+  background-size: cover;
+  background-position: center;
+}
+
+.light {
+  background-color: var(--slide-color-surface);
+}
+
+.brand {
+  background-image: var(--slide-gradient-brand-bleed);
+  color: var(--slide-color-text-on-brand);
+}
+
+.navy {
+  background-color: var(--slide-color-brand-navy);
+  color: var(--slide-color-text-on-brand);
+}
+
+.image {
+  color: var(--slide-color-text-on-brand);
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  z-index: 1;
+}
