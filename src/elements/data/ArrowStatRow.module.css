@@ -12,9 +12,9 @@
   margin-left: -7.5px;
 }
 
-/* The label is set at h3's size but the reference's weight is regular, not the
-   step's bold. Only the weight is restated — a `font` declaration here would
-   collapse the size back to inherited. */
+/* The label's weight is regular whatever step it is set at — the heading steps
+   carry 600 and the reference's label does not. Only the WEIGHT is restated: a
+   `font` declaration here would collapse the size back to inherited. */
 .label {
   font-weight: var(--slide-font-weight-regular);
 }

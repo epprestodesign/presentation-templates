@@ -90,20 +90,17 @@ export const Phone: Story = {
   },
 }
 
-/** The device side flips, for a slide that follows a right-aligned one. The copy
- *  column moves itself out of the way — the template derives its left edge from
- *  the device's, rather than the story restating the geometry. */
-export const DeviceLeft: Story = {
+/** Device centred, copy running full width above it.
+ *
+ *  Replaces the old left-aligned story. Centring is the variation that does not
+ *  cost the deck its left edge — see the note on `align` in the template. */
+export const DeviceCentered: Story = {
+  name: 'Device centered',
   args: {
-    eyebrow: 'Payments',
-    pageNumber: 12,
-    title: ['One ledger, ', { accent: 'not four hundred.' }],
-    lead: 'EventPipe Pay settles the block, the rebate and the commission in one place.',
-    copyWidth: 420,
-    align: 'left',
-    device: 'Group 2966',
-    alt: 'The EventPipe Pay reconciliation ledger in a browser window',
+    ...Laptop.args,
+    align: 'center',
+    deviceTop: 268,
     deviceWidth: 620,
-    deviceTop: 250,
+    points: [],
   },
 }

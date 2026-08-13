@@ -196,3 +196,80 @@ export const Blank: Story = {
     ],
   },
 }
+
+/* --- Revenue durability, at other column counts -------------------------
+ *
+ * The same three metrics, re-laid-out. Worth having as stories rather than as a
+ * note: the retention trio is the slide most often rebuilt for a different
+ * audience, and each count changes what the copy can carry, not just how wide
+ * the cards are.
+ */
+
+const DURABILITY_CARDS = RevenueDurability.args!.cards!
+
+/** Two-up: the pair a board actually argues about, with room for a full
+ *  sentence under each. Logo retention moves into the headline instead. */
+export const RevenueDurabilityTwoUp: Story = {
+  name: 'Revenue durability – 2 up',
+  args: {
+    ...RevenueDurability.args,
+    pageNumber: 7,
+    title: 'Revenue durability',
+    lead: 'Logo retention held at 93% over the same period.',
+    columns: 2,
+    top: 300,
+    height: 360,
+    cards: DURABILITY_CARDS.slice(0, 2),
+  },
+}
+
+/** Four-up: the trio plus the expansion figure that explains why net exceeds
+ *  gross. The cards narrow to ~277px, so the descriptions shorten. */
+export const RevenueDurabilityFourUp: Story = {
+  name: 'Revenue durability – 4 up',
+  args: {
+    ...RevenueDurability.args,
+    pageNumber: 7,
+    columns: 4,
+    top: 300,
+    height: 360,
+    cards: [
+      ...DURABILITY_CARDS.slice(0, 3).map((c) => ({
+        ...c,
+        description: undefined,
+      })),
+      {
+        value: '1.31x',
+        label: 'Expansion Multiple',
+        order: 'value-first' as const,
+        valueSize: 'statSm' as const,
+        align: 'top' as const,
+      },
+    ],
+  },
+}
+
+/** Stacked: one column, three full-width rows.
+ *
+ *  This is the version to use when the metrics are a SEQUENCE rather than a
+ *  set — gross, then net, then logo, each qualifying the one above. Side by
+ *  side, three cards read as three independent facts; stacked, the order
+ *  carries the argument. It also gives each description a full measure instead
+ *  of a 374px column, which is what lets the copy be a sentence rather than a
+ *  fragment. */
+export const RevenueDurabilityStacked: Story = {
+  name: 'Revenue durability – stacked',
+  args: {
+    ...RevenueDurability.args,
+    pageNumber: 7,
+    lead: 'Each line qualifies the one above it.',
+    columns: 1,
+    /* Three full-width rows need the whole well, not the 360px the 3-up
+       version uses: side by side the descriptions sit beside each other,
+       stacked they sit under each other and the column is three times as
+       tall. */
+    top: 246,
+    height: 414,
+    cards: DURABILITY_CARDS.map((c) => ({ ...c, order: 'value-first' as const, align: 'top' as const })),
+  },
+}

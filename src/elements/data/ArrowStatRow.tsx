@@ -38,6 +38,14 @@ export interface ArrowStatRowProps extends ArrowStatSpec {
    *  44 with nothing between. h1 (40) is the step that matches; statSm would
    *  run the figure 10% large and crowd the label column. */
   valueSize?: TypeStep
+  /** Type step for the label.
+   *
+   *  bodyLg (18/400) rather than the h3 (22) this used to carry. At 22 the
+   *  label competed with the 40px figure beside it for attention, and the
+   *  column read as two headlines rather than as a figure and the thing it
+   *  measures. 18 at regular weight puts it clearly second, which is the
+   *  hierarchy the row is for. */
+  labelSize?: TypeStep
   className?: string
   style?: CSSProperties
 }
@@ -46,11 +54,16 @@ export function ArrowStatRow({
   value,
   label,
   height = 56,
-  arrowColumn = 51.5,
+  /* 40, not the 51.5 measured off the reference. The reference's arrow is drawn
+     artwork sitting tight to its figure; the Material Symbol has side bearings
+     the drawing does not, so matching the measured column left a visible gulf
+     between the glyph and the number it points at. */
+  arrowColumn = 40,
   valueColumn = 113.5,
   icon = 'arrow_forward',
   iconSize = 40,
   valueSize = 'h1',
+  labelSize = 'bodyLg',
   className,
   style,
 }: ArrowStatRowProps) {
@@ -67,7 +80,7 @@ export function ArrowStatRow({
         className={styles.arrow}
       />
       <div className={`${typeClass(valueSize)} ds-text-accent`}>{value}</div>
-      <div className={`${styles.label} ds-text-h3`}>{label}</div>
+      <div className={`${styles.label} ${typeClass(labelSize)}`}>{label}</div>
     </div>
   )
 }

@@ -141,7 +141,7 @@ export function Quote({
           <Icon
             name="format_quote"
             size={markSize}
-            weight={300}
+            weight={400}
             filled
             color={onDark ? 'var(--slide-color-rule-on-brand-strong)' : 'var(--slide-color-accent)'}
           />

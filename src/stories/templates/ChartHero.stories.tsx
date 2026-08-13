@@ -87,6 +87,11 @@ export const AttachRate: Story = {
     pageNumber: 12,
     title: 'Every additional product a customer adopts compounds the revenue per booking.',
     titleWidth: 820,
+    /* This headline wraps to two lines, and the default chartTop is sized for
+       one — it left 33px between the headline and the chart's own title where
+       the one-line stories have 71, so the two blocks read as one crowded
+       stack. Matched to the rest of the set rather than eyeballed. */
+    chartTop: 232,
     chart: {
       kind: 'line',
       title: 'Revenue per Booking',

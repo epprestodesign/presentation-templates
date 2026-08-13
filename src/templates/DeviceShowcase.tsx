@@ -48,8 +48,14 @@ export interface DeviceShowcaseProps extends SlideChromeSpec {
   alt?: string
   /** Width of the device itself in slide px. */
   deviceWidth?: number
-  /** Which side the device sits on. */
-  align?: 'right' | 'left'
+  /** Where the device sits.
+   *
+   *  'left' was removed deliberately. The copy column has to step past the
+   *  device to clear it, which puts the headline off the page margin every
+   *  other slide — so a deck that alternated sides no longer had a left edge,
+   *  and that is the one alignment a reader tracks from slide to slide.
+   *  'center' is the variation that does not cost that. */
+  align?: 'right' | 'center'
   /** Top edge of the device. */
   deviceTop?: number
   /** Distance from the device to the slide edge it sits against. Defaults to
@@ -81,27 +87,32 @@ export function DeviceShowcase({
 }: DeviceShowcaseProps) {
   const inset =
     deviceInset ??
-    (align === 'right'
-      ? chrome.watermark === false
-        ? grid.marginX
-        : grid.watermarkGutter
-      : grid.marginX)
+    (chrome.watermark === false ? grid.marginX : grid.watermarkGutter)
+
+  /* Centred means centred in the SAFE width, not in the slide. The watermark
+     occupies the right gutter, so centring on 640 pushes the device visibly
+     right of the optical middle on any slide that shows the wordmark. */
+  const safeRight = chrome.watermark === false ? grid.marginX : grid.watermarkGutter
+  const centreLeft = grid.marginX + (1280 - grid.marginX - safeRight - deviceWidth) / 2
 
   const deviceStyle: CSSProperties = {
     top: deviceTop,
-    ...(align === 'right' ? { right: inset } : { left: inset }),
+    ...(align === 'center' ? { left: centreLeft } : { right: inset }),
   }
 
-  // The copy column keeps the page margin when the device is on the right, and
-  // steps past the device when it is on the left. Derived rather than a prop:
-  // there is exactly one correct answer, and it depends on numbers the template
-  // already has.
-  const copyLeft = align === 'left' ? inset + deviceWidth + columnGap : grid.marginX
+  // The copy keeps the page margin in both alignments now. Centred, it runs the
+  // full safe width above the device rather than beside it.
+  const copyLeft = grid.marginX
 
   return (
     <SlideFrame fit={fit} {...chrome}>
       {(title || lead) && (
-        <SlideHeading title={title} lead={lead} width={copyWidth} left={copyLeft} />
+        <SlideHeading
+          title={title}
+          lead={lead}
+          width={align === 'center' ? 1280 - grid.marginX - safeRight : copyWidth}
+          left={copyLeft}
+        />
       )}
 
       {points.length > 0 && (

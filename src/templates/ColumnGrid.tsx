@@ -168,10 +168,6 @@ export function ColumnGrid({
     icon: iconSize ?? density.icon,
   }
 
-  /* Bottom-anchored unless the author says otherwise. `bottom` and `top` are
-     mutually exclusive here — setting both on an absolutely positioned element
-     with no height would stretch the row back to a fixed well, which is the
-     hollow-card bug this replaces. */
   /* The stack owns the placement; the well owns the columns. `bottom` and `top`
      are mutually exclusive here — setting both on an absolutely positioned
      element with no height would stretch the row back to a fixed well, which is
@@ -254,7 +250,7 @@ export function ColumnGrid({
                 <Icon
                   name={cell.icon}
                   size={step.icon}
-                  weight={300}
+                  weight={400}
                   className={styles.icon}
                   color={onBrand ? 'var(--slide-color-text-on-brand)' : 'var(--slide-color-accent)'}
                 />

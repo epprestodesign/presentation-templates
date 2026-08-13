@@ -1,8 +1,24 @@
+/* The copy column spans from under the headline down to the deck's content
+   floor, and the blocks sit at the BOTTOM of that span.
+   
+   Anchored top-only, the column started under the headline and ended wherever
+   its text happened to run out — so the amount of empty space beneath it was a
+   function of how much copy a slide had, and no two slides in the deck landed
+   on the same line. Spanning the full height and pushing the text down means
+   the LAST line lands on the content floor every time, which is the edge the
+   images beside it are aligned to. */
 .figures {
   position: absolute;
   left: var(--slide-grid-margin-x);
   z-index: 2;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   gap: 18px;
+}
+
+/* Opt back into the old behaviour for a slide whose copy should hang directly
+   off the headline rather than off the floor. */
+.figuresTop {
+  justify-content: flex-start;
 }

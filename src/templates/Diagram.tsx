@@ -220,7 +220,7 @@ export function Diagram({
                     <Icon
                       name={node.icon}
                       size={well.iconSize}
-                      weight={200}
+                      weight={400}
                       color="var(--slide-color-accent)"
                     />
                   )}
@@ -246,7 +246,7 @@ export function Diagram({
                   style={{ width: well.gap, visibility: i === 0 ? 'hidden' : undefined }}
                   aria-hidden={i === 0}
                 >
-                  <Icon name={arrow} size={arrowSize} weight={200} />
+                  <Icon name={arrow} size={arrowSize} weight={400} />
                 </div>
                 <div
                   className={styles.card}
@@ -265,7 +265,7 @@ export function Diagram({
                         <Icon
                           name={node.icon}
                           size={well.iconSize}
-                          weight={200}
+                          weight={400}
                           color="var(--slide-color-text-on-brand)"
                         />
                       )

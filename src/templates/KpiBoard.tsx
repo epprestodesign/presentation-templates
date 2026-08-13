@@ -171,7 +171,7 @@ function KpiTile({
           <Icon
             name={tile.icon}
             size={iconSize}
-            weight={300}
+            weight={400}
             className={styles.icon}
             color={onBrand ? 'var(--slide-color-text-on-brand)' : 'var(--slide-color-accent)'}
           />

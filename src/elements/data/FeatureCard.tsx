@@ -29,6 +29,13 @@ export type FeatureCardLayout =
   | 'photo-top'
   /** Slide 10: title and copy at the top, photo inset along the bottom. */
   | 'photo-bottom'
+  /** No photograph at all — title and copy only.
+   *
+   *  Added because the column-count variants need a card that works without
+   *  imagery, and because the deck's photography is gitignored: a photo layout
+   *  with no `image` renders an empty band, which looks like a missing asset
+   *  rather than a deliberate choice. This says text-only out loud. */
+  | 'flat'
 
 export interface FeatureCardSpec {
   title?: RichText

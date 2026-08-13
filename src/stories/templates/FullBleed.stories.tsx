@@ -139,7 +139,10 @@ export const FramedWithHeadline: Story = {
     scrim: 0.34,
     eyebrow: 'EventPipe',
     title: ['Every room, ', { accent: 'one contract.' }],
-    titleWidth: 720,
+    // No wordmark: the frame already carries the brand on all four edges, and a
+    // rotated logo inside a gradient border reads as two marks competing.
+    watermark: false,
+    arrow: true,
   },
 }
 

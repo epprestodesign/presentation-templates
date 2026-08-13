@@ -55,7 +55,12 @@
   position: absolute;
   z-index: 0;
   line-height: 1;
-  font-weight: var(--slide-font-weight-bold);
+  /* Medium, not bold. The numeral is a GHOST — it sits behind the title as
+     texture, and at this size 700 stopped being background and started
+     competing with the copy in front of it. Weight is the only lever that
+     works here: the size is what makes it a ghost, and the colour is already
+     the card's own white. */
+  font-weight: var(--slide-font-weight-medium);
   color: var(--slide-color-text-on-brand);
   /* A figure this large would otherwise be selectable/copyable noise. */
   user-select: none;

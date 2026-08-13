@@ -199,3 +199,101 @@ export const FourWaysToCreateValue: Story = {
     ],
   },
 }
+
+/* --- Column-count variants ---------------------------------------------
+ *
+ * The template already re-flows on `columns` — the well is a grid and the cards
+ * share whatever is left after the gutters — so these are content, not new
+ * layout code. They exist because the count is the decision an author actually
+ * makes, and seeing the four side by side is what tells you where the copy has
+ * to shorten.
+ *
+ * The honest limit: at 5 the card is ~226px wide, and a title of more than two
+ * words wraps. Every deck that has reached for 5 here would have read better as
+ * 4 with a stronger claim in each. Kept anyway, because the alternative is
+ * someone forcing it with inline widths.
+ */
+
+const FLAT = {
+  eyebrow: 'Platform',
+  layout: 'flat' as const,
+  titleWidth: 1000,
+  top: 322,
+  height: 300,
+}
+
+/** Two columns — the most room per card, for a genuine either/or. */
+export const TwoColumns: Story = {
+  args: {
+    ...FLAT,
+    pageNumber: 11,
+    title: ['Two halves of ', { accent: 'one workflow.' }],
+    lead: 'Everything the platform does falls into one of these.',
+    columns: 2,
+    cards: [
+      {
+        title: 'Build the block',
+        body: [
+          'Contract hotels, load rates and attrition terms, and publish a branded booking site — once per event, not once per hotel.',
+        ],
+      },
+      {
+        title: 'Run the block',
+        body: [
+          'Track pickup nightly, release unsold rooms at cut-off, and reconcile commissions without exporting anything.',
+        ],
+      },
+    ],
+  },
+}
+
+/** Three — the comfortable default for a claim with a middle term. */
+export const ThreeColumns: Story = {
+  args: {
+    ...FLAT,
+    pageNumber: 12,
+    title: ['Three jobs, ', { accent: 'one record.' }],
+    lead: 'Each one is a spreadsheet somewhere else.',
+    columns: 3,
+    cards: [
+      { title: 'Contracting', body: ['Rates, counts and attrition agreed per hotel and stored once.'] },
+      { title: 'Booking', body: ['Teams book against the block on a site that carries the event brand.'] },
+      { title: 'Reconciliation', body: ['Rooms actualised, commissions and rebates paid on schedule.'] },
+    ],
+  },
+}
+
+/** Four — the reference deck's own count. */
+export const FourColumns: Story = {
+  args: {
+    ...FLAT,
+    pageNumber: 13,
+    title: ['Four ways ', { accent: 'to create value.' }],
+    lead: 'Monetise the same workflow, then take it where the payments already are.',
+    columns: 4,
+    cards: [
+      { title: 'Booking SaaS', body: ['The system of record, with room to monetise at checkout.'] },
+      { title: 'Payments', body: ['Economics on volume that already flows through the platform.'] },
+      { title: 'Distribution', body: ['Contracted inventory inside ticketing and registration.'] },
+      { title: 'AI', body: ['Automate on operating data; more events per coordinator.'] },
+    ],
+  },
+}
+
+/** Five — the practical ceiling. Titles must stay to two words. */
+export const FiveColumns: Story = {
+  args: {
+    ...FLAT,
+    pageNumber: 14,
+    title: ['The full ', { accent: 'operating stack.' }],
+    lead: 'Five surfaces, one underlying record.',
+    columns: 5,
+    cards: [
+      { title: 'Contract', body: ['Rates and terms per hotel.'] },
+      { title: 'Build', body: ['Blocks, policies, branded site.'] },
+      { title: 'Book', body: ['Teams reserve against the block.'] },
+      { title: 'Track', body: ['Pickup nightly against contract.'] },
+      { title: 'Settle', body: ['Actualise, reconcile, pay out.'] },
+    ],
+  },
+}

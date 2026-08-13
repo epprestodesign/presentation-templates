@@ -38,6 +38,12 @@ export interface HeadlineImageProps extends SlideChromeSpec {
   blocks?: CopyBlock[]
   /** Where the copy blocks start. Defaults below a two-line headline. */
   blocksTop?: number
+  /** Distance from the bottom of the slide to the last line of copy. The column
+   *  spans blocksTop → this, and the text is pushed to the bottom of it. */
+  blocksBottom?: number
+  /** 'bottom' (default) rests the last line on the content floor; 'top' hangs
+   *  the copy off the headline the way it used to. */
+  blocksAlign?: 'top' | 'bottom'
 
   /** Mosaic images, in absolute slide coordinates. */
   images?: ImageSpec[]
@@ -54,6 +60,8 @@ export function HeadlineImage({
   titleWidth = 620,
   blocks = [],
   blocksTop = 300,
+  blocksBottom = 60,
+  blocksAlign = 'bottom',
   images = [],
   ...chrome
 }: HeadlineImageProps) {
@@ -62,7 +70,12 @@ export function HeadlineImage({
       {title && <SlideHeading title={title} size={titleSize} width={titleWidth} />}
 
       {blocks.length > 0 && (
-        <div className={styles.figures} style={{ top: blocksTop, width: titleWidth }}>
+        <div
+          className={[styles.figures, blocksAlign === 'top' ? styles.figuresTop : '']
+            .filter(Boolean)
+            .join(' ')}
+          style={{ top: blocksTop, bottom: blocksBottom, width: titleWidth }}
+        >
           {blocks.map((block, i) => (
             <AccentText
               key={i}
