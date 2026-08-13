@@ -1,0 +1,61 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Data Grid/Overview" />
+
+<div style={{ maxWidth: 900 }}>
+
+# Data Grid
+
+**MUI X Data Grid**, themed with EventPipe tokens.
+
+`@mui/x-data-grid@9.11.0` — **MIT licensed.** No licence key required.
+
+---
+
+## Read this before using it on a slide
+
+**Do not put this component on a slide.**
+
+A Data Grid is an interactive application component: it sorts, filters,
+paginates, virtualises rows, and responds to hover and focus. A slide does none
+of those things — it is projected, static, and read from across a room. Dropping
+a grid onto one gives you a table that looks like a web app, with UI affordances
+nobody can use.
+
+For a table **on a slide**, use `Elements/Data → DataTable`. It is static,
+built for the 1280×720 artboard, and maps cleanly onto PptxGenJS's `addTable` so
+it exports to Google Slides as a **real editable table** rather than a picture.
+
+## Where it does belong
+
+**Mocking product UI to screenshot into a slide.** When a deck needs a
+PipeSights or reservation-management screen, you want the real grid with real
+behaviour — then capture it. That is what this section is for, and it is why the
+component is installed at all.
+
+## Licensing — the line to watch
+
+MUI X is open core, and the Community grid is genuinely capable. These need a
+**Pro or Premium licence** and are *not* installed:
+
+| Feature | Tier |
+| --- | --- |
+| Column pinning, row pinning | Pro |
+| Tree data, row grouping | Pro |
+| Master-detail rows | Pro |
+| Column reorder / resize persistence | Pro |
+| Excel export | Premium |
+| Aggregation, pivoting | Premium |
+| Cell selection ranges | Premium |
+
+Everything documented in this section is Community. If a mock starts needing
+row grouping or Excel export, that is the moment a licence conversation starts —
+worth knowing before it is designed in.
+
+## Theming
+
+`src/lib/muiTheme.ts` maps our tokens onto MUI's theme, so the grid renders in
+Poppins with EventPipe borders and radii rather than MUI's Roboto defaults. It is
+applied as a global Storybook decorator.
+
+</div>

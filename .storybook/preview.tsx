@@ -1,7 +1,20 @@
 import type { Preview } from '@storybook/react-vite'
+import { ThemeProvider } from '@mui/material/styles'
+import { muiTheme } from '../src/lib/muiTheme'
 import '../src/styles/globals.css'
 
 const preview: Preview = {
+  // Every MUI X chart and grid reads @mui/material's theme, so without this
+  // they render in MUI's default blue and Roboto — visibly off-brand beside a
+  // slide. Applied globally rather than per story so nothing has to remember,
+  // including charts that end up inside a slide template.
+  decorators: [
+    (Story) => (
+      <ThemeProvider theme={muiTheme}>
+        <Story />
+      </ThemeProvider>
+    ),
+  ],
   parameters: {
     // Documentation is the DEFAULT here, not the exception: Styles and Elements
     // pages are reference material and should reflow with the browser. Only the
@@ -46,10 +59,18 @@ const preview: Preview = {
             'Motion',
             'Grid & Safe Areas',
           ],
-          // 2) Elements — the pieces a slide is assembled from
+          // 2) The MUI X libraries, as siblings of Foundations. Both are
+          //    Community/MIT — nothing here needs a licence key. They are a
+          //    component catalogue for mocking product UI, NOT slide elements:
+          //    a grid has sorting and hover, a slide has neither.
+          'Charts',
+          ['Overview', 'Bar', 'Line', 'Pie', 'Scatter', 'Radar', 'Gauge & Sparkline'],
+          'Data Grid',
+          ['Overview', 'Basics'],
+          // 3) Elements — the pieces a slide is assembled from
           'Elements',
           ['Text', 'Data', 'Media', 'Layout', 'Brand'],
-          // 3) Templates — the slide archetypes, with real rebuilt slides as
+          // 4) Templates — the slide archetypes, with real rebuilt slides as
           //    their stories
           'Templates',
           [

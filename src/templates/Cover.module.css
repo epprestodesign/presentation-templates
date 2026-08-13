@@ -1,0 +1,68 @@
+/* The whole cover is one grid. `inset`, `gap` and the track sizes come from
+   the template so the measured 16px insets / 300px columns stay in the props
+   rather than being buried here. */
+.grid {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+}
+
+/* The title well. Its fill is the wash layer below, not a background here:
+   the plate's hexagons have to stay visible through it, which a solid
+   background — even a very pale one — would hide. */
+.well {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 40px;
+  overflow: hidden;
+}
+
+.wash {
+  position: absolute;
+  inset: 0;
+  background: var(--slide-color-accent);
+}
+
+/* Copy sits above the wash. */
+.copy {
+  position: relative;
+  z-index: 1;
+}
+
+.meta {
+  position: relative;
+  z-index: 1;
+  margin-top: 8px;
+}
+
+.panel {
+  overflow: hidden;
+}
+
+/* Three placeholder fills. Black and white are exactly what the two alternate
+   reference variants ship. Brand is a FLAT fill, not the card gradient: the
+   primary reference samples #02718f at every point inside the panel, so the
+   original is one solid mid-teal. `--slide-color-brand-navy` (#02658c) is the
+   nearest token — a shade deeper than the sample, and the only flat brand
+   solid the palette exposes. */
+.black {
+  background: var(--slide-color-text);
+}
+
+.white {
+  background: var(--slide-color-surface);
+}
+
+.brand {
+  background: var(--slide-color-brand-navy);
+}
+
+.photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

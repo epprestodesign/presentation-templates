@@ -1,0 +1,39 @@
+.points {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.point {
+  display: flex;
+  gap: 12px;
+}
+
+/* Nudged down to sit on the heading's cap line rather than its line box top —
+   an icon aligned to the box reads high next to 18px type. */
+.icon {
+  flex: none;
+  margin-top: 3px;
+}
+
+.pointCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.device {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.caption {
+  text-align: center;
+}

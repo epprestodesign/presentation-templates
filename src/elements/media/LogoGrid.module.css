@@ -1,0 +1,22 @@
+/* flex-wrap rather than CSS grid so a partial last row centres under the full
+   rows above it — slide 06's customer wall ends on a row of two and the
+   original centres them. */
+.field {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Height is capped by the caller; width follows. Capping width instead makes a
+   wide wordmark read much larger than a square badge beside it. */
+.mark {
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}

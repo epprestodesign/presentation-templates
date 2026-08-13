@@ -1,0 +1,133 @@
+/* One side of a before/after panel. Every number here was read off
+   references/slide-decks/02.png and 13.png with a pixel probe, not estimated. */
+
+.band {
+  position: relative;
+  /* No border-radius: the parent panel clips the stack, so the first band gets
+     rounded top corners and the last rounded bottom corners without either
+     band knowing where it sits. */
+  overflow: hidden;
+}
+
+.muted {
+  background-color: var(--slide-color-surface-muted);
+}
+
+/* Dark bottom-left to bright top-right — the same 45deg brand gradient the
+   stat cards use, sampled at #01adb3 in the band's top-right corner. */
+.brand {
+  background-image: var(--slide-gradient-brand);
+}
+
+/* The old-way side is set in italic throughout. Declared on the band so it
+   inherits into every cell; it sets only font-style, so it never collides with
+   the ds-text-* class that carries size and weight. */
+.italic {
+  font-style: italic;
+}
+
+/* ---------------------------------------------------------------
+ * 'inline' — slide 02. Side label, then dash-separated steps.
+ * --------------------------------------------------------------- */
+
+.row {
+  display: flex;
+  /* Cells hang from a common top edge; a cell that runs to four lines grows
+     downward rather than shifting its neighbours. */
+  align-items: flex-start;
+  gap: 12px;
+  padding-left: 24px;
+  padding-right: 24px;
+  /* currentColor for the dashes. They read a step lighter than the copy in the
+     reference (#939393 against #626262), so the row carries the rule colour
+     and each cell overrides it with its own ink class. */
+  color: var(--slide-color-text-subtle);
+}
+
+.brand .row {
+  color: var(--slide-color-rule-on-brand);
+}
+
+.labelCell {
+  flex: none;
+}
+
+/* Equal share of what is left, so adding a sixth step re-flows the row
+   instead of needing new coordinates. */
+.stepCell {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* Three dashes, 5.5px on a 9.5px pitch inside a 27px box — measured, and the
+   reason this is a gradient rather than three elements. `align-self: center`
+   puts it on the row's optical middle. */
+.dashes {
+  flex: none;
+  align-self: center;
+  width: 27px;
+  height: 3px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    currentColor 0 5.5px,
+    transparent 5.5px 9.5px
+  );
+}
+
+/* ---------------------------------------------------------------
+ * 'stepped' — slide 13. Dotted rail over a row of step cards.
+ * --------------------------------------------------------------- */
+
+.rail {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  /* The dots start 9px inside the card column, not flush with it. */
+  padding-left: 9px;
+  /* Dots and chevron both inherit this. The reference draws them in Blue Grey
+     200 (#b0bec5); `rule` is the nearest token and reads the same at slide
+     size. */
+  color: var(--slide-color-rule);
+}
+
+.railOnBrand {
+  color: var(--slide-color-text-on-brand);
+}
+
+/* 3px dots on a 19px pitch. A `dotted` border cannot do this — CSS ties the
+   gap to the dot size, which gives a 6px pitch — so the rail is a repeating
+   radial gradient tiled at the measured pitch. */
+.dots {
+  flex: 1 1 0;
+  height: 3px;
+  background-image: radial-gradient(circle at 1.5px 50%, currentColor 1.5px, transparent 1.5px);
+  background-size: 19px 3px;
+  background-repeat: repeat-x;
+}
+
+.cards {
+  display: flex;
+  /* 4px, measured. The cards read as one continuous track, not four tiles. */
+  gap: 4px;
+  padding: 0 16px 16px;
+}
+
+.card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 0 14px;
+  /* 8px, measured — the image radius, tighter than the 10px stat card. */
+  border-radius: var(--slide-radius-image);
+  /* The reference fills these with Blue Grey 100 (#cfd8dc); the palette has no
+     cool step that light, so the neutral border tone stands in. */
+  background-color: var(--slide-color-border);
+}
+
+/* On the brand band the cards invert to paper, which is what makes the second
+   row read as the resolved state. */
+.cardOnBrand {
+  background-color: var(--slide-color-surface);
+}

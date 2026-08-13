@@ -1,0 +1,6 @@
+/* One step of the staircase. The template puts the coordinates on the element;
+   this only establishes the positioning context and the stacking order. */
+.step {
+  position: absolute;
+  z-index: 2;
+}

@@ -1,0 +1,117 @@
+/* FeatureCard. Declares no font properties anywhere — every text node in the
+   component already carries a ds-text-* class, and module CSS is injected after
+   the globals, so a `font:` or `font-size` here would silently beat the scale.
+   See AccentText.module.css for the bug that taught us that. */
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  /* Clips the bled photo back to the card's rounded corners. */
+  overflow: hidden;
+}
+
+.muted { background: var(--slide-color-surface-muted); }
+.brand { background: var(--slide-gradient-brand); }
+.brandAlt { background: var(--slide-gradient-brand-card-alt); }
+.plain { background: transparent; }
+.outline {
+  background: transparent;
+  border: 1px solid var(--slide-color-border);
+}
+
+/* --- photo-top --------------------------------------------------------- */
+
+/* The photo band. `flex: none` so a long ruled list below it cannot squeeze
+   the photo — measured heights have to hold. */
+.media {
+  position: relative;
+  flex: none;
+  overflow: hidden;
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The veil under a reversed title. Built out of the deck's ink token rather
+   than a literal black so there is still one source for it; `--slide-color-text`
+   is #000. Stops are sampled off slide 03: the photo reads untouched for the
+   first ~28% of the band, is half gone by 56%, and is effectively solid by the
+   last fifth, which is what lets a two- or three-line white title sit on any of
+   the five photos without a legibility check per card. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    transparent 28%,
+    color-mix(in srgb, var(--slide-color-text) 45%, transparent) 56%,
+    color-mix(in srgb, var(--slide-color-text) 88%, transparent) 82%,
+    var(--slide-color-text) 100%
+  );
+}
+
+.mediaTitle {
+  position: absolute;
+  z-index: 2;
+}
+
+/* The ruled list under the photo. */
+.list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.bullet {
+  position: relative;
+  /* 3px rule + an 8px gap, measured off slide 03: rule at x=56 inside a card
+     whose left edge is 40, text starting at 67.5. */
+  padding-left: 11px;
+}
+
+.bullet::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  /* Sampled #b0bec5 — Blue Grey 200, which the palette does not carry. Built
+     instead as the card's own body-copy ink at 42%, which lands on #b1bcc1
+     over #f5f5f5 and so needs no new colour. */
+  background: color-mix(in srgb, var(--slide-color-text-cool) 42%, transparent);
+}
+
+/* The rule is decorative; the copy inside it is the content. */
+.bullet > p {
+  color: var(--slide-color-text-cool);
+}
+
+/* Card copy wraps greedily. AccentText balances by default, which is right for
+   a headline but wrong here: these paragraphs are measured against the
+   reference's ragged right edge, and balancing pulls every line short. */
+.bullet > p,
+.para {
+  text-wrap: wrap;
+}
+
+/* --- photo-bottom ------------------------------------------------------ */
+
+.copy {
+  display: flex;
+  flex-direction: column;
+}
+
+/* `margin-top: auto` floats the photo onto the card's floor, so a card with two
+   lines of copy and one with four still line their photos up across the row. */
+.thumb {
+  flex: none;
+  margin-top: auto;
+  overflow: hidden;
+}

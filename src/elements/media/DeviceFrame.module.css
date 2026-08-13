@@ -1,0 +1,11 @@
+/* The box is the device's own bounding box. The asset behind it is larger —
+   overflow stays visible because what hangs outside is the mockup's soft
+   shadow, and clipping it would leave a hard edge along the device. */
+.frame {
+  position: relative;
+}
+
+.mockup {
+  position: absolute;
+  display: block;
+}

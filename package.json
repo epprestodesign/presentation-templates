@@ -13,7 +13,9 @@
     "export:png": "node scripts/export-png.mjs",
     "export:pdf": "node scripts/export-pdf.mjs",
     "build:tokens": "node scripts/build-tokens.mjs",
-    "crop:images": "node scripts/crop-images.mjs"
+    "crop:images": "node scripts/crop-images.mjs",
+    "imagery:fetch": "node scripts/fetch-unsplash.mjs",
+    "imagery:fetch:all": "bash scripts/fetch-unsplash-all.sh"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -21,6 +23,7 @@
     "@fontsource/poppins": "^5.1.0",
     "@mui/material": "^9.3.1",
     "@mui/x-charts": "^9.11.1",
+    "@mui/x-data-grid": "^9.11.0",
     "material-symbols": "^0.45.10",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"

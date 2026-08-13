@@ -1,0 +1,15 @@
+.panel {
+  position: absolute;
+  z-index: 2;
+  box-sizing: border-box;
+  background: var(--slide-color-surface-muted);
+}
+
+/* One row of equal columns. The people are top-aligned rather than stretched:
+   role copy wraps to one or two lines depending on the title, and stretching
+   would push each headshot to a different baseline. */
+.row {
+  display: grid;
+  align-items: start;
+  height: 100%;
+}

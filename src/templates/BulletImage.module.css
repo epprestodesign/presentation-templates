@@ -1,0 +1,8 @@
+/* The list is the only thing this template positions itself; the headline is
+   on the grid anchors and the imagery carries its own rects. */
+.bullets {
+  position: absolute;
+  /* Above ImageMosaic's layer, so a wide headline or a long item stays legible
+     if it ever reaches the photography. */
+  z-index: 3;
+}

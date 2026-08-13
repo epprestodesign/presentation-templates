@@ -1,0 +1,79 @@
+/* Comparison — headline, optional figures row, and the two-band panel. */
+
+.lead {
+  position: absolute;
+  left: var(--slide-grid-margin-x);
+  z-index: 2;
+}
+
+/* ---------------------------------------------------------------
+ * Figures row — slide 13's two KPIs.
+ * --------------------------------------------------------------- */
+
+.figures {
+  position: absolute;
+  left: var(--slide-grid-margin-x);
+  z-index: 2;
+  display: flex;
+}
+
+.figure {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* The rule between figures. A pseudo-element rather than a border because the
+   reference inset it top and bottom (y=281 to 356, against a block that runs
+   263 to 360) instead of running it the full height of the column. */
+.figure + .figure {
+  padding-left: 40px;
+}
+
+.figure + .figure::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 18px;
+  width: 1px;
+  height: 75px;
+  background-color: var(--slide-color-rule);
+}
+
+/* ---------------------------------------------------------------
+ * Note — the icon-plus-aside beside the figures.
+ * --------------------------------------------------------------- */
+
+.note {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  /* 18px, measured: a 36px glyph then the copy column at x=882. */
+  gap: 18px;
+}
+
+.noteBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* ---------------------------------------------------------------
+ * The panel.
+ * --------------------------------------------------------------- */
+
+/* One rounded container, clipped, holding the bands as a column. Clipping is
+   what lets each band stay square-cornered and still produce the reference's
+   rounded outer shape — the first band's top corners and the last band's
+   bottom corners come from the panel, so reordering or adding a band needs no
+   per-band radius. The `gap` shows the white artboard through, which is
+   exactly the hairline the reference has between the two sides. */
+.panel {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--slide-radius-panel);
+  overflow: hidden;
+}

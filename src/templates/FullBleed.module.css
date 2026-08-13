@@ -1,0 +1,38 @@
+/* The photo layer. Below every content layer, above the artboard's own fill. */
+.bleed {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+}
+
+.photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The branded frame, applied in CSS to photography that arrives without one.
+   Every measurement here comes from the recovered compositions
+   (src/assets/imagery/full-bleed/*): the photo is inset 20px on the top,
+   right and bottom, runs off the left edge of the slide, and its two right
+   corners are rounded at 24px. The plate behind it samples #01658b at
+   bottom-left to #02adb3 at top-right, which is exactly `gradient.brand`. */
+.framed {
+  background: var(--slide-gradient-brand);
+  padding: var(--fullbleed-inset) var(--fullbleed-inset) var(--fullbleed-inset) 0;
+}
+
+.framed .photo {
+  border-radius: 0 var(--fullbleed-radius) var(--fullbleed-radius) 0;
+}
+
+/* Scrim under a headline. FullBleed carries its own rather than using
+   SlideFrame's, because the photo here is an <img> above the artboard
+   background and SlideFrame's scrim sits below it. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  z-index: 1;
+}

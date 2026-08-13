@@ -1,0 +1,48 @@
+.well {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+}
+
+/* Groups share the field evenly, so two walls of unequal logo counts still
+   line up their labels. */
+.group {
+  flex: 1;
+  min-width: 0;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  margin-bottom: 16px;
+}
+
+.labelText {
+  flex: none;
+  padding: 0 14px;
+  color: var(--slide-color-brand-navy);
+  white-space: nowrap;
+}
+
+/* The dotted leader. A repeating radial-gradient rather than N dot elements:
+   measured 4.5px dots on a 13.3px pitch, which a background repeat holds at
+   any field width.
+
+   Stops are in px, not percentages: a percentage on a radial-gradient resolves
+   against the gradient's farthest-corner extent (here 13.3 × 0.707 ≈ 9.4px),
+   not the tile width, so the dot came out nearly half again too wide. 2.25px is
+   the measured radius; the 0.1px step out is the antialias edge, which matters
+   at the 2x export. */
+.leader {
+  flex: 1;
+  height: 13.3px;
+  background-image: radial-gradient(
+    circle at center,
+    var(--slide-color-brand-navy) 2.25px,
+    transparent 2.35px
+  );
+  background-size: 13.3px 13.3px;
+  background-repeat: repeat-x;
+  background-position: center;
+}

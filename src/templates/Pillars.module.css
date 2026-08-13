@@ -1,0 +1,90 @@
+/* The well holds the three panels AND the banner laid across them, so it is
+   the positioning context for both. */
+.well {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+}
+
+.panel {
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background: var(--slide-color-surface-muted);
+  border-radius: var(--slide-radius-panel);
+}
+
+/* Above the panels, spanning all three — it crosses the 8px gaps between them,
+   which is what makes the row read as one band. */
+.banner {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  /* 20px of inset before the first dot, measured. */
+  padding: 0 20px;
+  background: var(--slide-color-surface);
+  border-radius: var(--slide-radius-pill);
+}
+
+/* Dotted leader. A repeating radial gradient rather than a dotted border:
+   `border-bottom: dotted` gives dashes whose size is tied to the border width
+   and differs per engine, and the reference is unambiguous — 3.5px dots on a
+   16px pitch. */
+.leader {
+  flex: 1;
+  height: 4px;
+  background-image: radial-gradient(
+    circle at 1.75px 50%,
+    var(--slide-color-accent) 0 1.75px,
+    transparent 1.75px
+  );
+  background-size: 16px 4px;
+  background-repeat: repeat-x;
+}
+
+.bannerLabel {
+  flex: none;
+  white-space: nowrap;
+}
+
+.heading {
+  text-align: center;
+}
+
+/* The stack takes the rest of the panel, and its cards share it evenly — three
+   105px cards and five 62px cards both start at y=330 and end at y=658. */
+.stack {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  background: var(--slide-color-surface);
+  border-radius: var(--slide-radius-card);
+}
+
+/* Card labels are set at the heading's size but at regular weight — the
+   headings are the bold ones. Only the weight is overridden here; size and
+   line-height stay with the ds-text-* class, which a `font` shorthand in this
+   file would silently clobber. */
+.cardLabel {
+  text-align: center;
+  font-weight: var(--slide-font-weight-regular);
+}
+
+.accent { color: var(--slide-color-accent); }
+.navy { color: var(--slide-color-brand-navy); }
+.ink { color: var(--slide-color-text); }

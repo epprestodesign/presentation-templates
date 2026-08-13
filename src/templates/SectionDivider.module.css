@@ -1,0 +1,24 @@
+/* The white card. Its rect comes from the template so the measured 20px insets
+   and the 24px arc stay visible in the props. */
+.panel {
+  position: absolute;
+  z-index: 1;
+  background: var(--slide-color-surface);
+}
+
+/* Copy centres itself in the box it was given — see the note in the template
+   on why a divider centres where a content slide anchors. */
+.well {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+}
+
+/* Tight to the title: the label reads as its kicker, not as a separate line
+   of copy. The gap above it is the well's own centring. */
+.label {
+  margin-bottom: -6px;
+}

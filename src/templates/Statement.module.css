@@ -1,0 +1,30 @@
+/* A description list, so the label/value pairing survives into the accessible
+   tree as well as the layout. */
+.contacts {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  /* The global reset covers headings, paragraphs and lists but not dl/dd, and
+     a UA `margin-inline-start: 40px` on every dd would knock each value out of
+     its column. */
+  margin: 0;
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contact dd {
+  margin: 0;
+}
+
+/* Right edge on the page margin, matching the reference at x = 1240. Its
+   baseline sits a little above the CONFIDENTIAL tag opposite it. */
+.logo {
+  position: absolute;
+  right: var(--slide-grid-margin-x);
+  bottom: 33px;
+  z-index: 2;
+}

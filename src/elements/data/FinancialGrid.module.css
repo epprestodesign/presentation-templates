@@ -1,0 +1,73 @@
+/* Every row shares one column template, published by the component as a
+   custom property. Nesting the summary rows inside a filled block rules out
+   `grid-template-columns: subgrid`, which only reaches one level up.
+
+   Nothing here declares a font size — sizes arrive as ds-text-* classes from
+   the component. Module CSS is injected after the globals, so a `font:` or
+   even a stray `font-size` here would quietly win and flatten the table. */
+.table {
+  position: absolute;
+  z-index: 2;
+}
+
+.row,
+.headerRow {
+  display: grid;
+  grid-template-columns: var(--fin-columns);
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  /* Figures are right-aligned with no padding, so a column's digits stack on
+     its heading's right edge — the whole reason a model table is readable. */
+  justify-content: flex-end;
+  /* Tabular figures: proportional digits make a column of numbers ripple. */
+  font-variant-numeric: tabular-nums;
+}
+
+.labelCell {
+  justify-content: flex-start;
+}
+
+/* The column headings and the summary rows read bold in the reference;
+   ds-text-h4 is semibold, so the weight is nudged. Only the weight — see the
+   note at the top of this file. */
+.headerCell,
+.summaryRow .cell {
+  font-weight: var(--slide-font-weight-bold);
+}
+
+/* The label column's caption is 3px smaller than the teal period headings, so
+   it is set to the bottom of the header band to share their baseline. */
+.headerLabel {
+  align-items: flex-end;
+  padding-bottom: 2px;
+}
+
+/* --- summary block -------------------------------------------------- */
+.block {
+  position: relative;
+}
+
+.panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--slide-color-surface-muted);
+}
+
+/* The channel before the variance group is a white bar over the block, not a
+   rule: on the reference there is no line anywhere below the block, so the
+   separation is the absence of fill and nothing else. */
+.channel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--slide-color-surface);
+}
+
+/* Rows stack above the block and its channel. */
+.summaryRow {
+  position: relative;
+}

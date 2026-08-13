@@ -1,0 +1,62 @@
+/* StaircaseCard. The only font declarations here belong to the ghost numeral,
+   which is deliberately NOT on the type scale — it is artwork, sized by the card
+   rather than by a step, and it carries no ds-text-* class for a module rule to
+   collide with. Every real text node does, so nothing else here touches type. */
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  /* Keeps a numeral that overshoots the card inside its rounded corners. */
+  overflow: hidden;
+}
+
+.muted { background: var(--slide-color-surface-muted); }
+/* Sampled off both reference slides: #02658c at the bottom-left corner rising to
+   #02abb2 at the top-right, which is `gradient.brand` (45deg, orient-800 →
+   fountain-blue-600) almost to the byte. See the story notes — the deck's other
+   stepped-card gradient, brandCardAlt, runs the opposite diagonal and is a
+   one-word change away for a deck that wants it. */
+.brand { background: var(--slide-gradient-brand); }
+.brandAlt { background: var(--slide-gradient-brand-card-alt); }
+.plain { background: transparent; }
+.outline {
+  background: transparent;
+  border: 1px solid var(--slide-color-rule-on-brand);
+}
+
+.body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card copy wraps greedily. AccentText balances by default, which is right for a
+   headline but wrong for a six-line paragraph in a 292px column: balancing pulls
+   every line short of the reference's ragged right edge. */
+.para {
+  text-wrap: wrap;
+}
+
+/* The title is pinned to the card's floor — see the component note on why the
+   label comes last. */
+.title {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+}
+
+/* The ghost numeral. `line-height: 1` so the box height is the font size and the
+   `bottom` offset stays predictable; z-index 0 keeps it under the title, which is
+   the whole effect. */
+.numeral {
+  position: absolute;
+  z-index: 0;
+  line-height: 1;
+  font-weight: var(--slide-font-weight-bold);
+  color: var(--slide-color-text-on-brand);
+  /* A figure this large would otherwise be selectable/copyable noise. */
+  user-select: none;
+}

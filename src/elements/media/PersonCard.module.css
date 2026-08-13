@@ -1,0 +1,39 @@
+/* No `font:` declaration anywhere in this file. The name and role receive
+   ds-text-* classes from the component, and module CSS is injected after the
+   globals — a `font: inherit` here would silently win and collapse a 32px name
+   to body size. */
+
+.card {
+  display: flex;
+  min-width: 0;
+}
+
+/* Leadership row: photo above the copy. */
+.stack {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Account-team grid: photo beside the copy, optically centred against it. */
+.row {
+  flex-direction: row;
+  align-items: center;
+}
+
+.photo {
+  flex: none;
+  display: block;
+  object-fit: cover;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* The name is an h4 element whatever type step it is set at, so it needs its
+   browser margin removed. */
+.copy h4 {
+  margin: 0;
+}

@@ -1,0 +1,13 @@
+/* No fill: the brand gradient underneath IS the card's surface. Only the
+   border draws it. */
+.card {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  border-style: solid;
+  /* 40% of the on-brand ink, which is what the reference border samples as.
+     Mixing the token keeps the colour in the palette instead of introducing a
+     second literal white. */
+  border-color: color-mix(in srgb, var(--slide-color-text-on-brand) 40%, transparent);
+  background: transparent;
+}

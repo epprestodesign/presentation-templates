@@ -1,0 +1,20 @@
+/* Marker-plus-copy list. No font properties are declared anywhere in this
+   file: the size step arrives as a ds-text-* class on the copy column, and a
+   `font` declaration here would be injected after app.css and silently beat
+   it. */
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+}
+
+/* Icon already sets `flex: none`, so the marker needs nothing here — the
+   li's `align-items` places it. */
+.text {
+  flex: 1 1 auto;
+  min-width: 0;
+}

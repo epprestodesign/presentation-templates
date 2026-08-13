@@ -1,0 +1,139 @@
+/* No `font:` declaration in this file. Labels, card titles and the hub copy all
+   receive ds-text-* classes, and module CSS is injected after the globals — a
+   shorthand here would silently win and collapse them to body size. */
+
+.well {
+  position: absolute;
+  z-index: 2;
+}
+
+/* ---------------------------------------------------------------------------
+ * orbit
+ * ------------------------------------------------------------------------- */
+
+.quadrants {
+  display: grid;
+  width: 100%;
+  height: 100%;
+}
+
+/* A cell's label and icon are pushed to the corner furthest from the hub. Top
+   row: label above the icon. Bottom row: icon above the label. Left column:
+   both flush left; right column: both flush right. */
+.cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  box-sizing: border-box;
+  gap: 16px;
+  background: var(--slide-color-surface-muted);
+}
+
+.cellBottom {
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+}
+
+.cellRight {
+  align-items: flex-end;
+}
+
+.cellLabel {
+  margin: 0;
+}
+
+/* The hub. Centred on the well rather than placed at slide coordinates, so
+   moving the well takes it along. `border` draws the ring, which keeps the
+   interior a real white fill that covers the cell corners underneath — a
+   box-shadow ring would leave them showing through. */
+.hub {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border-style: solid;
+  border-color: var(--slide-color-accent);
+  border-radius: var(--slide-radius-pill);
+  background: var(--slide-color-surface);
+}
+
+.hubCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.hubTitle {
+  margin: 0;
+  font-weight: var(--slide-font-weight-bold);
+  color: var(--slide-color-brand-navy);
+}
+
+.hubCopy p {
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * flow
+ * ------------------------------------------------------------------------- */
+
+.flow {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+/* Each item is [gap arrow] + card, so the cards share the remaining width
+   equally however many there are. The arrow column is a fixed width taken out
+   before the cards flex. */
+.flowItem {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
+.arrow {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--slide-gradient-brand);
+}
+
+.cardTitle {
+  margin: 0;
+  text-align: center;
+}
+
+/* The artwork takes the slack between title and caption and centres in it, so
+   a one-line and a two-line title still land their glyphs on one line. */
+.cardArt {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+.cardCaption {
+  margin: 0;
+  text-align: center;
+}

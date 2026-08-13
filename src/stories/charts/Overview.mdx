@@ -1,0 +1,66 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Charts/Overview" />
+
+<div style={{ maxWidth: 900 }}>
+
+# Charts
+
+Every **MUI X Charts** component available on the free tier, themed with
+EventPipe tokens, with EventPipe-shaped demo data.
+
+`@mui/x-charts@9.11.1` — **MIT licensed.** No licence key, no commercial
+agreement.
+
+---
+
+## What is here, and what is not
+
+MUI X is *open core*. These are the **Community** components, all installed and
+all documented in this section:
+
+**Bar · Line · Area · Pie · Scatter · Radar · Gauge · Sparkline**
+
+These require a **Pro or Premium licence** and are deliberately **not**
+installed, so nothing in this repo can quietly start depending on them:
+
+**Heatmap · Funnel · Treemap · Sankey · Candlestick · Gantt · Map · Range Bar**
+
+Also Pro: zoom & pan, the brush overlay, and the built-in export toolbar. That
+last one is worth knowing — it is the obvious thing to reach for and it is the
+line that triggers a licence. This repo exports slides through its own
+Playwright and PptxGenJS pipeline instead, which costs nothing.
+
+---
+
+## How charts relate to slides
+
+Two different jobs, and it matters which one you are doing.
+
+**On a slide**, do not use these components directly. Use `SlideChart` from
+`Elements/Data`, which takes a `ChartSpec` — a plain data object. That
+indirection is the whole point: the same spec renders here as SVG *and* feeds
+PptxGenJS's native `addChart`, so a chart arrives in Google Slides as a **real
+chart object whose numbers can be edited** rather than a flat picture. A chart
+written as markup can only ever export as an image.
+
+**In a product mock**, use them directly. When you are building a PipeSights
+screen to screenshot into a slide, you want the real component with its real
+behaviour.
+
+## Theming
+
+`src/lib/muiTheme.ts` maps our tokens onto MUI's theme, so a chart is on-brand
+by default — Poppins, the teal series palette, our gridline and axis greys —
+instead of MUI's default blue and Roboto. It is applied as a global Storybook
+decorator, so nothing has to remember to wrap itself.
+
+## One rule that is not optional
+
+**`skipAnimation` on every chart that will ever be exported.**
+
+Slides are rasterised by headless Chromium. A chart that animates on mount gets
+captured mid-transition, which silently produces a broken export — a half-drawn
+bar chart in a PDF nobody checked. `SlideChart` sets it unconditionally.
+
+</div>
