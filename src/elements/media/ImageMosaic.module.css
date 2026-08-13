@@ -1,0 +1,15 @@
+.mosaic {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  /* Purely a positioning context — it must not intercept anything or paint. */
+  pointer-events: none;
+}
+
+.image {
+  position: absolute;
+  object-fit: cover;
+  /* The recovered crops are 2x, so they downscale here rather than upscale.
+     Explicit sizing keeps them exactly on the detected rect. */
+  display: block;
+}

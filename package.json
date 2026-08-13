@@ -12,7 +12,8 @@
     "export:pptx": "node scripts/export-pptx.mjs",
     "export:png": "node scripts/export-png.mjs",
     "export:pdf": "node scripts/export-pdf.mjs",
-    "build:tokens": "node scripts/build-tokens.mjs"
+    "build:tokens": "node scripts/build-tokens.mjs",
+    "crop:images": "node scripts/crop-images.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

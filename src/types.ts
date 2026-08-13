@@ -15,17 +15,34 @@
  * Text
  * ---------------------------------------------------------------------- */
 
+/** The style flags a run can carry. Combinable — the opening slide sets its
+ *  figures teal *and* underlined, so these must not be mutually exclusive. */
+export interface TextRunStyles {
+  /** The brand teal — the deck's most repeated typographic move. */
+  accent?: boolean
+  bold?: boolean
+  italic?: boolean
+  underline?: boolean
+  muted?: boolean
+}
+
 /** One styled span inside a headline or paragraph.
  *
  *  Runs stay data rather than markup so the PPTX emitter can rebuild them as
- *  styled text runs inside a single editable text box. Rendering a headline
- *  as HTML and screenshotting it would flatten it to a picture.
+ *  styled text runs inside a single editable text box. Rendering a headline as
+ *  HTML and screenshotting it would flatten it to a picture.
  *
- *  Exactly one style key should be set per run. */
+ *  Three accepted forms, in increasing explicitness:
+ *
+ *    'plain text'                              — no styling
+ *    { accent: 'teal text' }                   — shorthand, one style
+ *    { text: 'teal underlined', accent: true, underline: true }
+ *                                              — composable, any combination
+ */
 export type TextRun =
   | string
-  | { text: string }
-  /** Set in the brand teal — the deck's most repeated typographic move. */
+  | ({ text: string } & TextRunStyles)
+  /** Single-style shorthands. The value is the text itself. */
   | { accent: string }
   | { bold: string }
   | { italic: string }

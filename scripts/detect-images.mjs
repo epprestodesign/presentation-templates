@@ -29,6 +29,15 @@ if (!file) {
 }
 /** Minimum bounding-box area, in 2x px, for a blob to be worth reporting. */
 const MIN_AREA = Number(process.argv[3] || 40000)
+/** Dilation radius, in 2x px. Bigger closes larger white gaps inside a photo;
+ *  smaller keeps photos separated when they sit close together or their drop
+ *  shadows bridge the gap between them (slide 2-01 needs ~2). */
+const RADIUS = Number(process.argv[4] || 6)
+/** Brightness above which a pixel counts as background (0-255). The default
+ *  247 keeps near-white paper out. Lower it to ~230 when photos carry soft
+ *  drop shadows: a shadow is non-white, so at the default it bridges the gap
+ *  between two adjacent photos and they merge into one blob (slide 2-01). */
+const WHITE = Number(process.argv[5] || 247)
 
 const dataUrl = `data:image/png;base64,${readFileSync(resolve(file)).toString('base64')}`
 
@@ -36,7 +45,7 @@ const browser = await chromium.launch()
 const page = await browser.newPage()
 
 const result = await page.evaluate(
-  async ({ dataUrl, MIN_AREA }) => {
+  async ({ dataUrl, MIN_AREA, RADIUS, WHITE }) => {
     const img = new Image()
     img.src = dataUrl
     await img.decode()
@@ -56,13 +65,13 @@ const result = await page.evaluate(
       const max = Math.max(r, g, b)
       const min = Math.min(r, g, b)
       const sat = max === 0 ? 0 : (max - min) / max
-      if (max < 247 || sat > 0.06) content[i] = 1
+      if (max < WHITE || sat > 0.06) content[i] = 1
     }
 
     /* --- 2. dilate to close interior gaps ------------------------------ */
     // Separable max filter, radius R. Without this a photo containing a
     // bright sky splits into several components.
-    const R = 6
+    const R = RADIUS
     const dilate = (src) => {
       const tmp = new Uint8Array(W * H)
       for (let y = 0; y < H; y++) {
@@ -159,13 +168,13 @@ const result = await page.evaluate(
     out.sort((a, b) => b.area - a.area)
     return { W, H, boxes: out }
   },
-  { dataUrl, MIN_AREA }
+  { dataUrl, MIN_AREA, RADIUS, WHITE }
 )
 
 await browser.close()
 
 const { W, H, boxes } = result
-console.log(`${file}  ${W}x${H} (2x)  — ${boxes.length} blobs over ${MIN_AREA}px²\n`)
+console.log(`${file}  ${W}x${H} (2x)  — ${boxes.length} blobs over ${MIN_AREA}px² (r=${RADIUS}, white>=${WHITE})\n`)
 console.log('  2x rect (x y w h)          1x rect (x y w h)          fill  aspect  likely')
 for (const b of boxes) {
   const one = [b.x / 2, b.y / 2, b.w / 2, b.h / 2].map((n) => String(+n.toFixed(1)).padStart(6)).join(' ')
