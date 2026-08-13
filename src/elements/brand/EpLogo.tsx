@@ -1,89 +1,123 @@
-import logoColor from '../../assets/logo/eventpipe-logo.svg'
-import logoWhite from '../../assets/logo/eventpipe-logo-fff.svg'
-import logoBlack from '../../assets/logo/eventpipe-logo-000.svg'
-import styles from './EpLogo.module.css'
+import { BOUNDS, EVENT_PATH, GLYPH_PATH, LOGO_COLORS, PIPE_PATH, VIEWBOX } from '../../assets/logo/logoPaths'
 
 /**
- * EpLogo — the EventPipe mark, in the three parts a slide actually needs.
+ * EpLogo — the EventPipe mark, in every orientation and part a slide needs.
  *
- * The source artwork (a 128x33 viewBox) is one lockup containing the hex
- * glyph followed by the wordmark. The deck uses them separately — the
- * bottom-right watermark stacks a rotated wordmark above an upright glyph —
- * so rather than maintain three divergent SVG files this clips one source
- * through a window. Vector stays vector, and there is one file to update if
- * the logo changes.
+ * Rendered as inline SVG from one set of paths (src/assets/logo/logoPaths.ts).
+ * The source artwork is the vertical watermark lockup; rotating it +90° puts the
+ * glyph on the left and the wordmark reading left-to-right, which is the
+ * standard horizontal lockup. So one set of paths covers both orientations and
+ * there is no second file to drift.
+ *
+ * Inline SVG rather than <img> because `tone` has to recolour the mark, and an
+ * <img> cannot be recoloured — the previous approach needed three near-identical
+ * SVG files plus an overflow-clipping window to isolate the glyph and wordmark.
+ *
+ * `size` always means the mark's LONG edge, whichever way it is oriented, so a
+ * caller does not have to know which axis it is asking about.
  */
 
-/** Source artwork geometry, in viewBox units.
- *
- *  The split points are real path bounding boxes, measured with
- *  `node scripts/measure-logo.mjs` rather than eyeballed — guessing them cut
- *  the leading "e" off the wordmark and rendered "aventpipe":
- *
- *    path[0] glyph      x  0.00 → 27.85   y  0.00 → 32.01
- *    path[1] "event"    x 33.85 → 85.95   y  8.97 → 23.04
- *    path[2] "pipe"     x 87.95 → 127.29  y  5.87 → 26.14
- *
- *  Re-run that script if the artwork is ever replaced. */
-const VIEWBOX = { width: 128, height: 33 }
-const SPLIT = {
-  glyphEnd: 27.85,
-  wordmarkStart: 33.85,
-  wordmarkEnd: 127.29,
-}
-
-const SOURCES = { color: logoColor, white: logoWhite, black: logoBlack }
-
-export type LogoVariant = 'full' | 'glyph' | 'wordmark'
-export type LogoTone = keyof typeof SOURCES
+export type LogoVariant =
+  /** The full lockup, wordmark then glyph. */
+  | 'full'
+  /** The hex glyph only. */
+  | 'glyph'
+  /** "eventpipe" only, no glyph. */
+  | 'wordmark'
+export type LogoOrientation = 'vertical' | 'horizontal'
+export type LogoTone = 'color' | 'white' | 'black'
 
 export interface EpLogoProps {
-  /** 'full' the whole lockup · 'glyph' the hex only · 'wordmark' the type only */
   variant?: LogoVariant
+  /** 'horizontal' is the conventional lockup and the default — it is how the
+   *  mark reads everywhere except one place. 'vertical' is the bottom-right
+   *  slide watermark, and is opted into rather than inherited. */
+  orientation?: LogoOrientation
   /** 'color' on light surfaces · 'white' on brand/photography · 'black' mono */
   tone?: LogoTone
-  /** Rendered height in slide px. Width follows the variant's aspect. */
-  height?: number
-  /** Rendered width in slide px. Takes precedence over `height` — the
-   *  watermark is specified by its length, not its weight. */
-  width?: number
+  /** Length of the mark's long edge in slide px. */
+  size?: number
   className?: string
 }
 
-/** The visible window into the artwork, in viewBox units. */
-function windowFor(variant: LogoVariant) {
-  if (variant === 'glyph') return { width: SPLIT.glyphEnd, offset: 0 }
-  if (variant === 'wordmark') {
-    return { width: SPLIT.wordmarkEnd - SPLIT.wordmarkStart, offset: SPLIT.wordmarkStart }
-  }
-  return { width: VIEWBOX.width, offset: 0 }
+/** Ink per tone. In colour, the wordmark's "event" is navy and everything else
+ *  is the brand teal — straight from the artwork. */
+function inks(tone: LogoTone) {
+  if (tone === 'white') return { teal: '#ffffff', navy: '#ffffff' }
+  if (tone === 'black') return { teal: '#000000', navy: '#000000' }
+  return { teal: LOGO_COLORS.teal, navy: LOGO_COLORS.navy }
 }
 
 export function EpLogo({
   variant = 'full',
+  orientation = 'horizontal',
   tone = 'color',
-  height = 33,
-  width,
+  size = 142,
   className,
 }: EpLogoProps) {
-  const win = windowFor(variant)
-  // `width` wins when given, so the watermark can be sized by its length.
-  const scale = width ? width / win.width : height / VIEWBOX.height
+  const ink = inks(tone)
+  const bounds = BOUNDS[variant === 'full' ? 'full' : variant]
 
+  // Crop the viewBox to just the part being shown, so a glyph-only render has
+  // no transparent padding and `size` means the glyph itself.
+  const vbY = bounds.y
+  const vbH = bounds.y2 - bounds.y
+  const vbW = VIEWBOX.width
+
+  // `size` is the long edge. Vertically that is the height; rotated, the width.
+  const scale = size / Math.max(vbW, vbH)
+  const w = vbW * scale
+  const h = vbH * scale
+
+  const svg = (
+    <svg
+      width={w}
+      height={h}
+      viewBox={`0 ${vbY} ${vbW} ${vbH}`}
+      fill="none"
+      role="img"
+      aria-label="EventPipe"
+      style={{ display: 'block' }}
+    >
+      {(variant === 'full' || variant === 'wordmark') && (
+        <>
+          <path fillRule="evenodd" clipRule="evenodd" d={PIPE_PATH} fill={ink.teal} />
+          <path fillRule="evenodd" clipRule="evenodd" d={EVENT_PATH} fill={ink.navy} />
+        </>
+      )}
+      {(variant === 'full' || variant === 'glyph') && (
+        <path fillRule="evenodd" clipRule="evenodd" d={GLYPH_PATH} fill={ink.teal} />
+      )}
+    </svg>
+  )
+
+  if (orientation === 'vertical') {
+    return <span className={className} style={{ display: 'block', width: w, height: h }}>{svg}</span>
+  }
+
+  // Rotating swaps the footprint, so the wrapper takes the swapped box (h x w)
+  // and the SVG is centred inside it absolutely.
+  //
+  // Absolute rather than a centring grid: the SVG's pre-rotation box is `h`
+  // tall, which is far taller than the `w`-tall wrapper for a horizontal
+  // lockup. A grid item bigger than its track aligns to the start and overflows
+  // downward, which left the mark hanging below its box.
   return (
     <span
-      className={[styles.logo, className].filter(Boolean).join(' ')}
-      style={{ width: win.width * scale, height: VIEWBOX.height * scale }}
+      className={className}
+      style={{ position: 'relative', display: 'block', width: h, height: w }}
     >
-      <img
-        src={SOURCES[tone]}
-        alt="EventPipe"
+      <span
         style={{
-          width: VIEWBOX.width * scale,
-          height: VIEWBOX.height * scale,
-          marginLeft: -win.offset * scale,
+          position: 'absolute',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%) rotate(90deg)',
+          lineHeight: 0,
         }}
-      />
+      >
+        {svg}
+      </span>
     </span>
   )
 }

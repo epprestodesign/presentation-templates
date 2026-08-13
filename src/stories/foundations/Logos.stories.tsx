@@ -19,21 +19,22 @@ const meta = {
         component: `
 ## Logos
 
-One source file (a 128×33 lockup) clipped into three views: the full lockup, the
-hex **glyph**, and the **wordmark**. The deck uses them separately — the
-bottom-right watermark stacks a rotated wordmark above an upright glyph — so
-clipping one file beats maintaining three that can drift.
+One set of paths, inlined from the current artwork
+(\`references/logo/Eventpipe Logo.svg\`, a 34×142 viewBox).
 
-The split points are **measured**, not guessed. Run
-\`node scripts/measure-logo.mjs\` to print the real path bounding boxes; an
-earlier guess cut the leading "e" off the wordmark and shipped "aventpipe" into
-every slide's watermark.
+The source **is** the vertical watermark lockup — reading bottom-to-top it is
+the glyph, then "event", then "pipe". Rotating the whole thing +90° puts the
+glyph on the left and the wordmark reading left-to-right, which is the standard
+horizontal lockup. **So one file serves both orientations** and there is no
+second asset to drift.
 
-> ⚠️ **Known issue.** The glyph in \`eventpipe-logo.svg\` is an **older mark**
-> than the current decks use — its inner form is an asymmetric spiral with a
-> diagonal tail, where the decks show a symmetric "e" with no tail. The
-> rendering below is faithful to the file; the file needs replacing. This
-> likely affects \`eventpipe-prototype-ds\` too.
+Inlined as SVG rather than loaded through \`<img>\` so \`tone\` can recolour the
+mark. An \`<img>\` cannot be recoloured, which previously meant shipping three
+near-identical files and clipping them through an overflow window to isolate
+the parts.
+
+\`size\` always means the mark's **long edge**, whichever way it is oriented, so
+a caller never has to know which axis it is asking about.
         `,
       },
     },
@@ -53,13 +54,13 @@ export const Variants: Story = {
       >
         <Grid min={220}>
           <Specimen label="full" meta="variant='full'" minHeight={110}>
-            <EpLogo variant="full" height={38} />
+            <EpLogo variant="full" orientation="horizontal" size={132} />
           </Specimen>
           <Specimen label="glyph" meta="variant='glyph'" minHeight={110}>
-            <EpLogo variant="glyph" height={44} />
+            <EpLogo variant="glyph" orientation="horizontal" size={44} />
           </Specimen>
           <Specimen label="wordmark" meta="variant='wordmark'" minHeight={110}>
-            <EpLogo variant="wordmark" width={140} />
+            <EpLogo variant="wordmark" orientation="horizontal" size={100} />
           </Specimen>
         </Grid>
       </Section>
@@ -76,11 +77,7 @@ export const Variants: Story = {
               minHeight={110}
               style={{ background: 'var(--slide-gradient-brand-bleed)', border: 'none' }}
             >
-              <EpLogo
-                variant={variant}
-                tone="white"
-                {...(variant === 'wordmark' ? { width: 140 } : { height: variant === 'glyph' ? 44 : 38 })}
-              />
+              <EpLogo variant={variant} orientation="horizontal" tone="white" size={variant === 'glyph' ? 44 : 122} />
             </Specimen>
           ))}
         </Grid>
@@ -89,14 +86,14 @@ export const Variants: Story = {
       <Section title="Mono" intro="One-colour contexts, print and watermarks.">
         <Grid min={220}>
           <Specimen label="full · black" minHeight={110}>
-            <EpLogo variant="full" tone="black" height={38} />
+            <EpLogo variant="full" orientation="horizontal" tone="black" size={132} />
           </Specimen>
           <Specimen
             label="full · white on navy"
             minHeight={110}
             style={{ background: 'var(--slide-color-brand-navy)', border: 'none' }}
           >
-            <EpLogo variant="full" tone="white" height={38} />
+            <EpLogo variant="full" orientation="horizontal" tone="white" size={132} />
           </Specimen>
         </Grid>
       </Section>
@@ -110,7 +107,7 @@ export const Watermark: Story = {
     <Page>
       <Section
         title="The slide watermark"
-        intro="Every content slide carries this bottom-right: the wordmark rotated to read bottom-to-top, above the upright glyph, both centred on x≈1241. It reserves an 85px right-hand gutter — any full-width content well must stop there or it runs underneath, which slide 07 proved."
+        intro="Every content slide carries this bottom-right. It is the artwork as supplied — wordmark reading bottom-to-top above the glyph — placed as one mark. It reserves an 85px right-hand gutter: any full-width content well must stop there or it runs underneath, which slide 07 proved."
       >
         <div
           style={{
@@ -134,12 +131,7 @@ export const Watermark: Story = {
               gap: 9,
             }}
           >
-            <div style={{ width: 36, height: 101, display: 'grid', placeItems: 'center' }}>
-              <div style={{ transform: 'rotate(-90deg)' }}>
-                <EpLogo variant="wordmark" width={101} />
-              </div>
-            </div>
-            <EpLogo variant="glyph" height={35} />
+            <EpLogo variant="full" orientation="vertical" size={142} />
           </div>
           <div
             style={{

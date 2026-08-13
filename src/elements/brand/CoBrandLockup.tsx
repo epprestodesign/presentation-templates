@@ -15,7 +15,9 @@ export interface CoBrandLockupProps {
   coBrand: CoBrandSpec
   /** Flips the divider and placeholder ink for dark surfaces. */
   onDark?: boolean
-  /** Height of the EventPipe wordmark, which sets the lockup's scale. */
+  /** Ink height of the EventPipe wordmark, which sets the lockup's scale. The
+   *  wordmark runs roughly 6x its height, so `size` is derived from this rather
+   *  than asked for twice. */
   height?: number
 }
 
@@ -37,7 +39,12 @@ export function CoBrandLockup({ coBrand, onDark = false, height = 15 }: CoBrandL
 
       <span className={styles.divider} style={{ height: height * 1.4 }} />
 
-      <EpLogo variant="wordmark" tone={onDark ? 'white' : 'color'} height={height} />
+      <EpLogo
+        variant="wordmark"
+        orientation="horizontal"
+        tone={onDark ? 'white' : 'color'}
+        size={height * 6}
+      />
     </div>
   )
 }

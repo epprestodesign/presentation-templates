@@ -41,29 +41,37 @@ does.
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** Slide 37 — Traction. Three tiles, label above the number, corner arrow.
+/** Slide 37 — Traction. Four tiles, label above the number, corner arrow.
  *
- *  The original runs its tiles from x=16 (breaking the 40px text margin the
- *  rest of the deck holds) and sizes the row to 887px rather than stretching
- *  it to the right margin. Both are reproduced here via `inset` and
- *  `wellWidth`; drop them to get the system default instead. */
+ *  Geometry taken from `scripts/detect-images.mjs` on the reference rather than
+ *  read off the image: four tiles at x = 16, 316, 616, 916, each 284x322 with a
+ *  16px gap, so the row runs 16 → 1200. That starts 24px inside the 40px text
+ *  margin the rest of the deck holds, and stops at 1200 — exactly clear of the
+ *  85px watermark gutter.
+ *
+ *  The fourth tile is the same content as the third on the brand gradient. That
+ *  is faithful to the original, which repeats "Annual Events / 4.8K" there —
+ *  evidently a placeholder demonstrating the reversed fill. Left as-is so the
+ *  rebuild matches; swap in the real fourth metric when there is one. */
 export const Traction: Story = {
   args: {
     eyebrow: 'Traction',
-    watermark: false,
+    pageNumber: 5,
     title: 'Growth across every operation metric.',
     lead: 'EventPipe connects event operators, housing companies, hotels, teams, and attendees around one live source of truth.',
     titleWidth: 1100,
     sublabel: '2026 Estimated Forecast',
     sublabelSize: 'h2',
     sublabelWidth: 260,
-    columns: 3,
+    columns: 4,
     inset: 16,
-    wellWidth: 887,
+    // 4 × 284 + 3 × 16
+    wellWidth: 1184,
     cards: [
       { label: 'Reservations', value: '1.2M', icon: 'arrow_outward' },
       { label: 'Room Nights', value: '1.9M', icon: 'arrow_outward' },
       { label: 'Annual Events', value: '4.8K', icon: 'arrow_outward' },
+      { label: 'Annual Events', value: '4.8K', icon: 'arrow_outward', surface: 'brand' },
     ],
   },
 }

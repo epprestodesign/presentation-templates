@@ -157,10 +157,11 @@ export const color = {
    *  number does not vibrate against white. */
   accentDeep: '#02859d',
   accentSoft: fountainBlue[50],
-  /** The dark ink in the logo wordmark ("event"), taken straight from
-   *  eventpipe-logo.svg. Close to orient-900 but not identical, so it is
-   *  kept exact — the logo is the one place it must match. */
-  brandNavy: '#093e60',
+  /** The dark ink in the logo wordmark ("event"), taken straight from the
+   *  current artwork (references/logo/Eventpipe Logo.svg). The superseded logo
+   *  file used #093e60; this is the value that ships. Kept exact — the logo is
+   *  the one place it must match. */
+  brandNavy: '#02658c',
 
   /* Lines */
   border: neutral[200],

@@ -64,6 +64,13 @@ const CROPS = [
    * preserves the soft drop shadows, which would be hard to rebuild. */
   ['2-01.png', [1268, 234, 1080, 1114], 'clusters/rfp-photo-cluster'],
 
+  /* --- Brand backgrounds ------------------------------------------------
+   * The section divider is a gradient PLUS a subtle hex pattern. The gradient
+   * alone is a token (`gradient.brandBleed`, sampled from these very corners),
+   * but the hex overlay is artwork — cheap to keep as an asset, fiddly and
+   * inexact to rebuild in CSS. Templates layer content over this. */
+  ['20.png', [0, 0, 2560, 1440], 'backgrounds/brand-gradient-hex'],
+
   /* --- Full-bleed slides -----------------------------------------------
    * Cropped at full canvas. These are a photo inside a branded gradient
    * frame with one large rounded corner — not a simple inset — so the exact

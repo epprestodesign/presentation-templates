@@ -35,25 +35,15 @@
   color: var(--slide-color-text-on-brand);
 }
 
-/* Wordmark and glyph share a centre line at x≈1241; the glyph sits 39px off
-   the bottom edge. */
+/* One mark, bottom-right. The artwork already stacks the wordmark above the
+   glyph, so there is nothing to compose here. */
 .watermark {
   position: absolute;
   right: 24px;
+  bottom: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 9px;
-}
-
-.wordmarkSlot {
-  display: grid;
-  place-items: center;
-}
-
-.wordmarkSlot > * {
-  transform: rotate(-90deg);
-  transform-origin: center;
 }
 
 /* A co-brand lockup reads horizontally, so it sits above the rotated stack
