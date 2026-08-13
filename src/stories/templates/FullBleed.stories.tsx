@@ -51,15 +51,15 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 /* Stories are named for what the photograph shows, not for the asset. The
-   recovered names are unreliable — `full-bleed/team-code-glasses` and
-   `full-bleed/team-1` are not team photos, they are a close-up of glasses
+   recovered names are unreliable — `full-bleed/demo-code-glasses` and
+   `full-bleed/travel-airport-silhouettes` are not team photos, they are a close-up of glasses
    reflecting code and an airport family silhouette. Those names are being
    corrected separately; the `image` values here are the current ones. */
 
 /** Demo.png — two colleagues at a laptop dashboard. */
 export const DashboardReview: Story = {
   args: {
-    image: 'full-bleed/demo-dashboard',
+    image: 'full-bleed/demo-dashboard-review',
     alt: 'Two colleagues reviewing a dashboard on a laptop',
     watermark: false,
   },
@@ -68,7 +68,7 @@ export const DashboardReview: Story = {
 /** Demo-1.png */
 export const GrowthHologram: Story = {
   args: {
-    image: 'full-bleed/demo-1',
+    image: 'full-bleed/demo-growth-hologram',
     alt: 'A hand holding a floating bar-chart hologram showing percentage growth',
     watermark: false,
   },
@@ -77,7 +77,7 @@ export const GrowthHologram: Story = {
 /** Demo-2.png */
 export const ServerRacks: Story = {
   args: {
-    image: 'full-bleed/demo-2',
+    image: 'full-bleed/demo-datacenter',
     alt: 'Rows of blue-lit server racks',
     watermark: false,
   },
@@ -86,7 +86,7 @@ export const ServerRacks: Story = {
 /** Demo-3.png */
 export const HexInterface: Story = {
   args: {
-    image: 'full-bleed/demo-3',
+    image: 'full-bleed/demo-platform-hex-ui',
     alt: 'A hand touching a hex-tiled interface of icons',
     watermark: false,
   },
@@ -95,7 +95,7 @@ export const HexInterface: Story = {
 /** EP TEam.png — the deck's PipeSights demo opener, despite the file name. */
 export const CodeInGlasses: Story = {
   args: {
-    image: 'full-bleed/team-code-glasses',
+    image: 'full-bleed/demo-code-glasses',
     alt: 'Code reflected in a pair of glasses',
     watermark: false,
   },
@@ -104,7 +104,7 @@ export const CodeInGlasses: Story = {
 /** EP TEam-1.png — the closing-remarks opener, despite the file name. */
 export const AirportFamily: Story = {
   args: {
-    image: 'full-bleed/team-1',
+    image: 'full-bleed/travel-airport-silhouettes',
     alt: 'A family walking through an airport terminal at sunset',
     watermark: false,
   },

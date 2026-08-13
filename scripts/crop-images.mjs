@@ -39,17 +39,26 @@ const CROPS = [
   ['04.png', [1436, 996, 482, 364], 'sports/youth-soccer-huddle'],
   ['04.png', [1936, 728, 464, 632], 'sports/youth-basketball'],
 
-  /* --- Slide 03, the five operating-layer cards -------------------------
-   * Detected with white=244 rather than the default 247. The #f5f5f5 card
-   * fill is 245, so at the default the whole card counts as content and the
-   * crop comes back with the title and bullet list baked in. Dropping the
-   * threshold below 245 makes the card read as background and isolates the
-   * photo — the card itself is rebuilt in CSS. */
-  ['03.png', [80, 548, 450, 512], 'operating-layer/contract-signing'],
-  ['03.png', [546, 548, 450, 512], 'operating-layer/booking-confirmed-phone'],
-  ['03.png', [1012, 548, 450, 512], 'operating-layer/dashboard-pointing'],
-  ['03.png', [1478, 548, 450, 512], 'operating-layer/commission-growth'],
-  ['03.png', [1944, 548, 450, 512], 'operating-layer/handshake-suits'],
+  /* --- Slide 03's five cards, FLATTENED --------------------------------
+   * These are NOT clean photographs and the folder name says so.
+   *
+   * Lowering the white threshold below 245 isolated the photo band from the
+   * #f5f5f5 card, which was the first bug. But the reference composites a dark
+   * scrim AND the white card title directly onto the photo, so the photo band
+   * itself still contains "Build and secure hotel supply" and its gradient.
+   * There is no rect that separates them — the text sits on the image, not
+   * beside it.
+   *
+   * Kept because they reproduce the original card exactly, for a 1:1 rebuild.
+   * For a card whose title is live text, use the clean Unsplash equivalents
+   * (unsplash/platform/contract-signing, dashboard-laptop, payment-terminal,
+   * travel/booking-on-phone, people/handshake-partnership) — which is what the
+   * FeatureCards story now does. */
+  ['03.png', [80, 548, 450, 512], 'operating-layer-flattened/contract-signing'],
+  ['03.png', [546, 548, 450, 512], 'operating-layer-flattened/booking-confirmed-phone'],
+  ['03.png', [1012, 548, 450, 512], 'operating-layer-flattened/dashboard-pointing'],
+  ['03.png', [1478, 548, 450, 512], 'operating-layer-flattened/commission-growth'],
+  ['03.png', [1944, 548, 450, 512], 'operating-layer-flattened/handshake-suits'],
 
   /* --- Slide 10, the four value-creation cards (same white=244 reason) --- */
   ['10.png', [78, 893, 504, 366], 'value/booking-saas-devices'],
@@ -79,12 +88,17 @@ const CROPS = [
    * frame with one large rounded corner — not a simple inset — so the exact
    * rebuild uses the whole composition as a background image. The FullBleed
    * template reproduces the frame in CSS separately, for new photography. */
-  ['Demo.png', [0, 0, 2560, 1440], 'full-bleed/demo-dashboard'],
-  ['Demo-1.png', [0, 0, 2560, 1440], 'full-bleed/demo-1'],
-  ['Demo-2.png', [0, 0, 2560, 1440], 'full-bleed/demo-2'],
-  ['Demo-3.png', [0, 0, 2560, 1440], 'full-bleed/demo-3'],
-  ['EP TEam.png', [0, 0, 2560, 1440], 'full-bleed/team-code-glasses'],
-  ['EP TEam-1.png', [0, 0, 2560, 1440], 'full-bleed/team-1'],
+  /* Named by CONTENT, not by source filename. The filenames are misleading:
+   * "EP TEam.png" is a close-up of glasses reflecting code (the deck titles that
+   * slide "PipeSights Demo") and "EP TEam-1.png" is an airport family
+   * silhouette ("Closing Remarks"). Neither is a team photo. Naming assets after
+   * a lying filename is how an agent-authored deck picks the wrong image. */
+  ['Demo.png', [0, 0, 2560, 1440], 'full-bleed/demo-dashboard-review'],
+  ['Demo-1.png', [0, 0, 2560, 1440], 'full-bleed/demo-growth-hologram'],
+  ['Demo-2.png', [0, 0, 2560, 1440], 'full-bleed/demo-datacenter'],
+  ['Demo-3.png', [0, 0, 2560, 1440], 'full-bleed/demo-platform-hex-ui'],
+  ['EP TEam.png', [0, 0, 2560, 1440], 'full-bleed/demo-code-glasses'],
+  ['EP TEam-1.png', [0, 0, 2560, 1440], 'full-bleed/travel-airport-silhouettes'],
 ]
 
 let ok = 0

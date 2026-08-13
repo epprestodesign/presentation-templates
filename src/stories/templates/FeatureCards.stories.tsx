@@ -86,7 +86,7 @@ export const OperatingLayer: Story = {
     cards: [
       {
         title: 'Build and secure hotel supply',
-        image: 'operating-layer/contract-signing',
+        image: 'unsplash/platform/contract-signing-1',
         alt: 'Signing a hotel contract on a laptop',
         bullets: [
           'Run hotel RFPs and compare bids and terms',
@@ -96,7 +96,7 @@ export const OperatingLayer: Story = {
       },
       {
         title: 'Turn contracted rooms into bookings',
-        image: 'operating-layer/booking-confirmed-phone',
+        image: 'unsplash/travel/booking-on-phone-1',
         alt: 'A phone showing a confirmed booking',
         bullets: [
           'Launch branded booking sites for each event',
@@ -106,7 +106,7 @@ export const OperatingLayer: Story = {
       },
       {
         title: 'Operate every event in real time',
-        image: 'operating-layer/dashboard-pointing',
+        image: 'unsplash/platform/dashboard-laptop-1',
         alt: 'Pointing at a live booking dashboard',
         bullets: [
           'See inventory and demand in real time',
@@ -116,7 +116,7 @@ export const OperatingLayer: Story = {
       },
       {
         title: 'Connect performance to payout',
-        image: 'operating-layer/commission-growth',
+        image: 'unsplash/platform/payment-terminal-1',
         alt: 'Commission growth visualised over an open hand',
         bullets: [
           'Give every partner the same numbers',
@@ -126,7 +126,7 @@ export const OperatingLayer: Story = {
       },
       {
         title: ['Earn ', { text: 'beyond the room booking', bold: true }],
-        image: 'operating-layer/handshake-suits',
+        image: 'unsplash/people/handshake-partnership-1',
         alt: 'Two people shaking hands over a deal',
         bullets: [
           'Add booking protection at checkout',

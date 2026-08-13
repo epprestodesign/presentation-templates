@@ -24,7 +24,7 @@ import styles from './FullBleed.module.css'
  */
 export interface FullBleedProps extends SlideChromeSpec {
   fit?: 'contain' | 'none'
-  /** Imagery name, e.g. 'full-bleed/demo-dashboard'. */
+  /** Imagery name, e.g. 'full-bleed/demo-dashboard-review'. */
   image: string
   alt?: string
   /** Apply the branded gradient frame in CSS. Leave off for the recovered

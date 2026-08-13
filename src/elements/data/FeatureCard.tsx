@@ -37,7 +37,7 @@ export interface FeatureCardSpec {
   /** A ruled list. Each entry gets the cool vertical rule slide 03 uses
    *  instead of a bullet glyph. */
   bullets?: RichText[]
-  /** Imagery name, e.g. 'operating-layer/contract-signing'. */
+  /** Imagery name, e.g. 'unsplash/platform/contract-signing-1'. */
   image?: string
   alt?: string
   /** `object-position` for the crop, e.g. '50% 30%'. Photos are cropped hard

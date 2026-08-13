@@ -42,23 +42,26 @@
    is #000. The ramp lets a two- or three-line white title sit on any of the five
    photos without a legibility check per card.
 
-   It goes fully solid at 62% of the band, which is harder than slide 03's own
-   scrim: the extracted photos in src/assets/imagery/operating-layer/* were cut
-   at the reference's card rect, so each one has the ORIGINAL scrim and the
-   original white title baked into its lower third. The earliest of those baked
-   titles starts at 65% of the photo's height, so anything softer than this
-   leaves a ghost of it showing through under the live one. Re-crop those five
-   photos from unlettered sources and this can relax to ~75%. */
+   Relaxed to 76%, which is slide 03's own scrim depth.
+
+   It previously went solid at 62% to bury text that was baked into the photos:
+   the extracted crops carried the ORIGINAL scrim and white title in their lower
+   third, because the reference composites the title onto the image rather than
+   beside it, so no crop rect could separate them. That cost ~30px of visible
+   photo per card. The story now uses clean photography, so the compensation is
+   gone. The flattened crops still exist under
+   src/assets/imagery/operating-layer-flattened/ for a 1:1 rebuild — if you point
+   a card at one of those, expect a ghost title and put this back to 62%. */
 .scrim {
   position: absolute;
   inset: 0;
   z-index: 1;
   background: linear-gradient(
     180deg,
-    transparent 22%,
-    color-mix(in srgb, var(--slide-color-text) 42%, transparent) 44%,
-    color-mix(in srgb, var(--slide-color-text) 88%, transparent) 56%,
-    var(--slide-color-text) 62%
+    transparent 30%,
+    color-mix(in srgb, var(--slide-color-text) 38%, transparent) 52%,
+    color-mix(in srgb, var(--slide-color-text) 82%, transparent) 66%,
+    var(--slide-color-text) 76%
   );
 }
 

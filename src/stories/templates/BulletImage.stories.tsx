@@ -113,7 +113,7 @@ export const Blank: Story = {
       [{ bold: 'The second capability, phrased the same way.' }],
       [{ bold: 'The third capability.' }],
     ],
-    // Drawn from `mosaic/`, which are clean photo crops. The `operating-layer/`
+    // Drawn from `mosaic/`, which are clean photo crops. The `operating-layer-flattened/`
     // set is not usable here: those crops come off the slide-03 cards and still
     // carry the card's title text along their bottom edge.
     images: [
