@@ -28,19 +28,23 @@ const preview: Preview = {
         order: [
           // 0) Overview page, always first
           'Introduction',
-          // 1) Styles / foundations, rendered live from the tokens
-          'Styles',
+          // 1) Foundations, rendered live from the tokens. Same list as
+          //    eventpipe-prototype-ds, with one substitution: Breakpoints has
+          //    no meaning for a fixed 1280x720 canvas, so that slot is
+          //    "Grid & Safe Areas" instead.
+          'Foundations',
           [
-            'Color',
+            'Colors',
+            'Palette',
             'Typography',
             'Icons',
             'Logos',
-            'Gradients',
-            'Shape',
-            'Elevation',
-            'Grid & Safe Areas',
             'Imagery',
-            'Charts',
+            'Border Radius',
+            'Spacing',
+            'Elevation',
+            'Motion',
+            'Grid & Safe Areas',
           ],
           // 2) Elements — the pieces a slide is assembled from
           'Elements',

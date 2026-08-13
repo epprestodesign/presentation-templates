@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react'
 
 /**
- * Shared layout primitives for the Styles pages.
+ * Shared layout primitives for the Foundations pages.
  *
  * These are documentation, not slides, so nothing here is fixed-width or
  * 16:9 — every grid is `auto-fill` against a minimum track size, so the page
@@ -9,7 +9,7 @@ import type { CSSProperties, ReactNode } from 'react'
  * the only thing in this system with a fixed aspect ratio, and it should stay
  * that way; boxing reference material into 1280x720 just wastes the viewport.
  *
- * Kept in one file so all Styles pages look like one document, and so adding a
+ * Kept in one file so all Foundations pages look like one document, and so adding a
  * page is writing content rather than re-deriving a layout.
  */
 

@@ -187,11 +187,30 @@ export const space = {
   1: 4, 2: 8, 3: 12, 4: 16, 5: 20, 6: 24, 7: 32, 8: 40, 9: 48, 10: 64, 11: 80,
 }
 
+/** Motion. Owned by the deck player — advancing between slides — and nothing
+ *  else. Every slide is also rasterised by headless Chromium for the PNG and
+ *  PPTX exports, so anything that animates on mount is captured
+ *  mid-transition; that is why charts are always given `skipAnimation` and no
+ *  element animates itself. */
+export const motion = {
+  duration: { instant: 0, slide: 240, slow: 400 },
+  easing: {
+    standard: 'cubic-bezier(0.2, 0, 0.2, 1)',
+    decelerate: 'cubic-bezier(0, 0, 0.2, 1)',
+  },
+  /** Slide-advance options, with when to use each. */
+  transitions: {
+    cut: 'Default — no transition, and the only option that matches the exported PDF exactly',
+    fade: 'Softer pacing for narrative decks',
+    push: 'Directional, for a sequence that reads left to right',
+  },
+}
+
 /** Soft shadow used on the floating image cards (slide 2-01). */
 export const shadow = {
   card: '0 4px 16px rgba(0, 0, 0, 0.10)',
   image: '0 6px 24px rgba(0, 0, 0, 0.16)',
 }
 
-export const tokens = { canvas, grid, type, gradient, tableTint, color, radius, space, shadow }
+export const tokens = { canvas, grid, type, gradient, tableTint, color, radius, space, shadow, motion }
 export default tokens

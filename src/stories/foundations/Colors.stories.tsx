@@ -1,22 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { palette } from '../../tokens/palette.js'
 import { color, gradient, tableTint } from '../../tokens/tokens.js'
 import { Code, Grid, Page, Section, Swatch } from './_docs'
 
-/** STYLES / Color — the brand ramps and the semantic layer built on them. */
+/** FOUNDATIONS / Colors — the brand ramps and the semantic layer built on them. */
 const meta = {
-  title: 'Styles/Color',
+  title: 'Foundations/Colors',
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component: `
-## Color
+## Colors
 
-Two tiers. **Ramps** are raw values derived from the EventPipe logo —
-\`orient\` is its blue half, \`fountain-blue\` its teal half. **Semantic
-tokens** attach meaning, and are the only thing elements and templates may
-reference.
+The **semantic** layer — the only colour tokens elements and templates may
+reference. The raw ramps they are built from live on the **Palette** page.
 
 Every semantic value was *sampled off the reference deck* rather than chosen, so
 a rebuilt slide matches the original: the highlighted headline clause is
@@ -33,35 +30,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const kebab = (s: string) => s.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
-
-/** The four primitive ramps. */
-export const Ramps: Story = {
-  render: () => (
-    <Page>
-      {Object.entries(palette).map(([name, steps]) => (
-        <Section
-          key={name}
-          title={kebab(name)}
-          intro={
-            name === 'orient'
-              ? 'The blue half of the logo. Deep ends of gradients, chart series 2.'
-              : name === 'fountainBlue'
-                ? 'The teal half of the logo. The primary slide accent: highlighted headline clauses, KPI numbers, rules, chart series 1.'
-                : name === 'neutral'
-                  ? 'True hue-less gray. Slide surfaces read as neutral in the reference deck, not as the product UI’s cool graphite. Step 100 is exactly the #f5f5f5 card fill.'
-                  : 'One borrowed Material ramp. The reference sets card body copy in #546e7a — cooler than neutral, and distinct enough on screen to keep rather than flatten.'
-          }
-        >
-          <Grid min={124}>
-            {Object.entries(steps).map(([step, hex]) => (
-              <Swatch key={step} label={step} value={hex} height={64} />
-            ))}
-          </Grid>
-        </Section>
-      ))}
-    </Page>
-  ),
-}
 
 /** The semantic layer — what templates actually use. */
 export const Semantic: Story = {

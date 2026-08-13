@@ -57,6 +57,11 @@ declare module '*/tokens/tokens.js' {
   export const radius: { image: number; card: number; panel: number; pill: number }
   export const space: Record<string, number>
   export const shadow: Record<string, string>
+  export const motion: {
+    duration: Record<string, number>
+    easing: Record<string, string>
+    transitions: Record<string, string>
+  }
   const tokens: unknown
   export default tokens
 }
