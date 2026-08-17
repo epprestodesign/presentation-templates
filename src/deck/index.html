@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Presentation · EventPipe</title>
+    <!-- Dark, because the player's stage is dark and a white flash before hydration
+         is the first thing an audience would see. -->
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #101418;
+        /* The player is position:fixed and manages its own layout, so the
+           document must never scroll. Without this a scrollbar appears at some
+           window heights, narrowing the layout viewport and throwing the
+           artboard 16px off centre — which reads as a mis-set slide, not as a
+           scrollbar. */
+        overflow: hidden;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./main.tsx"></script>
+  </body>
+</html>

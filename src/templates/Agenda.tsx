@@ -38,6 +38,8 @@ export interface AgendaProps extends SlideChromeSpec {
   top?: number
   /** Width of the numeral column. */
   numberWidth?: number
+  /** Numeral size in slide px. Smaller for a longer agenda — see the module CSS. */
+  numberSize?: number
   rowGap?: number
 }
 
@@ -48,6 +50,7 @@ export function Agenda({
   plate = 'backgrounds/brand-hex',
   top = 200,
   numberWidth = 140,
+  numberSize = 58,
   /** Gap between rows. One number for every agenda length. */
   rowGap = 34,
   ...chrome
@@ -65,6 +68,7 @@ export function Agenda({
           right: chrome.watermark === false ? grid.marginX : grid.watermarkGutter,
           bottom: grid.marginBottom,
           ['--agenda-row-gap' as string]: `${rowGap}px`,
+          ['--agenda-number-size' as string]: `${numberSize}px`,
         }}
       >
         {items.map((item, i) => (

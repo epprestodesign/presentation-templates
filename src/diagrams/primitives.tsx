@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { GRID, diagramType, nodeStyle, role, snap, withAlpha, type NodeKind } from './roles'
+import { GRID, diagramType, nodeStyle, role, snap, snapDown, withAlpha, type NodeKind } from './roles'
 
 /**
  * Shared SVG primitives for every diagram type.
@@ -102,6 +102,75 @@ export function elbow(from: Point, to: Point, bias: 'h' | 'v' = 'h', r = 8): str
     `M ${from.x} ${from.y}`,
     `L ${from.x} ${cy - sy * rr}`,
     `Q ${from.x} ${cy} ${from.x + sx * rr} ${cy}`,
+    `L ${to.x} ${to.y}`,
+  ].join(' ')
+}
+
+/**
+ * Orthogonal path with TWO bends, through a chosen corridor.
+ *
+ * `elbow()` turns once, which is right when the two points can be joined by an
+ * L. This turns twice — out of `from`, along `mid`, into `to` — which is the only
+ * route available when both endpoints face the same direction, or when the
+ * direct L would cross a box that is neither endpoint.
+ *
+ * `mid` is the corridor: an x for a vertical corridor (the caller picks a gutter
+ * between columns), or a y for a horizontal one. Both bends are quarter-arcs, so
+ * the result satisfies the same no-diagonals rule as everything else here.
+ *
+ * PROMOTED from CurrentState.tsx, where it was written for zone-gutter routing.
+ * Two independent diagrams now needed it — a lane-boundary crossing being the
+ * second — and two callers was the threshold the authors of both agreed on for
+ * moving it into the shared vocabulary.
+ */
+export function corridor(
+  from: Point,
+  to: Point,
+  mid: number,
+  axis: 'vertical' | 'horizontal' = 'vertical',
+  r = 8
+): string {
+  if (axis === 'horizontal') {
+    // `mid` is a y: down out of `from`, across at `mid`, into `to`.
+    const dx = to.x - from.x
+    if (Math.abs(dx) < 0.5) return `M ${from.x} ${from.y} L ${to.x} ${to.y}`
+    const sx = Math.sign(dx)
+    const sy1 = Math.sign(mid - from.y) || 1
+    const sy2 = Math.sign(to.y - mid) || 1
+    const rr = Math.min(
+      r,
+      Math.abs(dx) / 2,
+      Math.max(Math.abs(mid - from.y), 1),
+      Math.max(Math.abs(to.y - mid), 1)
+    )
+    return [
+      `M ${from.x} ${from.y}`,
+      `L ${from.x} ${mid - sy1 * rr}`,
+      `Q ${from.x} ${mid} ${from.x + sx * rr} ${mid}`,
+      `L ${to.x - sx * rr} ${mid}`,
+      `Q ${to.x} ${mid} ${to.x} ${mid + sy2 * rr}`,
+      `L ${to.x} ${to.y}`,
+    ].join(' ')
+  }
+
+  // `mid` is an x: across out of `from`, down the corridor, into `to`.
+  const dy = to.y - from.y
+  if (Math.abs(dy) < 0.5) return `M ${from.x} ${from.y} L ${to.x} ${to.y}`
+  const sy = Math.sign(dy)
+  const sx1 = Math.sign(mid - from.x) || 1
+  const sx2 = Math.sign(to.x - mid) || 1
+  const rr = Math.min(
+    r,
+    Math.abs(dy) / 2,
+    Math.max(Math.abs(mid - from.x), 1),
+    Math.max(Math.abs(to.x - mid), 1)
+  )
+  return [
+    `M ${from.x} ${from.y}`,
+    `L ${mid - sx1 * rr} ${from.y}`,
+    `Q ${mid} ${from.y} ${mid} ${from.y + sy * rr}`,
+    `L ${mid} ${to.y - sy * rr}`,
+    `Q ${mid} ${to.y} ${mid + sx2 * rr} ${to.y}`,
     `L ${to.x} ${to.y}`,
   ].join(' ')
 }
@@ -549,5 +618,5 @@ export function DiagramText({
   )
 }
 
-export { GRID, snap, role, nodeStyle, diagramType, withAlpha }
+export { GRID, snap, snapDown, role, nodeStyle, diagramType, withAlpha }
 export type { NodeKind }

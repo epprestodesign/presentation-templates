@@ -6,6 +6,7 @@ import {
   diagramType,
   role,
   snap,
+  snapDown,
   withAlpha,
   type LegendItem,
 } from './primitives'
@@ -89,7 +90,15 @@ export function LayerStack({
      it beyond starting further right. */
   const dirW = direction ? 52 : 0
   const stackX = snap(dirW)
-  const stackW = snap(width - stackX)
+  /* snapDown, not snap, and 2px of room for the stroke.
+     
+     `snap` rounds to NEAREST: at width 1155 with a 52px direction column it
+     returned 1104, so the stack ended at x=1156 — one pixel past the viewBox.
+     The SVG clips, so every band's right border was sliced off and the whole
+     stack looked cut off on the right. Flooring keeps it inside, and the extra
+     2px is because a 1px stroke is centred on the path, so a band ending exactly
+     on the edge still loses half its border. */
+  const stackW = snapDown(width - stackX - 2)
 
   /* Band edges are derived from the count, then snapped — so the boundaries land
      on the grid and the last band still ends exactly on the stack's floor.

@@ -141,5 +141,16 @@ export function withAlpha(hex: string, alpha: number): string {
 export const GRID = 4
 export const snap = (n: number) => Math.round(n / GRID) * GRID
 
+/** Floor to the grid. Use this for any dimension DERIVED BY SUBTRACTION OR
+ *  DIVISION from the available space.
+ *
+ *  `snap` rounds to nearest, which is right for a position an author chose and
+ *  wrong for a width computed from the canvas: rounding up pushes the result
+ *  past the edge it was measured from. A layer stack whose width came out
+ *  `snap(1155 - 52) = 1104` ended at x=1156 inside a 1155 viewBox, and since the
+ *  SVG clips, every band lost its right border. A Gantt did the same thing
+ *  vertically and put seven rows past the floor. */
+export const snapDown = (n: number) => Math.floor(n / GRID) * GRID
+
 /** Neutral re-export, for the rare component that needs a step directly. */
 export { neutral, blueGrey }

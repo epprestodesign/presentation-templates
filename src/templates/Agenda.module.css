@@ -29,16 +29,22 @@
      Baseline put the numeral's baseline on the heading's, which — at 58px
      against a 22px heading — threw the numeral's mass well above the two-line
      block it belongs to, so it read as belonging to the row above. Centring
-     lines each numeral up with its own item. */
+     lines each numeral up with its own item.
+     
+     18px gap, not 8. At 8 the numeral sat almost against its own heading and the
+     column read as one crowded block rather than as an index beside an item. */
   align-items: center;
-  gap: 8px;
+  gap: 18px;
 }
 
 /* Lighter than the headings it sits beside: the numeral is an index, not a
    value, so it should not compete with the copy. */
 .number {
   flex: none;
-  font-size: 58px;
+  /* Set inline. 58px is right for a four- or five-item agenda; a six-item one
+     needs the height back, and the numeral is the cheapest place to find it —
+     it is an index, not a value, so shrinking it costs the slide nothing. */
+  font-size: var(--agenda-number-size, 58px);
   line-height: 1;
   font-weight: var(--slide-font-weight-regular);
   letter-spacing: -0.02em;
