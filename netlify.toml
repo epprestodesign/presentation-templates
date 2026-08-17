@@ -1,0 +1,51 @@
+# Netlify build for BOTH artefacts on one site:
+#   /       Storybook — the design system
+#   /deck/  the presentation player
+#
+# This file is the authority, not the site's UI settings. Those were pointing at
+# `pnpm run build:deck` publishing `dist`, and that script writes `deck-static` —
+# so every deploy failed, and it would have shipped the deck without Storybook.
+# Keeping the config in the repo means the build is reproducible and reviewable
+# rather than living in a web form.
+#
+# Base paths differ from the GitHub Pages deploy on purpose. Pages serves this
+# from /presentation-templates/; Netlify serves it from the domain root. Vite and
+# Storybook both emit absolute asset paths, so a bundle built for the wrong base
+# requests /assets/... , gets the 404 page, and renders a blank screen with
+# nothing in the console.
+#
+# Netlify builds from a CLEAN CHECKOUT, so the gitignored imagery is absent and
+# every photograph resolves from the image host through src/assets/imagery/
+# manifest.ts. That is the same path production already takes, and it is why this
+# build is ~20MB rather than the ~670MB a local build produces (Storybook's
+# staticDirs copies the whole local asset tree).
+
+[build]
+  command = """
+    pnpm build:tokens && \
+    pnpm build-storybook && \
+    DECK_BASE_PATH=/deck/ pnpm build:deck && \
+    mkdir -p storybook-static/deck && \
+    cp -R deck-static/. storybook-static/deck/
+  """
+  publish = "storybook-static"
+
+[build.environment]
+  NODE_VERSION = "24"
+  STORYBOOK_DISABLE_TELEMETRY = "1"
+  # Unset on purpose: at the domain root the base is '/', which is the default.
+  # STORYBOOK_BASE_PATH is only set by the GitHub Pages workflow.
+
+# Both apps are single-page. A deep link like /deck/#13-three-shapes resolves at
+# its own index, but a direct hit on an unknown path should serve the app shell
+# rather than a 404 — and the deck's shell must win inside /deck/, or a refresh
+# there would land in Storybook.
+[[redirects]]
+  from = "/deck/*"
+  to = "/deck/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
