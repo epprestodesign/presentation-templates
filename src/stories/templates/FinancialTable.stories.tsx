@@ -3,7 +3,7 @@ import { FinancialTable } from '../../templates/FinancialTable'
 
 /** TEMPLATES / Financial Table — the model table. */
 const meta = {
-  title: 'Templates/Data/Financial Table',
+  title: 'Slide Data/Financial Table',
   component: FinancialTable,
   tags: ['autodocs'],
   parameters: {

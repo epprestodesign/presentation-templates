@@ -4,7 +4,7 @@ import { columns, pickupRateColumn, reservations, type Reservation } from '../da
 
 /** TEMPLATES / Data / Data Grid — a product screen on a slide. */
 const meta = {
-  title: 'Templates/Data/Data Grid',
+  title: 'Slide Data/Data Grid',
   component: DataGridSlide,
   tags: ['autodocs'],
   parameters: {

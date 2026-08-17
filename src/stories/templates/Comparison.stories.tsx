@@ -8,7 +8,7 @@ import { Comparison } from '../../templates/Comparison'
  * on: a new slide is data, not markup.
  */
 const meta = {
-  title: 'Templates/Data/Comparison',
+  title: 'Slide Data/Comparison',
   component: Comparison,
   tags: ['autodocs'],
   parameters: {

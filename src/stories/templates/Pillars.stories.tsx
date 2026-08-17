@@ -3,7 +3,7 @@ import { Pillars } from '../../templates/Pillars'
 
 /** TEMPLATES / Pillars — three tinted columns of white cards under one banner. */
 const meta = {
-  title: 'Templates/Narrative/Pillars',
+  title: 'Narrative/Pillars',
   component: Pillars,
   tags: ['autodocs'],
   parameters: {

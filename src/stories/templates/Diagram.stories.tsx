@@ -6,7 +6,7 @@ import { Diagram } from '../../templates/Diagram'
  * Stories are the real rebuilt slides: a content object handed to the template.
  */
 const meta = {
-  title: 'Templates/Narrative/Diagram',
+  title: 'Narrative/Diagram',
   component: Diagram,
   tags: ['autodocs'],
   parameters: {

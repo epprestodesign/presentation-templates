@@ -11,7 +11,7 @@ import { ColumnGrid } from '../../templates/ColumnGrid'
  * this template, so it must be plausible without being anyone's real number.
  */
 const meta = {
-  title: 'Templates/Data/Column Grid',
+  title: 'Slide Data/Column Grid',
   component: ColumnGrid,
   tags: ['autodocs'],
   parameters: {

@@ -80,55 +80,60 @@ const preview: Preview = {
           //    question from what job the slide does.
           'Diagrams',
           ['Overview'],
-          // 5) Templates — the slide archetypes, grouped by the JOB the slide
-          //    does rather than by what it is made of. A deck is written in
-          //    roughly this order, so the sidebar reads as the shape of a
-          //    presentation: open, argue, evidence, prove, show, close.
+          // 5) THE SLIDE TYPES, as top-level categories rather than folders
+          //    under a 'Templates' parent.
           //
-          //    Deliberately NOT grouped by audience (investor / customer /
-          //    internal). Almost every template here is used by all three, so
-          //    that cut would have duplicated most of the list and forced a
-          //    guess about intent at authoring time.
-          'Templates',
+          //    Flattened because a folder inside a category cost a click on the
+          //    thing this system is FOR: you come here to find a slide, and
+          //    'Templates → Data → Stat Grid' buried the useful noun two levels
+          //    down. As siblings they also sit level with Diagrams, which
+          //    likewise produces finished slides.
+          //
+          //    'Slide Data' and 'Slide Charts' are prefixed on purpose. Plain
+          //    'Charts' and 'Data Grid' already belong to the MUI X catalogue
+          //    above, which is a component library for mocking product UI — a
+          //    different thing from a slide. The prefix is what keeps the two
+          //    readable in one sidebar.
+          //
+          //    Ordered as a deck is written: open, argue, evidence, prove, show,
+          //    close.
+          'Openers',
+          ['Cover', 'Section Divider', 'Agenda'],
+          'Narrative',
           [
-            'Openers',
-            ['Cover', 'Section Divider', 'Agenda'],
-            'Narrative',
-            [
-              'Headline + Image',
-              'Bullets + Image',
-              'Feature Cards',
-              'Staircase Cards',
-              'Pillars',
-              'Diagram',
-              'Timeline',
-              'Process',
-              'Quote',
-            ],
-            'Data',
-            [
-              'Stat Grid',
-              'Column Grid',
-              'Numbers',
-              'Comparison',
-              'Tint Table',
-              'Financial Table',
-              'Use of Funds',
-              'Data Grid',
-              'KPI Board',
-            ],
-            'Charts',
-            ['Headline + Chart', 'Chart Hero', 'Chart Duo', 'Chart Stack', 'Chart + Stats'],
-            'People & Partners',
-            ['Team Grid', 'Team Row', 'Logo Wall'],
-            'Showcase',
-            ['Full Bleed', 'Device Showcase'],
-            // Statement lives here rather than with the openers. It is the
-            // full-slide declarative sentence — used far more often to land a
-            // deck than to open one.
-            'Closing',
-            ['Statement', 'Closing'],
+            'Headline + Image',
+            'Bullets + Image',
+            'Feature Cards',
+            'Staircase Cards',
+            'Pillars',
+            'Diagram',
+            'Timeline',
+            'Process',
+            'Quote',
           ],
+          'Slide Data',
+          [
+            'Stat Grid',
+            'Column Grid',
+            'Numbers',
+            'Comparison',
+            'Tint Table',
+            'Financial Table',
+            'Use of Funds',
+            'Data Grid',
+            'KPI Board',
+          ],
+          'Slide Charts',
+          ['Headline + Chart', 'Chart Hero', 'Chart Duo', 'Chart Stack', 'Chart + Stats'],
+          'People',
+          ['Team Grid', 'Team Row', 'Logo Wall'],
+          'Showcase',
+          ['Full Bleed', 'Device Showcase'],
+          // Statement sits here rather than with the openers: it is the
+          // full-slide declarative sentence, used far more to land a deck than
+          // to open one.
+          'Closing',
+          ['Statement', 'Closing'],
           '*',
         ],
       },

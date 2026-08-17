@@ -3,7 +3,7 @@ import { UseOfFunds } from '../../templates/UseOfFunds'
 
 /** TEMPLATES / Use of Funds — tier rows left, gradient spec panel right. */
 const meta = {
-  title: 'Templates/Data/Use of Funds',
+  title: 'Slide Data/Use of Funds',
   component: UseOfFunds,
   tags: ['autodocs'],
   parameters: {

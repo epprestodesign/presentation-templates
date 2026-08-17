@@ -7,7 +7,7 @@ import { TeamGrid } from '../../templates/TeamGrid'
  * nothing else.
  */
 const meta = {
-  title: 'Templates/People & Partners/Team Grid',
+  title: 'People/Team Grid',
   component: TeamGrid,
   tags: ['autodocs'],
   parameters: {

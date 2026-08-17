@@ -4,7 +4,7 @@ import { YEARS, revenue } from '../charts/_data'
 
 /** TEMPLATES / Chart + Stats — one chart with a rail of KPI callouts. */
 const meta = {
-  title: 'Templates/Charts/Chart + Stats',
+  title: 'Slide Charts/Chart + Stats',
   component: ChartStats,
   tags: ['autodocs'],
   parameters: {

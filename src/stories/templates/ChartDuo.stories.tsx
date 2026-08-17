@@ -5,7 +5,7 @@ import { YEARS, byProduct } from '../charts/_data'
 
 /** TEMPLATES / Chart Duo — two charts side by side, each with its caption. */
 const meta = {
-  title: 'Templates/Charts/Chart Duo',
+  title: 'Slide Charts/Chart Duo',
   component: ChartDuo,
   tags: ['autodocs'],
   parameters: {

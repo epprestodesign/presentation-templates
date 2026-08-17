@@ -10,10 +10,11 @@ import styles from './Agenda.module.css'
  * A numbered running order on the brand background: display title, then rows of
  * a large outlined-looking numeral, a bold heading and a supporting line.
  *
- * Rows are evenly distributed down the available height rather than pinned to
- * fixed anchors, so a 4-item agenda and a 6-item agenda both look deliberate.
- * That is the one place a slide in this system flexes vertically — an agenda's
- * length is genuinely variable, unlike a headline's position.
+ * Rows cascade from the top on a CONSTANT gap. They are deliberately not
+ * distributed down the well: spreading them made the gap a function of the item
+ * count, so a three-part agenda pulled its rows so far apart they stopped
+ * reading as one list, and no two agendas in a deck shared a rhythm. A short
+ * agenda now leaves space beneath it, which reads as intended.
  *
  * Numbers are zero-padded to two digits to match the deck's page numbering.
  */
@@ -37,6 +38,7 @@ export interface AgendaProps extends SlideChromeSpec {
   top?: number
   /** Width of the numeral column. */
   numberWidth?: number
+  rowGap?: number
 }
 
 export function Agenda({
@@ -46,6 +48,8 @@ export function Agenda({
   plate = 'backgrounds/brand-hex',
   top = 200,
   numberWidth = 140,
+  /** Gap between rows. One number for every agenda length. */
+  rowGap = 34,
   ...chrome
 }: AgendaProps) {
   return (
@@ -60,6 +64,7 @@ export function Agenda({
           // Stop clear of the watermark like every other full-width well.
           right: chrome.watermark === false ? grid.marginX : grid.watermarkGutter,
           bottom: grid.marginBottom,
+          ['--agenda-row-gap' as string]: `${rowGap}px`,
         }}
       >
         {items.map((item, i) => (
