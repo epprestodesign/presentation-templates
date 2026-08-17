@@ -9,6 +9,47 @@
   flex-direction: column;
 }
 
+/* 'split' — quote and attribution side by side. Two classes on `.copy`, because
+   `flex-direction` is set inline-adjacent here and a single class would be a
+   coin-toss against the base rule's own declaration order. */
+.copy.rowLayout {
+  flex-direction: row;
+}
+
+/* Mark + quote as one column inside either layout. `flex: 1` only bites in the
+   row layout, where it is what leaves the attribution its fixed column. */
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+/* The attribution column in a split. `flex: none` against `.main`'s `flex: 1`,
+   and the rule goes vertical-adjacent — a 3px horizontal rule above a credit
+   reads as a divider under the quote when the quote is beside it, not above. */
+.attribution.attributionSplit {
+  flex: none;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* THE CREDIT STACKS IN A SPLIT, and it has to. Side by side the avatar and the
+   names share a 280px column, and `.credit`'s row direction put a 64px disc plus
+   a 16px gap in front of a role line that does not wrap — measured at 1293px,
+   which is 13px off the right edge of the artboard. As a column the names get the
+   full width and the role wraps like copy. `min-width: 0` on the names is what
+   actually permits that wrap inside a flex child. */
+.attribution.attributionSplit .credit {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.attribution.attributionSplit .names {
+  min-width: 0;
+}
+
 .quote {
   margin: 0;
   /* Poppins at 40px wraps late, and a pull quote reads badly with one orphan

@@ -270,6 +270,16 @@ export const RevenueDurabilityStacked: Story = {
        tall. */
     top: 246,
     height: 414,
-    cards: DURABILITY_CARDS.map((c) => ({ ...c, order: 'value-first' as const, align: 'top' as const })),
+    /* `.slice(0, 3)`, and its absence was a real bug — this spread all SIX of
+       the base story's cards into one column, so six value+label+description
+       rows shared a 414px well and the last one rendered 13px past the artboard
+       floor. The prose above and the story name both say three; the argument is
+       gross → net → logo, each qualifying the one above, and the concentration
+       pair belongs to the 3-up grid where it has a second row to sit in. */
+    cards: DURABILITY_CARDS.slice(0, 3).map((c) => ({
+      ...c,
+      order: 'value-first' as const,
+      align: 'top' as const,
+    })),
   },
 }

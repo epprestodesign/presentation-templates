@@ -19,6 +19,13 @@ import { resolve } from 'node:path'
  * `publicDir` points at src/assets so the deck resolves imagery exactly as
  * Storybook does via its staticDirs — otherwise a photographic slide would work
  * in Storybook and be blank in the deck, which is the worst possible split.
+ *
+ * MULTI-PAGE, one build. Each deck is its own entry HTML under this root, and
+ * Vite mirrors the entry's path into the output — so src/deck/process/index.html
+ * lands at deck-static/process/index.html and serves from <deck>/process/ with a
+ * trailing-slash URL rather than a bare .html file. The decks share the player,
+ * the templates, the tokens and this base path; only the slide list differs.
+ * Adding a third deck is a directory and one line in `input`.
  */
 export default defineConfig({
   root: resolve(import.meta.dirname, 'src/deck'),
@@ -29,6 +36,14 @@ export default defineConfig({
     // Out of the deck root, back up to a top-level folder the deploy can copy.
     outDir: resolve(import.meta.dirname, 'deck-static'),
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        // 'Design production' — 42 slides, the deck root.
+        main: resolve(import.meta.dirname, 'src/deck/index.html'),
+        // 'The design process' — 12 slides.
+        process: resolve(import.meta.dirname, 'src/deck/process/index.html'),
+      },
+    },
   },
   server: { port: 6009 },
 })

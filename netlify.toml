@@ -36,10 +36,21 @@
   # Unset on purpose: at the domain root the base is '/', which is the default.
   # STORYBOOK_BASE_PATH is only set by the GitHub Pages workflow.
 
-# Both apps are single-page. A deep link like /deck/#13-three-shapes resolves at
-# its own index, but a direct hit on an unknown path should serve the app shell
+# Every app here is single-page. A deep link like /deck/#13-three-shapes resolves
+# at its own index, but a direct hit on an unknown path should serve the app shell
 # rather than a 404 — and the deck's shell must win inside /deck/, or a refresh
 # there would land in Storybook.
+#
+# ORDER IS THE WHOLE POINT: Netlify takes the FIRST matching rule, and /deck/*
+# matches /deck/process/anything. Without the narrower rule above it, a refresh
+# inside the process deck would silently serve the 42-slide deck instead — which
+# looks like the wrong deck was deployed rather than like a routing bug. Any deck
+# added under /deck/ needs its own rule here, above the catch-all.
+[[redirects]]
+  from = "/deck/process/*"
+  to = "/deck/process/index.html"
+  status = 200
+
 [[redirects]]
   from = "/deck/*"
   to = "/deck/index.html"

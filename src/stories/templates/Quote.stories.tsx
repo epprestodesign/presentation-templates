@@ -90,6 +90,36 @@ export const BrandPullQuote: Story = {
   },
 }
 
+/** The brand pull quote run LEFT TO RIGHT instead of stacked.
+ *
+ *  Same copy, `layout: 'split'`. The quote takes a flexible column and the
+ *  attribution a fixed one beside it, centred against each other — which is worth
+ *  having because the stacked version of a short quote leaves a visible hole under
+ *  the credit, and because an attribution beside the sentence reads as a source
+ *  rather than as a footnote to it.
+ *
+ *  `align` drops back to left. Centred text inside a narrowed column is the one
+ *  combination this layout cannot carry: the ragged left edge stops the quote and
+ *  its credit sharing a spine, which is the only thing holding the row together.
+ *
+ *  Note the size drop, `display` → `h1`. The copy column is ~300px narrower here,
+ *  so the sentence that set on two lines stacked would set on four — and a pull
+ *  quote that wraps four times has stopped being a pull quote. Any story moving to
+ *  `split` should expect to spend one step of the type scale on it. */
+export const BrandPullQuoteSplit: Story = {
+  name: 'Brand pull quote – side by side',
+  args: {
+    ...BrandPullQuote.args,
+    layout: 'split',
+    align: 'left',
+    size: 'h1',
+    width: 1100,
+    left: 60,
+    top: 210,
+    attributionWidth: 280,
+  },
+}
+
 /** A longer quote from an internal deck — the support read-out at an all-hands.
  *
  *  Dropped to `h2` because the sentence runs past thirty words; at `h1` it takes

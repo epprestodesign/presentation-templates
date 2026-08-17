@@ -70,6 +70,22 @@ export interface QuoteProps extends SlideChromeSpec {
   size?: TypeStep
   align?: 'left' | 'center'
 
+  /** How the quote and its attribution sit relative to each other.
+   *
+   *  'stacked' is the editorial default: mark, quote, rule, credit, straight down
+   *  the left. It is right when the quote is the whole slide.
+   *
+   *  'split' runs them LEFT TO RIGHT — quote in a flexible column, attribution in
+   *  a fixed one beside it, the two centred against each other. Reach for it when
+   *  the quote is short enough that a stacked version leaves a hole under it, or
+   *  when the attribution is doing real work (a named customer, a logo) and being
+   *  under the quote reads as a footnote. A long quote in `split` is the wrong
+   *  call: the copy column narrows and a pull quote that wraps five times is not
+   *  a pull quote. */
+  layout?: 'stacked' | 'split'
+  /** 'split' only: width of the attribution column. The quote takes the rest. */
+  attributionWidth?: number
+
   /** Width of the copy column. Clamped to the watermark gutter, so a story
    *  cannot accidentally run a quote under the wordmark. */
   width?: number
@@ -107,6 +123,8 @@ export function Quote({
   markSize = 72,
   size = 'h1',
   align = 'left',
+  layout = 'stacked',
+  attributionWidth = 300,
   width = 900,
   left = grid.marginX,
   top = 150,
@@ -123,20 +141,32 @@ export function Quote({
    * clamp lives on it rather than being restated per story. */
   const maxWidth =
     canvas.width - left - (chrome.watermark === false ? grid.marginX : grid.watermarkGutter)
+  const split = layout === 'split'
   const copyStyle: CSSProperties = {
     left,
     top,
     width: Math.min(width, maxWidth),
     gap,
-    alignItems: align === 'center' ? 'center' : 'flex-start',
-    textAlign: align,
+    /* A split row centres its two columns against each other; a stacked column
+       inherits the copy alignment. Sending `align: 'center'` through to a split
+       row would centre the quote inside its own column, which is a different and
+       usually wrong thing. */
+    alignItems: split ? 'center' : align === 'center' ? 'center' : 'flex-start',
+    textAlign: split ? 'left' : align,
   }
 
   const initials = attribution ? (attribution.initials ?? monogram(attribution.name)) : ''
 
   return (
     <SlideFrame fit={fit} surface={surface} plate={plate} {...chrome}>
-      <div className={styles.copy} style={copyStyle}>
+      <div
+        className={[styles.copy, split ? styles.rowLayout : ''].filter(Boolean).join(' ')}
+        style={copyStyle}
+      >
+        {/* The mark and the quote are one unit, so they stay in a column even when
+            the slide runs left to right — otherwise `split` would put the quote
+            glyph beside the sentence instead of above it. */}
+        <div className={styles.main} style={{ gap, alignItems: split ? 'flex-start' : 'inherit' }}>
         {mark && (
           <Icon
             name="format_quote"
@@ -157,8 +187,15 @@ export function Quote({
           />
         )}
 
+        </div>
+
         {attribution && (
-          <div className={styles.attribution}>
+          <div
+            className={[styles.attribution, split ? styles.attributionSplit : '']
+              .filter(Boolean)
+              .join(' ')}
+            style={split ? { width: attributionWidth } : undefined}
+          >
             {ruleWidth > 0 && (
               <span
                 className={[styles.rule, onDark ? styles.ruleOnBrand : ''].filter(Boolean).join(' ')}
