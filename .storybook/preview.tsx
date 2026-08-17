@@ -73,7 +73,14 @@ const preview: Preview = {
           //    it from the source rather than from memory.
           'Components',
           ['Overview', 'Text', 'Data', 'Media', 'Layout', 'Brand'],
-          // 4) Templates — the slide archetypes, grouped by the JOB the slide
+          // 4) Diagrams — the ported diagram-design types, each rendered as a
+          //    finished slide with its own copy. Their own category rather than
+          //    a Templates folder: a diagram type is chosen by what it SHOWS
+          //    (components, decisions, time, overlap), which is a different
+          //    question from what job the slide does.
+          'Diagrams',
+          ['Overview'],
+          // 5) Templates — the slide archetypes, grouped by the JOB the slide
           //    does rather than by what it is made of. A deck is written in
           //    roughly this order, so the sidebar reads as the shape of a
           //    presentation: open, argue, evidence, prove, show, close.
