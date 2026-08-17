@@ -8,7 +8,7 @@ import { Statement } from '../../templates/Statement'
  * on: a new slide is data, not markup.
  */
 const meta = {
-  title: 'Templates/Closing/Statement',
+  title: 'Closing/Statement',
   component: Statement,
   tags: ['autodocs'],
   parameters: {

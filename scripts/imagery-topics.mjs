@@ -31,6 +31,12 @@ export const IMAGERY_BRIEF = [
       { slug: 'team-huddle', query: 'kids sports team huddle' },
       { slug: 'sports-parents-stands', query: 'parents watching youth sports bleachers' },
       { slug: 'tournament-venue', query: 'indoor sports complex courts' },
+      /* Texture around the game rather than the game itself — the travel day is
+       * where EventPipe actually shows up, and the deck had no picture of it. */
+      { slug: 'team-hotel-arrival', query: 'young athletes with sports bags walking' },
+      // Reworded: the original 'sports duffel bags gym corridor floor' returned
+      // zero results — Unsplash narrows hard on long literal phrases.
+      { slug: 'gear-bags-corridor', query: 'sports bags equipment' },
     ],
   },
   {
@@ -80,6 +86,10 @@ export const IMAGERY_BRIEF = [
       { slug: 'developer-screen', query: 'software developer code screen' },
       { slug: 'phone-app-ui', query: 'hands holding phone app interface' },
       { slug: 'contract-signing', query: 'signing contract business documents' },
+      /* The operator's desk, for the diagram and process templates: what the
+       * person on the other side of the software is actually sitting at. */
+      { slug: 'dual-screen-desk', query: 'dual monitors desk office workstation' },
+      { slug: 'wall-calendar-planning', query: 'wall calendar planner office wall' },
     ],
   },
   {
@@ -100,6 +110,10 @@ export const IMAGERY_BRIEF = [
       { slug: 'teal-gradient-texture', query: 'teal blue abstract gradient texture' },
       { slug: 'architecture-lines', query: 'minimal architecture lines blue' },
       { slug: 'network-abstract', query: 'abstract network connection lines' },
+      /* Two more divider surfaces: one cool and architectural, one warm and
+       * papery, so consecutive dividers in a long deck need not repeat. */
+      { slug: 'glass-steel-detail', query: 'glass and steel building facade detail' },
+      { slug: 'paper-texture', query: 'textured paper close up neutral background' },
     ],
   },
   /* --- Added for the documentation templates ---------------------------
@@ -131,6 +145,22 @@ export const IMAGERY_BRIEF = [
       { slug: 'portrait-man-professional', query: 'professional man portrait plain background', orientation: 'squarish' },
       { slug: 'portrait-smiling-candid', query: 'candid smiling professional headshot', orientation: 'squarish' },
       { slug: 'portrait-outdoor-natural', query: 'natural light portrait person outdoors', orientation: 'squarish' },
+    ],
+  },
+  /* --- Added for the diagram and timeline templates --------------------
+   *
+   * hotels-housing shows the hotel as a GUEST sees it — a lobby, a room, a key
+   * card. The diagram, process and timeline templates need the hotel as STAFF
+   * see it: the handover, the cart, the printed rooming list, the loading of a
+   * shuttle. That operational half was missing entirely. */
+  {
+    group: 'hotel-operations',
+    why: 'The staff-side hotel: handovers, housekeeping, the rooming list, the shuttle. Process and timeline steps need a picture of the work, not of the lobby.',
+    topics: [
+      { slug: 'front-desk-handover', query: 'hotel staff behind front desk computer' },
+      { slug: 'housekeeping-cart', query: 'hotel housekeeping cart hallway' },
+      { slug: 'rooming-list', query: 'clipboard checklist paper pen desk' },
+      { slug: 'shuttle-loading', query: 'passengers boarding bus with luggage' },
     ],
   },
 ]

@@ -8,7 +8,7 @@ import { Cover } from '../../templates/Cover'
  * on: a new slide is data, not markup.
  */
 const meta = {
-  title: 'Templates/Openers/Cover',
+  title: 'Openers/Cover',
   component: Cover,
   tags: ['autodocs'],
   parameters: {

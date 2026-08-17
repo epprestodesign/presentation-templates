@@ -7,7 +7,7 @@ import { Timeline } from '../../templates/Timeline'
  * is illustrative.
  */
 const meta = {
-  title: 'Templates/Narrative/Timeline',
+  title: 'Narrative/Timeline',
   component: Timeline,
   tags: ['autodocs'],
   parameters: {

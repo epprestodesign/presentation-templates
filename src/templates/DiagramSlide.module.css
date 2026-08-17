@@ -1,0 +1,15 @@
+/* The diagram well. Absolutely positioned in the 1280x720 space; its size is
+   passed to the diagram rather than used to scale it — see the note in
+   DiagramSlide.tsx. */
+.well {
+  position: absolute;
+}
+
+.well > svg {
+  display: block;
+}
+
+.footnote {
+  position: absolute;
+  color: var(--slide-color-text-subtle);
+}

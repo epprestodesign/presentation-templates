@@ -3,7 +3,7 @@ import { HeadlineImage } from '../../templates/HeadlineImage'
 
 /** TEMPLATES / Headline + Image — copy column left, photo mosaic right. */
 const meta = {
-  title: 'Templates/Narrative/Headline + Image',
+  title: 'Narrative/Headline + Image',
   component: HeadlineImage,
   tags: ['autodocs'],
   parameters: {

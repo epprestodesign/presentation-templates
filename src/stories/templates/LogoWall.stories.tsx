@@ -6,7 +6,7 @@ import { LogoWall } from '../../templates/LogoWall'
  * Stories are the real rebuilt slides: a content object handed to the template.
  */
 const meta = {
-  title: 'Templates/People & Partners/Logo Wall',
+  title: 'People/Logo Wall',
   component: LogoWall,
   tags: ['autodocs'],
   parameters: {

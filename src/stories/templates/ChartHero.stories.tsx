@@ -4,7 +4,7 @@ import { YEARS } from '../charts/_data'
 
 /** TEMPLATES / Chart Hero — one chart, nearly the whole slide. */
 const meta = {
-  title: 'Templates/Charts/Chart Hero',
+  title: 'Slide Charts/Chart Hero',
   component: ChartHero,
   tags: ['autodocs'],
   parameters: {

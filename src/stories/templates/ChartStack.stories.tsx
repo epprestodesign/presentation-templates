@@ -5,7 +5,7 @@ import { YEARS } from '../charts/_data'
 
 /** TEMPLATES / Chart Stack — two full-width charts sharing one x-axis. */
 const meta = {
-  title: 'Templates/Charts/Chart Stack',
+  title: 'Slide Charts/Chart Stack',
   component: ChartStack,
   tags: ['autodocs'],
   parameters: {

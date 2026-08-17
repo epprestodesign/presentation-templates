@@ -9,7 +9,7 @@ import { KpiBoard } from '../../templates/KpiBoard'
  * anyone's real number.
  */
 const meta = {
-  title: 'Templates/Data/KPI Board',
+  title: 'Slide Data/KPI Board',
   component: KpiBoard,
   tags: ['autodocs'],
   parameters: {

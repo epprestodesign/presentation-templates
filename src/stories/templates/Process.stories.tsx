@@ -6,7 +6,7 @@ import { Process } from '../../templates/Process'
  * Stories are content objects. Every name and figure below is illustrative.
  */
 const meta = {
-  title: 'Templates/Narrative/Process',
+  title: 'Narrative/Process',
   component: Process,
   tags: ['autodocs'],
   parameters: {

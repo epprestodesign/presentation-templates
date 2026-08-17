@@ -8,7 +8,7 @@ import { Quote } from '../../templates/Quote'
  * to a customer — a testimonial slide is a claim, not a layout.
  */
 const meta = {
-  title: 'Templates/Narrative/Quote',
+  title: 'Narrative/Quote',
   component: Quote,
   tags: ['autodocs'],
   parameters: {

@@ -3,7 +3,7 @@ import { TintTable } from '../../templates/TintTable'
 
 /** TEMPLATES / Tint Table — black header, cyan-ramped rows. */
 const meta = {
-  title: 'Templates/Data/Tint Table',
+  title: 'Slide Data/Tint Table',
   component: TintTable,
   tags: ['autodocs'],
   parameters: {
