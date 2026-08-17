@@ -6,6 +6,7 @@ import {
   DiagramText,
   Legend,
   NodeBox,
+  corridor,
   elbow,
   fanPoints,
   role,
@@ -77,12 +78,35 @@ export interface SwimEdge {
   dashed?: boolean
 }
 
+/** An EXPLICIT cross-lane connector, routed by the caller rather than the
+ *  auto-router.
+ *
+ *  `edges` routes itself, which is right for a handoff between adjacent steps and
+ *  wrong for a backwards lane crossing: the router exits the source's left face
+ *  and runs back along its own lane, so on a full lane the stroke passes behind
+ *  every box between the two and surfaces only in the gutters. On the
+ *  seven-questions slide that read as "Who drops to Solve" — the opposite of the
+ *  argument.
+ *
+ *  This routes through the LANE BOUNDARY instead, which is genuinely open canvas:
+ *  down out of the source, along the boundary between the two lanes, up into the
+ *  target. Two bends, both quarter-arcs, no box crossed. */
+export interface SwimAnnotation {
+  from: string
+  to: string
+  label?: string
+  tone?: ArrowTone
+  dashed?: boolean
+}
+
 export interface SwimlaneProps {
   width: number
   height: number
   lanes: SwimLane[]
   nodes: SwimNode[]
   edges?: SwimEdge[]
+  /** Cross-lane connectors routed via the lane boundary. See SwimAnnotation. */
+  annotations?: SwimAnnotation[]
   legend?: LegendItem[]
   /** Defaults to the widest column referenced. */
   columns?: number
@@ -109,6 +133,7 @@ export function Swimlane({
   lanes,
   nodes,
   edges = [],
+  annotations = [],
   legend,
   columns,
   labelWidth = 132,
@@ -143,6 +168,27 @@ export function Swimlane({
     }
   })
   const byId = new Map(placed.map((p) => [p.id, p]))
+
+  /* Annotation routes. The corridor is the lane boundary BETWEEN the two lanes:
+     the y where one lane's band ends and the next begins. Because nodes are
+     centred in their band, that line always falls in the gap between them, so the
+     horizontal run cannot cross a box. */
+  const annotated = annotations.map((a) => {
+    const from = byId.get(a.from)
+    const to = byId.get(a.to)
+    if (!from || !to) return null
+    const downward = to.laneIndex > from.laneIndex
+    const boundary = snap(Math.max(from.laneIndex, to.laneIndex) * laneH)
+    const p1 = { x: from.x + from.w / 2, y: downward ? from.y + from.h : from.y }
+    const p2 = { x: to.x + to.w / 2, y: downward ? to.y : to.y + to.h }
+    return {
+      a,
+      d: corridor(p1, p2, boundary, 'horizontal'),
+      /* The label sits on the horizontal run, at the midpoint of the leg — the
+         only part of this route guaranteed to be in open canvas. */
+      label: { x: (p1.x + p2.x) / 2, y: boundary },
+    }
+  })
 
   const sidesFor = (e: SwimEdge) => {
     const a = byId.get(e.from)
@@ -298,6 +344,19 @@ export function Swimlane({
         (r, i) => r && <Connector key={i} d={r.d} tone={r.e.tone} dashed={r.e.dashed} idPrefix={uid} />
       )}
 
+      {annotated.map(
+        (r, i) =>
+          r && (
+            <Connector
+              key={`ann-${i}`}
+              d={r.d}
+              tone={r.a.tone ?? 'accent'}
+              dashed={r.a.dashed ?? true}
+              idPrefix={uid}
+            />
+          )
+      )}
+
       {placed.map((p) => (
         <NodeBox
           key={p.id}
@@ -322,6 +381,20 @@ export function Swimlane({
               text={r.e.label}
               side={r.horizontalRun ? 'above' : 'right'}
               tone={r.e.tone === 'accent' ? 'accent' : 'soft'}
+            />
+          )
+      )}
+
+      {annotated.map(
+        (r, i) =>
+          r?.a.label && (
+            <ArrowLabel
+              key={`annlab-${i}`}
+              x={r.label.x}
+              y={r.label.y}
+              text={r.a.label}
+              side="above"
+              tone={(r.a.tone ?? 'accent') === 'accent' ? 'accent' : 'soft'}
             />
           )
       )}

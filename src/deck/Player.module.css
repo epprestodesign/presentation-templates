@@ -1,0 +1,261 @@
+/* Deck player chrome. Deliberately quiet: everything here is furniture around
+   the slide, and a presenter should notice the slide, not the player. */
+
+.player {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: #101418;
+}
+
+/* The stage centres the artboard and gives it the space left after the bar.
+   `overflow: hidden` matters — a slide scaled to fit can still round a fraction
+   of a pixel past the edge, and a scrollbar appearing mid-talk is jarring. */
+/* `position: relative` + an absolutely centred artboard, NOT grid centring.
+   
+   `place-items: center` centres the artboard's UNSCALED 1280x720 box. When the
+   window is small enough that 1280 exceeds the stage's content width, CSS
+   overflow alignment clamps a centred item to the start edge instead of letting
+   it overflow both ways — so at 1280x800 the slide sat 32px from the left and
+   flush to the right. Centring on the element's own midpoint is independent of
+   whether the unscaled box fits. */
+.stage {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  padding: 16px;
+}
+
+.artboard {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: #fff;
+  /* A faint lift so the white slide separates from the dark stage without a
+     border, which would read as part of the slide. */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* Live links for the current slide. Sits between the stage and the bar so it
+   never covers the slide, and it only renders when a slide declares links —
+   otherwise the deck shows no chrome it does not need. */
+.links {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 18px 0;
+  background: #101418;
+}
+
+.link {
+  font: 500 12px/1 Poppins, system-ui, sans-serif;
+  color: #35cbfb;
+  text-decoration: none;
+  border: 1px solid rgba(53, 203, 251, 0.34);
+  border-radius: 999px;
+  padding: 7px 13px;
+}
+
+.link:hover {
+  color: #101418;
+  background: #35cbfb;
+  border-color: #35cbfb;
+}
+
+/* --- bottom bar ------------------------------------------------------- */
+.bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 18px;
+  height: 46px;
+  background: #171c22;
+  color: rgba(255, 255, 255, 0.72);
+  font: 500 12px/1 Poppins, system-ui, sans-serif;
+}
+
+.navBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: transparent;
+  color: inherit;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.navBtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.counter {
+  font-variant-numeric: tabular-nums;
+  min-width: 58px;
+  text-align: center;
+}
+
+.barTitle {
+  color: #fff;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.keys {
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.42);
+  white-space: nowrap;
+}
+
+.keys kbd {
+  font: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  padding: 2px 5px;
+  margin: 0 1px;
+}
+
+/* --- speaker notes ---------------------------------------------------- */
+.notes {
+  position: fixed;
+  right: 18px;
+  bottom: 60px;
+  width: 330px;
+  max-height: 42vh;
+  overflow: auto;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: rgba(23, 28, 34, 0.97);
+  color: rgba(255, 255, 255, 0.86);
+  font: 400 13px/1.55 Poppins, system-ui, sans-serif;
+}
+
+.notesHead {
+  font: 600 10px/1 Poppins, system-ui, sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 8px;
+}
+
+.notes p {
+  margin: 0;
+}
+
+/* --- overview grid ---------------------------------------------------- */
+.overview {
+  position: fixed;
+  inset: 0;
+  overflow: auto;
+  background: #101418;
+  padding: 20px 24px 40px;
+}
+
+.overviewHead {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 6px 0 18px;
+  font: 500 12px/1 Poppins, system-ui, sans-serif;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.deckTitle {
+  font: 600 15px/1 Poppins, system-ui, sans-serif;
+  color: #fff;
+}
+
+.hint {
+  margin-left: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.thumb {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+/* A thumbnail renders the REAL slide, scaled by transform. `aspect-ratio` plus a
+   scaled child is what keeps the grid on 16:9 without hard-coding a pixel size
+   for every breakpoint. */
+.thumbStage {
+  display: block;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #fff;
+  outline: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.thumbInner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1280px;
+  height: 720px;
+  /* Scale is set here rather than inline because every thumbnail is the same
+     size; container queries would be the modern answer but are overkill for a
+     fixed grid track minimum. */
+  transform: scale(calc(260 / 1280));
+  transform-origin: top left;
+  pointer-events: none;
+}
+
+.thumbCurrent .thumbStage {
+  outline: 2px solid #02adb3;
+}
+
+.thumbLabel {
+  display: flex;
+  gap: 8px;
+  font: 500 12px/1.35 Poppins, system-ui, sans-serif;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.thumbNum {
+  color: rgba(255, 255, 255, 0.38);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- empty state ------------------------------------------------------ */
+.empty {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 10px;
+  text-align: center;
+  background: #101418;
+  color: rgba(255, 255, 255, 0.8);
+  font: 400 15px/1.6 Poppins, system-ui, sans-serif;
+}
+
+.empty h1 {
+  font: 600 26px/1.2 Poppins, system-ui, sans-serif;
+  color: #fff;
+  margin: 0;
+}
+
+.empty code {
+  color: #35cbfb;
+}

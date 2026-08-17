@@ -57,6 +57,23 @@ jobs:
           STORYBOOK_BASE_PATH: /${{ github.event.repository.name }}/
         run: pnpm build-storybook
 
+      # The deck player ships as a sub-page of the same Pages site, at
+      # /<repo>/deck/. One site, one deploy, one URL to share — and the deck
+      # inherits Storybook's domain rather than needing a second repo.
+      #
+      # Its base path must include the /deck/ segment: Vite emits absolute asset
+      # paths, so a deck built for the domain root would request /assets/... and
+      # get Storybook's 404 page instead.
+      - name: Build deck player
+        env:
+          DECK_BASE_PATH: /${{ github.event.repository.name }}/deck/
+        run: pnpm build:deck
+
+      - name: Nest the deck inside the Storybook output
+        run: |
+          mkdir -p storybook-static/deck
+          cp -R deck-static/. storybook-static/deck/
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

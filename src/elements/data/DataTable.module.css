@@ -12,7 +12,15 @@
   background: var(--slide-table-header);
 }
 
-.headerCell {
+/* `.table .headerCell`, not `.headerCell`.
+ *
+ * The header ink has to beat typography.css's `.ds-text-*` rule, which also sets
+ * `color` and sits at the same 0-1-0 specificity — so the winner was decided by
+ * whichever stylesheet loaded last. In Storybook the module won and the header
+ * was white; in the deck player globals won and the header went black-on-black.
+ * Two classes settle it on specificity instead of luck, so no entry point has to
+ * remember to import globals first. */
+.table .headerCell {
   color: var(--slide-table-header-text);
   font-weight: var(--slide-font-weight-bold);
   padding: 14px 22px;

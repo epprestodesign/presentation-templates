@@ -1,0 +1,110 @@
+.head {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* The question the slide answers, above the headline. Grey and small — it is
+   orientation, not content, and it must not compete with the h2 under it. */
+.kicker {
+  color: var(--slide-color-text-subtle);
+}
+
+.lead {
+  color: var(--slide-color-text-cool);
+  max-width: 62ch;
+}
+
+.list {
+  position: absolute;
+  z-index: 2;
+  /* The top rule. The list reads as a table of terms, and a table needs an
+     edge to start against. */
+  border-top: 1px solid var(--slide-color-border);
+}
+
+/* Three fixed columns, so every term starts at the same x whatever the numeral
+   or the term length. `--nr-term` is set inline per slide.
+   
+   `align-items: baseline` rather than center: the numeral, term and detail are
+   three type sizes, and centring them would leave the numeral floating against
+   a two-line detail. Baseline is what makes the row read as one line of text. */
+.row {
+  display: grid;
+  grid-template-columns: 34px var(--nr-term, 300px) 1fr;
+  gap: 22px;
+  align-items: baseline;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--slide-color-border);
+}
+
+.index {
+  color: var(--slide-color-text-subtle);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+
+.term {
+  color: var(--slide-color-text);
+}
+
+/* The changed row. An accent rule on the leading edge plus accent ink on the
+   numeral and the term — no fill.
+   
+   The rule sits in the 34px index column's own gutter rather than shifting the
+   grid, so a marked row and an unmarked one still align on every column. Padding
+   is added back on the left to make room for it, which is why the border is on
+   the row and not on the index cell. */
+.changed {
+  border-left: 2px solid var(--slide-color-accent);
+  padding-left: 14px;
+  margin-left: -16px;
+}
+
+.changed .index,
+.changed .term {
+  color: var(--slide-color-accent-deep);
+}
+
+.detail {
+  color: var(--slide-color-text-cool);
+}
+
+/* The closing implication. Accent, because it is the one line on the slide that
+   is an argument rather than an item.
+   
+   34px, not 22. The last row carries a bottom rule, so 22px measured from the
+   BOX put the note ~22px under a hairline — close enough that it read as a
+   fifth row rather than as the conclusion drawn from the four above it. The gap
+   is what marks the change of register. */
+/* `.list .note`, two classes — NOT `.note`.
+   
+   AccentText renders as a <p> and its own module sets `margin: 0` on `.root`.
+   That rule is injected after this file, so at equal specificity it won. The
+   note's margin-top computed to 0 and the closing line sat flush against the
+   last row's rule on every slide that has one — which is most of the deck. The
+   same trap took out DataTable's header ink and ChartDuo's caption; this is the
+   third fix of the same shape, so it is worth stating plainly: any margin set on
+   a class that lands on an AccentText needs two selectors to survive. */
+.list .note {
+  margin-top: 34px;
+  color: var(--slide-color-accent-deep);
+}
+
+/* A note that is a link. Underlined on purpose — an audience should be able to
+   tell from across a room that it is clickable, and colour alone does not say
+   that when the note is already accent-inked. `display: block` so the two-class
+   margin rule above still applies to it. */
+.list .noteLink {
+  display: block;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+.list .noteLink:hover {
+  text-decoration-thickness: 2px;
+}

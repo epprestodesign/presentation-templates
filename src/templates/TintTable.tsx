@@ -21,6 +21,19 @@ import styles from './TintTable.module.css'
 export interface TintTableProps extends SlideChromeSpec {
   fit?: 'contain' | 'none'
 
+  /** How the rows are filled.
+   *
+   *  'tint' is the reference deck's own treatment — the measured cyan ramp,
+   *  lightest last. It is emphatic, and it is meant to be: the integration
+   *  slides it came from are the ones a reader is supposed to study.
+   *
+   *  'ruled' drops the fills for hairline rules on white. Use it when a deck has
+   *  SEVERAL tables. Ten tinted tables in one presentation stop reading as
+   *  emphasis and start reading as wallpaper — the ramp only means something if
+   *  it is the exception. A long reference table is also easier to scan on white,
+   *  because the row tint competes with the eye's own line-tracking. */
+  variant?: 'tint' | 'ruled'
+
   title?: RichText
   titleSize?: TypeStep
   lead?: RichText
@@ -41,6 +54,7 @@ export interface TintTableProps extends SlideChromeSpec {
 
 export function TintTable({
   fit = 'contain',
+  variant = 'tint',
   title,
   titleSize = 'h2',
   lead,
@@ -70,7 +84,7 @@ export function TintTable({
       )}
 
       <DataTable
-        variant="tint"
+        variant={variant === 'ruled' ? 'financial' : 'tint'}
         headers={headers}
         rows={rows}
         columnWidths={columnWidths}
